@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 
 import { AuthService } from './auth/auth.service';
+import { PiiController } from './pii/pii.controller';
 import { PiiService } from './pii/pii.service';
 import { VaultService } from './vault/vault.service';
 import { VerificationsController } from './verifications.controller';
-import { VerificationsService } from './verifications.service';
 
 @Module({
-  controllers: [VerificationsController],
-  providers: [AuthService, PiiService, VaultService, VerificationsService]
+  controllers: [PiiController, VerificationsController],
+  providers: [AuthService, PiiService, VaultService]
 })
 export class VerificationsModule {}
