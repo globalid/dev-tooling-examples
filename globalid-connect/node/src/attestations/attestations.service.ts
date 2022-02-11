@@ -7,7 +7,7 @@ import { Attestation } from './attestation.interface';
 export class AttestationsService {
   constructor(private readonly authService: AuthService) {}
 
-  async getAttestations() {
+  async getAttestations(): Promise<Attestation[]> {
     const { access_token } = await this.authService.getTokens();
     const { data } = await axios.post<Attestation[]>(
       'https://api.global.id/v1/attestations',
