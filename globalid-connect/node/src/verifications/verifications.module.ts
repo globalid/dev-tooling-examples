@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AuthService } from './auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 import { PiiController } from './pii/pii.controller';
 import { PiiService } from './pii/pii.service';
 import { VaultService } from './vault/vault.service';

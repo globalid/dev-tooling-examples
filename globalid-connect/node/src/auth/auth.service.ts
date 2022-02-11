@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { GrantType } from './grant-type.enum';
-import { TokensRequestOptions } from './token-request-options.interface';
+import { TokensRequestOptions } from './tokens-request-options.interface';
 import { Tokens } from './tokens.interface';
 
 @Injectable()

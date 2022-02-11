@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { Injectable } from '@nestjs/common';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { EncryptedPii } from './encrypted-pii.interface';
 
 @Injectable()

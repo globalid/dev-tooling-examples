@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { EncryptedPii } from '../vault/encrypted-pii.interface';
 import { VaultService } from '../vault/vault.service';
 import { Pii } from './pii.interface';
