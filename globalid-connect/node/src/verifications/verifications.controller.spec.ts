@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { VerificationsController } from './verifications.controller';
@@ -7,7 +8,8 @@ describe('VerificationsController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [VerificationsController]
+      controllers: [VerificationsController],
+      providers: [ConfigService]
     }).compile();
 
     controller = module.get<VerificationsController>(VerificationsController);

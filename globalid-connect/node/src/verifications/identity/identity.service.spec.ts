@@ -1,4 +1,7 @@
+import { HttpModule } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import { AuthService } from '../../auth/auth.service';
 
 import { IdentityService } from './identity.service';
 
@@ -7,7 +10,8 @@ describe('IdentityService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [IdentityService]
+      imports: [HttpModule],
+      providers: [AuthService, ConfigService, IdentityService]
     }).compile();
 
     service = module.get<IdentityService>(IdentityService);
