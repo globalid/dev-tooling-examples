@@ -1,11 +1,8 @@
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
-
 import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { accessToken, code } from '../../../test/stubs';
+import { accessToken, code, spyOnHttpPost } from '../../../test/common';
 import { AuthService } from './auth.service';
 import { GrantType } from './grant-type.enum';
 import { Tokens } from './tokens.interface';
@@ -37,12 +34,7 @@ describe('AuthService', () => {
     let postSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      postSpy = jest.spyOn(http, 'post').mockReturnValueOnce(
-        new Observable((subscriber) => {
-          subscriber.next(createMock<AxiosResponse<Tokens>>({ data: tokens }));
-          subscriber.complete();
-        })
-      );
+      postSpy = spyOnHttpPost(http, tokens);
     });
 
     it('should use client credentials flow when given no options', async () => {

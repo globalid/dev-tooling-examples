@@ -1,7 +1,7 @@
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code } from '../../../test/stubs';
+import { code } from '../../../test/common';
 import { PiiController } from './pii.controller';
 import { Pii } from './pii.interface';
 import { PiiService } from './pii.service';

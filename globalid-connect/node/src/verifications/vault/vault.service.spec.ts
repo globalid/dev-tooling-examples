@@ -1,11 +1,8 @@
-import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
-
 import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { tokens } from '../../../test/stubs';
+import { spyOnHttpPost, tokens } from '../../../test/common';
 import { AuthService } from '../auth/auth.service';
 import { EncryptedPii } from './encrypted-pii.interface';
 import { VaultService } from './vault.service';
@@ -34,16 +31,11 @@ describe('VaultService', () => {
       const consentTokens = createMock<string[]>();
       const encryptedPii = createMock<EncryptedPii[]>();
       const getTokensSpy = jest.spyOn(auth, 'getTokens').mockResolvedValueOnce(tokens);
-      const postSpy = jest.spyOn(http, 'post').mockReturnValueOnce(
-        new Observable((subscriber) => {
-          subscriber.next(createMock<AxiosResponse<EncryptedPii[]>>({ data: encryptedPii }));
-          subscriber.complete();
-        })
-      );
+      const postSpy = spyOnHttpPost(http, encryptedPii);
 
       const result = await service.getEncryptedData(consentTokens);
 
-      expect(result).toBeDefined();
+      expect(result).toBe(encryptedPii);
       expect(getTokensSpy).toHaveBeenCalledTimes(1);
       expect(getTokensSpy).toHaveBeenCalledWith();
       expect(postSpy).toHaveBeenCalledTimes(1);
