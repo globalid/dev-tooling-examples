@@ -1,3 +1,4 @@
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { PiiController } from './pii/pii.controller';
