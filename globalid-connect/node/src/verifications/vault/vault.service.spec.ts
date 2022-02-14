@@ -28,7 +28,7 @@ describe('VaultService', () => {
   });
 
   describe('getEncryptedData', () => {
-     const tokens: Tokens = {
+    const tokens: Tokens = {
       access_token: accessToken,
       expires_in: 12345,
       scope: 'openid',
