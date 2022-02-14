@@ -2,8 +2,9 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { spyOnHttpPost, tokens } from '../../../test/common';
+import { accessToken, spyOnHttpPost } from '../../../test/common';
 import { AuthService } from '../auth/auth.service';
+import { Tokens } from '../auth/tokens.interface';
 import { EncryptedPii } from './encrypted-pii.interface';
 import { VaultService } from './vault.service';
 
@@ -27,6 +28,13 @@ describe('VaultService', () => {
   });
 
   describe('getEncryptedData', () => {
+     const tokens: Tokens = {
+      access_token: accessToken,
+      expires_in: 12345,
+      scope: 'openid',
+      token_type: 'foo'
+    };
+
     it('should call vault with consent tokens', async () => {
       const consentTokens = createMock<string[]>();
       const encryptedPii = createMock<EncryptedPii[]>();

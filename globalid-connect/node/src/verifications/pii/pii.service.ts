@@ -11,7 +11,7 @@ import { Pii } from './pii.interface';
 
 @Injectable()
 export class PiiService {
-  privateKey: RSA.PrivateKey;
+  private readonly privateKey: RSA.PrivateKey;
 
   constructor(
     private readonly authService: AuthService,
@@ -24,12 +24,11 @@ export class PiiService {
     };
   }
 
-  async get(code: string): Promise<Record<string, any>> {
+  async get(code: string): Promise<Pii[]> {
     const idToken = await this.getIdToken(code);
     const consentTokens = this.extractConsentTokens(idToken);
     const encryptedPii = await this.vaultService.getEncryptedData(consentTokens);
-    const pii = encryptedPii.map((data) => this.decryptPii(data));
-    return this.objectify(pii);
+    return encryptedPii.map((data) => this.decryptPii(data));
   }
 
   private async getIdToken(code: string): Promise<string> {
@@ -58,10 +57,5 @@ export class PiiService {
     const password = RSA.decrypt(this.privateKey, encryptedPii.encrypted_data_password);
     const json = AES.decrypt(encryptedPii.encrypted_data, password);
     return JSON.parse(json);
-  }
-
-  private objectify(pii: Pii[]): Record<string, any> {
-    const entries = pii.map((pii) => [pii.type, pii.value]);
-    return Object.fromEntries(entries);
   }
 }
