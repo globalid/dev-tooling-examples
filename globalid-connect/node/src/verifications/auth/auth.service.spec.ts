@@ -11,16 +11,16 @@ import { GrantType } from './grant-type.enum';
 import { Tokens } from './tokens.interface';
 
 describe('AuthService', () => {
-  let http: HttpService;
   let service: AuthService;
+  let http: HttpService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({ providers: [AuthService] })
       .useMocker(createMock)
       .compile();
 
-    http = module.get(HttpService);
     service = module.get(AuthService);
+    http = module.get(HttpService);
   });
 
   it('should be defined', () => {
