@@ -12,7 +12,7 @@ export class IdentityService {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
-    private httpService: HttpService
+    private readonly httpService: HttpService
   ) {}
 
   private get redirectUri() {
