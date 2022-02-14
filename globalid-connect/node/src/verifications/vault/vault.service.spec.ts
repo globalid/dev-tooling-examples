@@ -4,7 +4,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from '../auth/auth.service';
 
 import { accessToken, spyOnHttpPost } from '../../../test/common';
-import { AuthService } from '../auth/auth.service';
 import { Tokens } from '../auth/tokens.interface';
 import { EncryptedPii } from './encrypted-pii.interface';
 import { VaultService } from './vault.service';

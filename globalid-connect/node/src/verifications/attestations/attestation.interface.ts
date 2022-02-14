@@ -7,8 +7,8 @@ export interface Attestation {
   attestor: string;
   related_attestations: string;
   data_hash: string;
-  attestor_signed_at: Date;
-  attestee_signed_at: Date;
+  attestor_signed_at: string;
+  attestee_signed_at: string;
   attestor_signature: string;
   attestee_signature: string;
   sig_version: number;

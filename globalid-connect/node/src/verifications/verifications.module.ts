@@ -8,7 +8,6 @@ import { VerificationsController } from './verifications.controller';
 import { IdentityService } from './identity/identity.service';
 import { AttestationsService } from './attestations/attestations.service';
 import { AttestationsController } from './attestations/attestations.controller';
-import { HttpModule } from '@nestjs/axios';
 
 @Module({
   imports: [HttpModule],

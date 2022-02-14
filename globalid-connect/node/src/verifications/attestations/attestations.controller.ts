@@ -7,7 +7,7 @@ export class AttestationsController {
   constructor(private readonly attestationsService: AttestationsService) {}
 
   @Get('connect/attestations')
-  index(@Query('code') code: string): Promise<Attestation[]> {
-    return this.attestationsService.get(code);
+  getAttestations(@Query('code') code: string): Promise<Attestation[]> {
+    return this.attestationsService.getAttestations(code);
   }
 }
