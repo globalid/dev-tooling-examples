@@ -3,17 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { VerificationsModule } from './verifications/verifications.module';
-import { AttestationsModule } from './attestations/attestations.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true
     }),
-    VerificationsModule,
-    AttestationsModule,
-    AuthModule
+    VerificationsModule
   ],
   controllers: [AppController],
   providers: []

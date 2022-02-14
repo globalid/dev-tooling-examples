@@ -9,5 +9,5 @@ export class AttestationsController {
   @Get()
   index(): Promise<Attestation[]> {
     return this.attestationsService.getAttestations();
-  }  
+  }
 }
