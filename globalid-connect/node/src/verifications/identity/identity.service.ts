@@ -5,6 +5,7 @@ import { HttpService } from '@nestjs/axios';
 import { HttpException, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
+import { Identity } from './identity.interface';
 
 @Injectable()
 export class IdentityService {
@@ -18,17 +19,17 @@ export class IdentityService {
     return this.configService.get<string>('IDENTITY_REDIRECT_URI');
   }
 
-  async get(code: string) {
+  async get(code: string): Promise<Identity> {
     const { access_token } = await this.authService.getTokens({ code, redirectUri: this.redirectUri });
 
-    const response = lastValueFrom(
+    const response = lastValueFrom<Identity>(
       this.httpService
-        .get('https://api.global.id/v1/identity/me', { headers: { Authorization: `Bearer ${access_token}` } })
+        .get<Identity>('https://api.global.id/v1/identities/me', { headers: { Authorization: `Bearer ${access_token}` } })
         .pipe(
           map((response) => {
             return response.data;
           }),
-          catchError((e) => {
+          catchError(e => {
             throw new HttpException(e.response.data, e.response.status);
           })
         )
