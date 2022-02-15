@@ -11,10 +11,10 @@ import { AuthService } from '../auth/auth.service';
 import { Tokens } from '../auth/tokens.interface';
 import { EncryptedPii } from '../vault/encrypted-pii.interface';
 import { VaultService } from '../vault/vault.service';
-import { PiiService } from './pii.service';
 import { Pii } from './pii.interface';
+import { PiiService } from './pii.service';
 
-const redirectUri = 'http://localhost:300/verifications/pii';
+const redirectUri = 'http://localhost:3000/verifications/pii';
 
 const { public_key: publicKey, private_key: privateKey, passphrase } = RSA.generateKeyPair(4096);
 const consentTokens = ['foo', 'bar', 'baz'];

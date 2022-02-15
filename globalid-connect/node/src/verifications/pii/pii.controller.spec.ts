@@ -24,7 +24,7 @@ describe('PiiController', () => {
   });
 
   describe('getPii', () => {
-    it('should return PII record', async () => {
+    it('should return PII records', async () => {
       const piiRecord = createMock<Pii[]>();
       const serviceSpy = jest.spyOn(service, 'get').mockResolvedValueOnce(piiRecord);
 
