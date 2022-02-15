@@ -11,7 +11,6 @@ export class VaultService {
   constructor(private readonly authService: AuthService, private readonly httpService: HttpService) {}
 
   async getEncryptedData(consentTokens: string[]): Promise<EncryptedPii[]> {
-    // The `code` is not needed for `getTokens()`
     const { access_token } = await this.authService.getTokens();
     const response$ = this.httpService.post<EncryptedPii[]>(
       'https://api.global.id/v1/vault/get-encrypted-data',

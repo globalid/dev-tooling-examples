@@ -27,18 +27,13 @@ describe('AttestationsService', () => {
   });
 
   describe('getAttestations', () => {
-    const attestations = createMock<Attestation[]>();
-    let getTokensSpy: jest.SpyInstance;
-    let getSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      getTokensSpy = jest
+    it('should get attestations from the API', async () => {
+      const attestations = createMock<Attestation[]>();
+      let getTokensSpy = jest
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
-      getSpy = spyOnHttpGet(http, attestations);
-    });
+      let getSpy = spyOnHttpGet(http, attestations);
 
-    it('should get attestations from the API', async () => {
       const result = await service.getAttestations(code);
       expect(result).toBe(attestations);
       expect(getTokensSpy).toHaveBeenCalledWith(expect.objectContaining({
