@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { catchError, lastValueFrom, map } from 'rxjs';
+import { lastValueFrom, map } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Attestation } from './attestation.interface';
 
@@ -23,23 +23,18 @@ export class AttestationsService {
       redirectUri: this.redirectUri
     });
 
-    const response = lastValueFrom<Attestation[]>(
-      this.httpService
-        .get<Attestation[]>('https://api.global.id/v1/attestations', {
-          headers: {
-            Authorization: `Bearer ${access_token}`
-          }
+    const response$ = this.httpService
+      .get<Attestation[]>('https://api.global.id/v1/attestations', {
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      })
+      .pipe(
+        map((response) => {
+          return response.data;
         })
-        .pipe(
-          map((response) => {
-            return response.data;
-          }),
-          catchError(e => {
-            throw new HttpException(e.response.data, e.response.status);
-          })
-        )
-    );
+      );
 
-    return response;
+    return lastValueFrom<Attestation[]>(response$);
   }
 }

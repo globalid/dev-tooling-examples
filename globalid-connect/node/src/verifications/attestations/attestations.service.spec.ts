@@ -2,11 +2,14 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 import { accessToken, code, spyOnHttpGet } from '../../../test/common';
+import { AuthService } from '../auth/auth.service';
+import { Tokens } from '../auth/tokens.interface';
 import { Attestation } from './attestation.interface';
 import { AttestationsService } from './attestations.service';
 
 describe('AttestationsService', () => {
   let service: AttestationsService;
+  let authService: AuthService;
   let http: HttpService;
 
   beforeEach(async () => {
@@ -15,6 +18,7 @@ describe('AttestationsService', () => {
       .compile();
 
     service = module.get(AttestationsService);
+    authService = module.get(AuthService);
     http = module.get(HttpService);
   });
 
@@ -24,18 +28,28 @@ describe('AttestationsService', () => {
 
   describe('getAttestations', () => {
     const attestations = createMock<Attestation[]>();
+    let getTokensSpy: jest.SpyInstance;
     let getSpy: jest.SpyInstance;
 
     beforeEach(() => {
+      getTokensSpy = jest
+        .spyOn(authService, 'getTokens')
+        .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
       getSpy = spyOnHttpGet(http, attestations);
     });
 
     it('should get attestations from the API', async () => {
       const result = await service.getAttestations(code);
-
       expect(result).toBe(attestations);
+      expect(getTokensSpy).toHaveBeenCalledWith(expect.objectContaining({
+        code
+      }))
       expect(getSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/attestations', expect.any(Object));
+      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/attestations', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
     })
   });
 });
