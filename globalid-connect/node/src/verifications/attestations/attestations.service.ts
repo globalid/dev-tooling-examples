@@ -28,13 +28,8 @@ export class AttestationsService {
         headers: {
           Authorization: `Bearer ${access_token}`
         }
-      })
-      .pipe(
-        map((response) => {
-          return response.data;
-        })
-      );
-
-    return lastValueFrom<Attestation[]>(response$);
+      });
+    const response = await lastValueFrom(response$);
+    return response.data;
   }
 }
