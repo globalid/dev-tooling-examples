@@ -19,22 +19,20 @@ export class IdentityService {
     return this.configService.get<string>('IDENTITY_REDIRECT_URI');
   }
 
-  async get(code: string) {
+  async getIdentity(code: string) {
     const { access_token } = await this.authService.getTokens({ code, redirectUri: this.redirectUri });
 
-    const response = lastValueFrom(
-      this.httpService
-        .get('https://api.global.id/v1/identity/me', { headers: { Authorization: `Bearer ${access_token}` } })
-        .pipe(
-          map((response) => {
-            return response.data;
-          }),
-          catchError((e) => {
-            throw new HttpException(e.response.data, e.response.status);
-          })
-        )
-    );
+    const response = this.httpService
+      .get('https://api.global.id/v1/identity/me', { headers: { Authorization: `Bearer ${access_token}` } })
+      .pipe(
+        map((response) => {
+          return response.data;
+        }),
+        catchError((e) => {
+          throw new HttpException(e.response.data, e.response.status);
+        })
+      );
 
-    return response;
+    return lastValueFrom(response);
   }
 }

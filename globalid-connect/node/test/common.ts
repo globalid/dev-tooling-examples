@@ -15,3 +15,12 @@ export function spyOnHttpPost(httpService: HttpService, data: any) {
     })
   );
 }
+
+export function spyOnHttpGet(httpService: HttpService, data?: any) {
+  return jest.spyOn(httpService, 'get').mockReturnValueOnce(
+    new Observable((subscriber) => {
+      subscriber.next(createMock<AxiosResponse>({ data }));
+      subscriber.complete();
+    })
+  );
+}
