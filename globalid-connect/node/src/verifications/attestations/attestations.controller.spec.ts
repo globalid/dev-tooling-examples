@@ -22,7 +22,7 @@ describe('AttestationsController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('getPii', () => {
+  describe('getAttestations', () => {
     it('should return Attestation records', async () => {
       const attestationRecord = createMock<Attestation[]>();
       const serviceSpy = jest.spyOn(service, 'getAttestations').mockResolvedValueOnce(attestationRecord);
