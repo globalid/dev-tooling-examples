@@ -24,12 +24,12 @@ describe('AttestationsController', () => {
 
   describe('getAttestations', () => {
     it('should return Attestation records', async () => {
-      const attestationRecords = createMock<Attestation[]>();
-      const serviceSpy = jest.spyOn(service, 'getAttestations').mockResolvedValueOnce(attestationRecords);
+      const attestations = createMock<Attestation[]>();
+      const serviceSpy = jest.spyOn(service, 'getAttestations').mockResolvedValueOnce(attestations);
 
       const result = await controller.getAttestations(code);
 
-      expect(result).toBe(attestationRecords);
+      expect(result).toBe(attestations);
       expect(serviceSpy).toHaveBeenCalledTimes(1);
       expect(serviceSpy).toHaveBeenCalledWith(code);
     });
