@@ -5,14 +5,14 @@ import * as jwt from 'jsonwebtoken';
 import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../auth/auth.service';
-import { VaultService } from '../vault/vault.service';
 
 import { code } from '../../../test/common';
+import { AuthService } from '../auth/auth.service';
 import { Tokens } from '../auth/tokens.interface';
 import { EncryptedPii } from '../vault/encrypted-pii.interface';
-import { PiiService } from './pii.service';
+import { VaultService } from '../vault/vault.service';
 import { Pii } from './pii.interface';
+import { PiiService } from './pii.service';
 
 const redirectUri = 'http://localhost:3000/verifications/pii';
 
