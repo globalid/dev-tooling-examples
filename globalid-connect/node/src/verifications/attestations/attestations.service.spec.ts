@@ -45,6 +45,6 @@ describe('AttestationsService', () => {
           Authorization: `Bearer ${accessToken}`
         }
       });
-    })
+    });
   });
 });
