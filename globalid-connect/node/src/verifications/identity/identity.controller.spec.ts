@@ -26,12 +26,12 @@ describe('IdentityController', () => {
 
   describe('getIdentity', () => {
     it('should return Identity', async() => {
-      const Identity = createMock<Identity[]>();
-      const serviceSpy = jest.spyOn(service, 'getIdentity').mockResolvedValueOnce(Identity);
+      const identity = createMock<Identity>();
+      const serviceSpy = jest.spyOn(service, 'getIdentity').mockResolvedValueOnce(identity);
 
       const result = await controller.getIdentity(code);
 
-      expect(result).toBe(Identity);
+      expect(result).toBe(identity);
       expect(serviceSpy).toHaveBeenCalledTimes(1);
       expect(serviceSpy).toHaveBeenCalledWith(code);
     });

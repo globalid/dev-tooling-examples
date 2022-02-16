@@ -1,11 +1,11 @@
 import { lastValueFrom } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
 
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { AuthService } from '../auth/auth.service';
+import { Identity } from './identity.interface';
 
 @Injectable()
 export class IdentityService {
@@ -22,17 +22,11 @@ export class IdentityService {
   async getIdentity(code: string) {
     const { access_token } = await this.authService.getTokens({ code, redirectUri: this.redirectUri });
 
-    const response = this.httpService
-      .get('https://api.global.id/v1/identity/me', { headers: { Authorization: `Bearer ${access_token}` } })
-      .pipe(
-        map((response) => {
-          return response.data;
-        }),
-        catchError((e) => {
-          throw new HttpException(e.response.data, e.response.status);
-        })
-      );
+    const response$ = this.httpService.get<Identity>('https://api.global.id/v1/identity/me', {
+      headers: { Authorization: `Bearer ${access_token}` }
+    });
 
-    return lastValueFrom(response);
+    const response = await lastValueFrom(response$);
+    return response.data;
   }
 }

@@ -3,8 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { VerificationsModule } from './verifications/verifications.module';
-import { IdentityController } from './src/verifications/identity/identity/identity.controller';
-import { IdentityController } from './src/verifications/identity/identity/identity.controller';
 
 @Module({
   imports: [
@@ -13,7 +11,7 @@ import { IdentityController } from './src/verifications/identity/identity/identi
     }),
     VerificationsModule
   ],
-  controllers: [AppController, IdentityController],
+  controllers: [AppController],
   providers: []
 })
 export class AppModule {}

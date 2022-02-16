@@ -1,7 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { IdentityService } from './identity.service';
 
-@Controller('identity')
+@Controller('verifications')
 export class IdentityController {
     constructor(private readonly identity: IdentityService) {}
 
