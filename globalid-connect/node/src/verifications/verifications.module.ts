@@ -7,7 +7,6 @@ import { PiiService } from './pii/pii.service';
 import { VaultService } from './vault/vault.service';
 import { VerificationsController } from './verifications.controller';
 import { IdentityService } from './identity/identity.service';
-import { IdentityController } from './identity/identity/identity.controller';
 import { IdentityController } from './identity/identity.controller';
 
 @Module({
