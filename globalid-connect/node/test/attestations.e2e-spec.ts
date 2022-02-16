@@ -5,7 +5,6 @@ import { INestApplication } from '@nestjs/common';
 import { VerificationsModule } from '../src/verifications/verifications.module';
 import { createMock } from '@golevelup/ts-jest';
 import { Attestation } from '../src/verifications/attestations/attestation.interface';
-import { ConfigService } from '@nestjs/config';
 
 describe('Attestations', () => {
   let app: INestApplication;
@@ -31,12 +30,17 @@ describe('Attestations', () => {
   it(`GET /verifications/connect/attestations`, () => {
     request(app.getHttpServer())
       .get('/verifications/connect/attestations')
-      .query({ code: '123' })
       .expect(200)
       .then(resp => {
         expect(resp.body).toMatchObject({
-            data: attestationsMock,
-          })
+          data: attestationsMock,
+        });
+      }).catch(err => {
+        
       });
+  });
+
+  afterAll(() => {
+    app.close().catch(err => {});
   });
 });
