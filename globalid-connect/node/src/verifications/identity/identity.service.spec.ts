@@ -31,11 +31,11 @@ describe('IdentityService', () => {
 
   describe('getIdentity', () => {
     it("should return user's identity", async () => {
-      const IdentityMock = createMock<Identity>();
+      const identity = createMock<Identity>();
       const getTokensSpy = jest
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
-      const getSpy = spyOnHttpGet(http, IdentityMock);
+      const getSpy = spyOnHttpGet(http, identity);
       const result = await service.getIdentity(code);
 
       expect(getTokensSpy).toHaveBeenCalledWith(
@@ -43,13 +43,16 @@ describe('IdentityService', () => {
           code
         })
       );
+
       expect(getSpy).toHaveBeenCalledTimes(1);
+
       expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/identity/me', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      expect(result).toBe(IdentityMock);
+
+      expect(result).toBe(identity);
     });
   });
 });
