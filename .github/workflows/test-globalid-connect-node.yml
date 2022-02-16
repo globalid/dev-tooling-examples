@@ -1,0 +1,43 @@
+name: Test globalid-connect node
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'globalid-connect/node/**'
+    
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Setup and test using Node ${{ matrix.node_version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: globalid-connect/node
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+        node_version:
+          - 12
+          - 14
+          - 16
+          - 17
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          # https://github.com/actions/setup-node#caching-packages-dependencies
+          cache: 'npm'
+          cache-dependency-path: globalid-connect/node/package-lock.json
+      - run: npm ci --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: npm run test
