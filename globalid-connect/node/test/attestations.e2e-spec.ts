@@ -29,12 +29,14 @@ describe('Attestations', () => {
   });
 
   it(`GET /verifications/connect/attestations`, () => {
-    return request(app.getHttpServer())
+    request(app.getHttpServer())
       .get('/verifications/connect/attestations')
       .query({ code: '123' })
       .expect(200)
-      .expect({
-        data: attestationsService.getAttestations('123'),
+      .then(resp => {
+        expect(resp.body).toMatchObject({
+            data: attestationsMock,
+          })
       });
   });
 });
