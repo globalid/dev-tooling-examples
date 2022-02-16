@@ -30,23 +30,19 @@ describe('IdentityService', () => {
   });
 
   describe('getIdentity', () => {
-    const IdentityMock = createMock<Identity>();
-    let getTokensSpy: jest.SpyInstance;
-    let getSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      getTokensSpy = jest
+    it("should return user's identity", async () => {
+      const IdentityMock = createMock<Identity>();
+      const getTokensSpy = jest
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
-      getSpy = spyOnHttpGet(http, IdentityMock);
-    });
-
-    it("should return user's identity", async () => {
+      const getSpy = spyOnHttpGet(http, IdentityMock);
       const result = await service.getIdentity(code);
 
-      expect(getTokensSpy).toHaveBeenCalledWith(expect.objectContaining({
-        code
-      }));
+      expect(getTokensSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          code
+        })
+      );
       expect(getSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/identity/me', {
         headers: {
