@@ -5,7 +5,6 @@ import { INestApplication } from '@nestjs/common';
 import { VerificationsModule } from '../src/verifications/verifications.module';
 import { createMock } from '@golevelup/ts-jest';
 import { Attestation } from '../src/verifications/attestations/attestation.interface';
-import { ConfigService } from '@nestjs/config';
 
 describe('Attestations', () => {
   let app: INestApplication;
