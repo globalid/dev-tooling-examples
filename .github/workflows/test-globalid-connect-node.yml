@@ -1,4 +1,4 @@
-name: Test globalid-connect node
+name: Test globalid-connect Node
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: Setup and test using Node ${{ matrix.node_version }} on ${{ matrix.os }}
+    name: Test Node ${{ matrix.node_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -22,18 +22,17 @@ jobs:
           - macos-latest
           - windows-latest
         node_version:
-          - 12
           - 14
           - 16
           - 17
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v2
         with:
           registry-url: 'https://registry.npmjs.org/'
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ matrix.node_version }}
           # https://github.com/actions/setup-node#caching-packages-dependencies
           cache: 'npm'
           cache-dependency-path: globalid-connect/node/package-lock.json
@@ -41,3 +40,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run test
+      
