@@ -35,9 +35,7 @@ describe('Attestations', () => {
         expect(resp.body).toMatchObject({
           data: attestationsMock,
         });
-      }).catch(err => {
-        
-      });
+      }).catch(err => {});
   });
 
   afterAll(() => {
