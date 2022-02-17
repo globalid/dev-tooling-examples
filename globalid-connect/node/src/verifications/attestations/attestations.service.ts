@@ -24,6 +24,7 @@ export class AttestationsService {
     });
 
     const response$ = this.httpService
+      /* Mock the actual endpoint with nock 'https://api.global.id/v1/attestations' */
       .get<Attestation[]>('https://api.global.id/v1/attestations', {
         headers: {
           Authorization: `Bearer ${access_token}`
