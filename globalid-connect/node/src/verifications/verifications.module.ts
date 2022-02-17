@@ -5,12 +5,14 @@ import { PiiController } from './pii/pii.controller';
 import { PiiService } from './pii/pii.service';
 import { VaultService } from './vault/vault.service';
 import { VerificationsController } from './verifications.controller';
+import { IdentityService } from './identity/identity.service';
+import { IdentityController } from './identity/identity.controller';
 import { AttestationsService } from './attestations/attestations.service';
 import { AttestationsController } from './attestations/attestations.controller';
 
 @Module({
   imports: [HttpModule],
-  controllers: [AttestationsController, PiiController, VerificationsController],
-  providers: [AttestationsService, AuthService, PiiService, VaultService]
+  controllers: [AttestationsController, PiiController, VerificationsController, IdentityController],
+  providers: [AttestationsService, AuthService, PiiService, VaultService, IdentityService]
 })
 export class VerificationsModule {}
