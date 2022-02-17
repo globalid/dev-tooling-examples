@@ -14,7 +14,7 @@ export class AttestationsService {
   ) {}
   
   private get redirectUri() {
-    return this.configService.get<string>('ATTESTATION_REDIRECT_URI');
+    return this.configService.get<string>('ATTESTATIONS_REDIRECT_URI');
   }
 
   async getAttestations(code: string): Promise<Attestation[]> {

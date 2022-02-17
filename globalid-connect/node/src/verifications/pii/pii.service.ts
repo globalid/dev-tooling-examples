@@ -34,7 +34,7 @@ export class PiiService {
   private async getIdToken(code: string): Promise<string> {
     const tokens = await this.authService.getTokens({
       code,
-      redirectUri: this.configService.get<string>('REDIRECT_URI')
+      redirectUri: this.configService.get<string>('PII_REDIRECT_URI')
     });
     if (tokens.id_token == null) {
       throw Error('could not get ID token');
