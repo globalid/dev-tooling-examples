@@ -16,6 +16,11 @@ describe('AppController (e2e)', () => {
   });
 
   it('/ (GET)', () => {
-    return request(app.getHttpServer()).get('/').expect(302);
+    const response = request(app.getHttpServer()).get('/').expect(302);
+    expect(response.ok).toBeTruthy();
   });
+
+  it('should be started', () => {
+    expect(app.get(AppModule)).toBeTruthy();
+  })
 });
