@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function, jest/valid-expect-in-promise */
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { AttestationsService } from '../src/verifications/attestations/attestations.service'
