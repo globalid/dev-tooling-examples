@@ -44,7 +44,7 @@ describe('PiiService', () => {
             get: jest.fn((key: string) => {
               if (key === 'PRIVATE_KEY') return privateKey;
               if (key === 'PRIVATE_KEY_PASSPHRASE') return passphrase;
-              if (key === 'REDIRECT_URI') return redirectUri;
+              if (key === 'PII_REDIRECT_URI') return redirectUri;
             })
           }
         }

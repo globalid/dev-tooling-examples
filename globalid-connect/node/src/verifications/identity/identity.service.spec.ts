@@ -36,23 +36,21 @@ describe('IdentityService', () => {
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
       const getSpy = spyOnHttpGet(http, identity);
+
       const result = await service.getIdentity(code);
 
+      expect(result).toBe(identity);
       expect(getTokensSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           code
         })
       );
-
       expect(getSpy).toHaveBeenCalledTimes(1);
-
-      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/identity/me', {
+      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/identities/me', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-
-      expect(result).toBe(identity);
     });
   });
 });
