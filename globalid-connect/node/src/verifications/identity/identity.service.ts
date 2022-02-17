@@ -22,7 +22,7 @@ export class IdentityService {
   async getIdentity(code: string) {
     const { access_token } = await this.authService.getTokens({ code, redirectUri: this.redirectUri });
 
-    const response$ = this.httpService.get<Identity>('https://api.global.id/v1/identity/me', {
+    const response$ = this.httpService.get<Identity>('https://api.global.id/v1/identities/me', {
       headers: { Authorization: `Bearer ${access_token}` }
     });
 

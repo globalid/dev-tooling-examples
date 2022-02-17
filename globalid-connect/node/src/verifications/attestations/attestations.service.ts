@@ -12,9 +12,9 @@ export class AttestationsService {
     private readonly configService: ConfigService,
     private readonly httpService: HttpService
   ) {}
-  
+
   private get redirectUri() {
-    return this.configService.get<string>('ATTESTATION_REDIRECT_URI');
+    return this.configService.get<string>('ATTESTATIONS_REDIRECT_URI');
   }
 
   async getAttestations(code: string): Promise<Attestation[]> {
@@ -23,12 +23,11 @@ export class AttestationsService {
       redirectUri: this.redirectUri
     });
 
-    const response$ = this.httpService
-      .get<Attestation[]>('https://api.global.id/v1/attestations', {
-        headers: {
-          Authorization: `Bearer ${access_token}`
-        }
-      });
+    const response$ = this.httpService.get<Attestation[]>('https://api.global.id/v1/attestations', {
+      headers: {
+        Authorization: `Bearer ${access_token}`
+      }
+    });
     const response = await lastValueFrom(response$);
     return response.data;
   }

@@ -36,15 +36,17 @@ describe('AttestationsService', () => {
 
       const result = await service.getAttestations(code);
       expect(result).toBe(attestations);
-      expect(getTokensSpy).toHaveBeenCalledWith(expect.objectContaining({
-        code
-      }))
+      expect(getTokensSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          code
+        })
+      );
       expect(getSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/attestations', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-    })
+    });
   });
 });
