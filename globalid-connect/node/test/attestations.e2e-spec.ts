@@ -2,7 +2,6 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { createMock } from '@golevelup/ts-jest';
 import { Attestation } from '../src/verifications/attestations/attestation.interface';
 import { AppModule } from '../src/app.module';
 import * as nock from 'nock';
@@ -29,11 +28,9 @@ describe('Attestations', () => {
 
     const response = await request(app.getHttpServer())
       .get(`/verifications/connect/attestations?code=${code}`);
-    
-    expect(response.body).toBe(partialAttestations)
-  });
 
-  afterAll(() => {
-    app.close();
+    expect(scope.isDone()).toBeTruthy();
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toMatchObject(partialAttestations)
   });
 });
