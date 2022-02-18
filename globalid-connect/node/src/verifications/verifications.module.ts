@@ -1,6 +1,5 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth/auth.service';
 import { PiiController } from './pii/pii.controller';
 import { PiiService } from './pii/pii.service';

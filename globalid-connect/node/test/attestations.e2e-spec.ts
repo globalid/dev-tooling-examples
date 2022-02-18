@@ -2,7 +2,6 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { Attestation } from '../src/verifications/attestations/attestation.interface';
 import { AppModule } from '../src/app.module';
 import * as nock from 'nock';
 import { accessToken, code, partialAttestations } from './common';
