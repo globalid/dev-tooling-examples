@@ -1,10 +1,5 @@
 name: Test globalid-connect Node
 on:
-  pull_request:
-    branches:
-      - '**'
-    paths:
-      - 'globalid-connect/node/**'
   push:
     branches:
       - '**'
