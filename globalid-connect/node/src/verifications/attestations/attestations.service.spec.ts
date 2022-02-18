@@ -29,10 +29,10 @@ describe('AttestationsService', () => {
   describe('getAttestations', () => {
     it('should get attestations from the API', async () => {
       const attestations = createMock<Attestation[]>();
-      let getTokensSpy = jest
+      const getTokensSpy = jest
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
-      let getSpy = spyOnHttpGet(http, attestations);
+      const getSpy = spyOnHttpGet(http, attestations);
 
       const result = await service.getAttestations(code);
       expect(result).toBe(attestations);
