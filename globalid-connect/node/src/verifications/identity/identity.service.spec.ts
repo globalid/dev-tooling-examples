@@ -1,23 +1,26 @@
 import { createMock } from '@golevelup/ts-jest';
-import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
-import { accessToken, code, spyOnHttpGet } from '../../../test/common';
-import { AuthService } from '../auth/auth.service';
-import { Tokens } from '../auth/tokens.interface';
-import { Attestation } from './attestation.interface';
-import { AttestationsService } from './attestations.service';
+import { HttpService } from '@nestjs/axios';
 
-describe('AttestationsService', () => {
-  let service: AttestationsService;
+import { IdentityService } from './identity.service';
+import { AuthService } from '../auth/auth.service';
+import { accessToken, code, spyOnHttpGet } from '../../../test/common';
+import { Identity } from './identity.interface';
+import { Tokens } from '../auth/tokens.interface';
+
+describe('IdentityService', () => {
+  let service: IdentityService;
   let authService: AuthService;
   let http: HttpService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({ providers: [AttestationsService] })
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [IdentityService]
+    })
       .useMocker(createMock)
       .compile();
 
-    service = module.get(AttestationsService);
+    service = module.get<IdentityService>(IdentityService);
     authService = module.get(AuthService);
     http = module.get(HttpService);
   });
@@ -26,23 +29,24 @@ describe('AttestationsService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('getAttestations', () => {
-    it('should get attestations from the API', async () => {
-      const attestations = createMock<Attestation[]>();
+  describe('getIdentity', () => {
+    it("should return user's identity", async () => {
+      const identity = createMock<Identity>();
       const getTokensSpy = jest
         .spyOn(authService, 'getTokens')
         .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
-      const getSpy = spyOnHttpGet(http, attestations);
+      const getSpy = spyOnHttpGet(http, identity);
 
-      const result = await service.getAttestations(code);
-      expect(result).toBe(attestations);
+      const result = await service.getIdentity(code);
+
+      expect(result).toBe(identity);
       expect(getTokensSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           code
         })
       );
       expect(getSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/attestations', {
+      expect(getSpy).toHaveBeenCalledWith('https://api.global.id/v1/identities/me', {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

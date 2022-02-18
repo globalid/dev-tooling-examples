@@ -2,15 +2,12 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { accessToken, spyOnHttpPost } from '../../../test/common';
-import { AuthService } from '../auth/auth.service';
-import { Tokens } from '../auth/tokens.interface';
+import { accessToken, attachmentContents, spyOnHttpGet, spyOnHttpPost, tokens } from '../../../test/common';
 import { EncryptedPii } from './encrypted-pii.interface';
 import { VaultService } from './vault.service';
 
 describe('VaultService', () => {
   let service: VaultService;
-  let auth: AuthService;
   let http: HttpService;
 
   beforeEach(async () => {
@@ -19,7 +16,6 @@ describe('VaultService', () => {
       .compile();
 
     service = module.get(VaultService);
-    auth = module.get(AuthService);
     http = module.get(HttpService);
   });
 
@@ -28,24 +24,14 @@ describe('VaultService', () => {
   });
 
   describe('getEncryptedData', () => {
-    const tokens: Tokens = {
-      access_token: accessToken,
-      expires_in: 12345,
-      scope: 'openid',
-      token_type: 'foo'
-    };
-
     it('should call vault with consent tokens', async () => {
       const consentTokens = createMock<string[]>();
       const encryptedPii = createMock<EncryptedPii[]>();
-      const getTokensSpy = jest.spyOn(auth, 'getTokens').mockResolvedValueOnce(tokens);
       const postSpy = spyOnHttpPost(http, encryptedPii);
 
-      const result = await service.getEncryptedData(consentTokens);
+      const result = await service.getEncryptedData(consentTokens, accessToken);
 
       expect(result).toBe(encryptedPii);
-      expect(getTokensSpy).toHaveBeenCalledTimes(1);
-      expect(getTokensSpy).toHaveBeenCalledWith();
       expect(postSpy).toHaveBeenCalledTimes(1);
       expect(postSpy).toHaveBeenCalledWith(
         'https://api.global.id/v1/vault/get-encrypted-data',
@@ -56,6 +42,24 @@ describe('VaultService', () => {
           }
         }
       );
+    });
+  });
+
+  describe('getAttachment', () => {
+    it('should return attachment as a Buffer', async () => {
+      const privateFileToken = 'foo';
+      const getSpy = spyOnHttpGet(http, attachmentContents);
+
+      const result = await service.getAttachment(privateFileToken, accessToken);
+
+      expect(result).toBe(attachmentContents);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith(`https://api.global.id/v1/vault/attachment/${privateFileToken}/client`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        },
+        responseType: 'arraybuffer'
+      });
     });
   });
 });

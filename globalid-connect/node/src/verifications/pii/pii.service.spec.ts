@@ -6,11 +6,12 @@ import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code } from '../../../test/common';
+import { accessToken, attachmentContents, code } from '../../../test/common';
 import { AuthService } from '../auth/auth.service';
 import { Tokens } from '../auth/tokens.interface';
 import { EncryptedPii } from '../vault/encrypted-pii.interface';
 import { VaultService } from '../vault/vault.service';
+import { MissingIdTokenError } from './missing-id-token.error';
 import { Pii } from './pii.interface';
 import { PiiService } from './pii.service';
 
@@ -44,7 +45,7 @@ describe('PiiService', () => {
             get: jest.fn((key: string) => {
               if (key === 'PRIVATE_KEY') return privateKey;
               if (key === 'PRIVATE_KEY_PASSPHRASE') return passphrase;
-              if (key === 'REDIRECT_URI') return redirectUri;
+              if (key === 'PII_REDIRECT_URI') return redirectUri;
             })
           }
         }
@@ -66,27 +67,42 @@ describe('PiiService', () => {
     it('should retrieve and decrypt PII', async () => {
       const getTokensSpy = jest
         .spyOn(auth, 'getTokens')
-        .mockResolvedValueOnce(createMock<Tokens>({ id_token: idToken }));
+        .mockResolvedValueOnce(createMock<Tokens>({ id_token: idToken }))
+        .mockResolvedValueOnce(createMock<Tokens>({ access_token: accessToken }));
       const password = crypto.randomBytes(32).toString('hex');
       const pii: Pii = {
         attestation_request_uuid: 'request-uuid',
         gid_uuid: 'gid-uuid',
         type: 'name',
-        value: 'foo'
+        value: 'foo',
+        has_attachment: true
       };
+      const privateFileToken = 'foo';
       const encryptedPii: EncryptedPii = {
         encrypted_data_password: RSA.encrypt(publicKey, password),
-        encrypted_data: AES.encrypt(JSON.stringify(pii), password)
+        encrypted_data: AES.encrypt(JSON.stringify(pii), password),
+        private_file_token: privateFileToken
       };
       const getEncryptedDataSpy = jest.spyOn(vault, 'getEncryptedData').mockResolvedValueOnce([encryptedPii]);
+      const encryptedAttachment = AES.encryptBuffer(attachmentContents, password);
+      const getAttachmentSpy = jest.spyOn(vault, 'getAttachment').mockResolvedValueOnce(encryptedAttachment);
 
       const result = await service.get(code);
 
-      expect(result).toStrictEqual([pii]);
-      expect(getTokensSpy).toHaveBeenCalledTimes(1);
-      expect(getTokensSpy).toHaveBeenCalledWith({ code, redirectUri });
+      expect(result).toStrictEqual([{ ...pii, attachment: attachmentContents.toString('base64') }]);
+      expect(getTokensSpy).toHaveBeenCalledTimes(2);
+      expect(getTokensSpy).toHaveBeenNthCalledWith(1, { code, redirectUri });
+      expect(getTokensSpy).toHaveBeenNthCalledWith(2);
       expect(getEncryptedDataSpy).toHaveBeenCalledTimes(1);
-      expect(getEncryptedDataSpy).toHaveBeenCalledWith(consentTokens);
+      expect(getEncryptedDataSpy).toHaveBeenCalledWith(consentTokens, accessToken);
+      expect(getAttachmentSpy).toHaveBeenCalledTimes(1);
+      expect(getAttachmentSpy).toHaveBeenCalledWith(privateFileToken, accessToken);
+    });
+
+    it('should throw error when ID token is missing from user tokens', async () => {
+      jest.spyOn(auth, 'getTokens').mockResolvedValueOnce(createMock<Tokens>({ id_token: undefined }));
+      
+      await expect(() => service.get(code)).rejects.toThrow(MissingIdTokenError);
     });
   });
 });
