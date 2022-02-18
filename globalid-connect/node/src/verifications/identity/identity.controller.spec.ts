@@ -25,7 +25,7 @@ describe('IdentityController', () => {
   });
 
   describe('getIdentity', () => {
-    it('should return Identity', async() => {
+    it('should return Identity', async () => {
       const identity = createMock<Identity>();
       const serviceSpy = jest.spyOn(service, 'getIdentity').mockResolvedValueOnce(identity);
 

@@ -2,7 +2,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { accessToken, attachmentContents, spyOnHttpGet, spyOnHttpPost, tokens } from '../../../test/common';
+import { accessToken, encryptedAttachment, privateFileToken, spyOnHttpGet, spyOnHttpPost } from '../../../test/common';
 import { EncryptedPii } from './encrypted-pii.interface';
 import { VaultService } from './vault.service';
 
@@ -38,7 +38,7 @@ describe('VaultService', () => {
         { private_data_tokens: consentTokens },
         {
           headers: {
-            Authorization: `Bearer ${tokens.access_token}`
+            Authorization: `Bearer ${accessToken}`
           }
         }
       );
@@ -47,12 +47,11 @@ describe('VaultService', () => {
 
   describe('getAttachment', () => {
     it('should return attachment as a Buffer', async () => {
-      const privateFileToken = 'foo';
-      const getSpy = spyOnHttpGet(http, attachmentContents);
+      const getSpy = spyOnHttpGet(http, encryptedAttachment);
 
       const result = await service.getAttachment(privateFileToken, accessToken);
 
-      expect(result).toBe(attachmentContents);
+      expect(result).toBe(encryptedAttachment);
       expect(getSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledWith(`https://api.global.id/v1/vault/attachment/${privateFileToken}/client`, {
         headers: {
