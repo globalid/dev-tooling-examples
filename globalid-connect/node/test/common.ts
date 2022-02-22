@@ -5,7 +5,6 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 
 import { Tokens } from '../src/verifications/auth/tokens.interface';
-import { Identity } from 'src/verifications/identity/identity.interface';
 
 
 export const code = 'abcdefghijklmnopqrstuvwxyz';
@@ -20,11 +19,6 @@ export const tokens: Tokens = {
 };
 
 export const attachmentContents = Buffer.from('lorem ipsum dolor sit amet');
-
-export const partialIdentity: Partial<Identity> = {
-  gid_uuid: '123456-abcdef-etc-etc',
-  gid_name: "Test Name"
-};
 
 export function spyOnHttpPost(httpService: HttpService, data?: any) {
   return spyOnHttp(httpService, 'post', data);
