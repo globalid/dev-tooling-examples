@@ -4,14 +4,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 
 import {
   accessToken,
-  attachmentContents,
   code,
   configServiceMock,
   consentTokens,
   encryptedAttachment,
   encryptedPii,
   idToken,
-  pii,
+  piiWithAttachment,
   privateFileToken
 } from '../../../test/common';
 import { AuthService } from '../auth/auth.service';
@@ -52,7 +51,7 @@ describe('PiiService', () => {
 
       const result = await service.get(code);
 
-      expect(result).toStrictEqual([{ ...pii, attachment: attachmentContents.toString('base64') }]);
+      expect(result).toStrictEqual([piiWithAttachment]);
       expect(getTokensSpy).toHaveBeenCalledTimes(2);
       expect(getTokensSpy).toHaveBeenNthCalledWith(1, expect.objectContaining({ code }));
       expect(getTokensSpy).toHaveBeenNthCalledWith(2);
