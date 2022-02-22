@@ -21,14 +21,16 @@ describe('Attestations', () => {
 
   describe(`GET /verifications/connect/attestations`, () => {
     it('should return attestations', async () => {
-      const partialAttestations: Partial<Attestation>[] = [{
-        uuid: '123456-abcdef-etc-etc',
-        attestor: 'somebody'
-      },
-      {
-        uuid: '654321-fedcba-etc-etc',
-        attestor: 'somebody else'
-      }];
+      const partialAttestations: Partial<Attestation>[] = [
+        {
+          uuid: '123456-abcdef-etc-etc',
+          attestor: 'somebody'
+        },
+        {
+          uuid: '654321-fedcba-etc-etc',
+          attestor: 'somebody else'
+        }
+      ];
       const scope = nock('https://api.global.id')
         .get(`/v1/attestations`)
         .reply(200, partialAttestations)
