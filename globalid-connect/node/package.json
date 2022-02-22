@@ -4,7 +4,7 @@
   "description": "",
   "author": "GlobaliD",
   "private": true,
-  "license": "Proprietary",
+  "license": "ISC",
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
