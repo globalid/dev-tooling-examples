@@ -42,4 +42,5 @@ jobs:
       - run: npm run build
       - run: npm test
       - run: npm run test:e2e
+      - run: npm run test:cov
       
