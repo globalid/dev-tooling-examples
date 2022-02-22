@@ -1,10 +1,5 @@
 name: Test globalid-connect Node
 on:
-  pull_request:
-    branches:
-      - '**'
-    paths:
-      - 'globalid-connect/node/**'
   push:
     branches:
       - '**'
@@ -46,4 +41,5 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run build
       - run: npm test
+      - run: npm run test:e2e
       
