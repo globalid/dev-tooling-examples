@@ -22,7 +22,7 @@ describe('Attestations', () => {
     it('should return identity', async () => {
       const partialIdentity: Partial<Identity> = {
         gid_uuid: '123456-abcdef-etc-etc',
-        gid_name: "Test Name"
+        gid_name: 'Test Name'
       };
       const scope = nock('https://api.global.id')
         .post('/v1/auth/token')
