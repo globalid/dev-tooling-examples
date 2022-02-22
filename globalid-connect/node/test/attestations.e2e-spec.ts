@@ -29,7 +29,6 @@ describe('Attestations', () => {
         uuid: '654321-fedcba-etc-etc',
         attestor: 'somebody else'
       }];
-
       const scope = nock('https://api.global.id')
         .get(`/v1/attestations`)
         .reply(200, partialAttestations)
