@@ -23,11 +23,12 @@ export class AttestationsService {
       redirectUri: this.redirectUri
     });
 
-    const response$ = this.httpService.get<Attestation[]>('https://api.global.id/v1/attestations', {
-      headers: {
-        Authorization: `Bearer ${access_token}`
-      }
-    });
+    const response$ = this.httpService
+      .get<Attestation[]>('https://api.global.id/v1/attestations', {
+        headers: {
+          Authorization: `Bearer ${access_token}`
+        }
+      });
     const response = await lastValueFrom(response$);
     return response.data;
   }
