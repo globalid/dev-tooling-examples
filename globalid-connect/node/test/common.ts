@@ -5,6 +5,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 
 import { Tokens } from '../src/verifications/auth/tokens.interface';
+import { Attestation } from '../src/verifications/attestations/attestation.interface';
 
 export const code = 'abcdefghijklmnopqrstuvwxyz';
 
