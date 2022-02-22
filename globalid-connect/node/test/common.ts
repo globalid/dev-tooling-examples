@@ -6,7 +6,6 @@ import { HttpService } from '@nestjs/axios';
 
 import { Tokens } from '../src/verifications/auth/tokens.interface';
 
-
 export const code = 'abcdefghijklmnopqrstuvwxyz';
 
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
