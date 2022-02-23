@@ -16,6 +16,11 @@ describe('AppController', () => {
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
-    expect(controller.index()).toBeFalsy();
+  });
+
+  describe('index', () => {
+    it('should do nothing', () => {
+      expect(controller.index()).toBeUndefined();
+    });
   });
 });

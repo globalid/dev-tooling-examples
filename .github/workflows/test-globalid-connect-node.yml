@@ -40,7 +40,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run build
-      - run: npm test
-      - run: npm run test:e2e
       - run: npm run test:cov
+      - run: npm run test:e2e
       
