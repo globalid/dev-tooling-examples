@@ -1,6 +1,8 @@
 const webpack = require('webpack');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const CopyPlugin = require('copy-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { RunScriptWebpackPlugin } = require('run-script-webpack-plugin');
 
 module.exports = {
@@ -25,6 +27,12 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: 'config.yaml', to: 'dist'}
+      ]
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new RunScriptWebpackPlugin({ name: 'server.js' }),
   ],
