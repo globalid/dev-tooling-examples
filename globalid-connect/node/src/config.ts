@@ -9,7 +9,7 @@ const logger = new Logger('Config');
 const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
 export const configValidationStructure = {
-  NODE_ENV: Joi.string().pattern(/(development|production)/),
+  NODE_ENV: Joi.string().pattern(/(development|test|production)/),
   YAML_CONFIG_FILENAME: Joi.string().pattern(/.+\.yaml/),
   CLIENT_ID: Joi.string().uuid(),
   CLIENT_SECRET: Joi.string().uuid({ separator: false }),
