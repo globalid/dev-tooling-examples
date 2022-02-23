@@ -3,7 +3,7 @@ import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class Nonce {
-    generateNonce () {
-        return uuid();
-    }
+  generateNonce() {
+    return uuid();
+  }
 }
