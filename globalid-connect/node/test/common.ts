@@ -68,12 +68,16 @@ export const piiWithAttachment: Pii = {
   attachment: attachmentContents.toString('base64')
 };
 
-export const configServiceMock = {
-  get: jest.fn((key: string) => {
-    if (key === 'PRIVATE_KEY') return privateKey;
-    if (key === 'PRIVATE_KEY_PASSPHRASE') return passphrase;
-  })
-};
+export const configServiceMock = mockConfigService({
+  PRIVATE_KEY: privateKey,
+  PRIVATE_KEY_PASSPHRASE: passphrase
+});
+
+export function mockConfigService(env: Record<string, any>) {
+  return {
+    get: jest.fn((key: string) => env[key])
+  };
+}
 
 export function spyOnHttpPost(httpService: HttpService, data?: any) {
   return spyOnHttp(httpService, 'post', data);
