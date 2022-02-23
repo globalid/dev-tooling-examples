@@ -1,7 +1,8 @@
+# Note: Don't set node_env or yaml_config_filename here, only use environment variables (including .env).
 client_id: foo
 client_secret: foo
 
-attestations_connect_url: https://connect.global.id?...
+attestations_connect_url: https://connect.global.id?asdf
 attestations_redirect_uri: http://localhost:3000/verifications/connect/attestations
 
 identity_connect_url: https://connect.global.id?...

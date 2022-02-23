@@ -1,6 +1,4 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src",
-  "assets": ["**/*.yaml"],
-  "watchAssets": true
+  "sourceRoot": "src"
 }

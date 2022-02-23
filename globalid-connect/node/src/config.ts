@@ -1,11 +1,15 @@
 import { readFileSync } from 'fs';
 import * as Joi from 'joi';
 import * as yaml from 'js-yaml';
-import { join, resolve } from 'path';
+import { Logger } from '@nestjs/common';
+import { resolve } from 'path';
+
+const logger = new Logger('Config');
 
 const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
 export const configValidationStructure = {
+  NODE_ENV: Joi.string().pattern(/(development|production)/),
   YAML_CONFIG_FILENAME: Joi.string().pattern(/.+\.yaml/),
   CLIENT_ID: Joi.string().uuid(),
   CLIENT_SECRET: Joi.string().uuid({ separator: false }),
@@ -27,18 +31,17 @@ const getYamlConfig = () => {
       schema: yaml.DEFAULT_SCHEMA,
     }
   );
-  console.log('yamlConfig', yamlConfig);
   return yamlConfig;
 }
 
 const getMergedConfig = () => {
-  console.log('Config keys', JSON.stringify(Object.keys(configValidationStructure)));
   const yamlConfig = getYamlConfig();
-  console.log('yamlConfig2', yamlConfig);
-  return Object.keys(configValidationStructure).reduce((accum, key) => {
-    console.log('accum', accum, 'key', key, 'yamlConfig[key.toLowerCase()]', yamlConfig[key.toLowerCase()]);
-    return accum[key] = process.env[key] ?? yamlConfig[key.toLowerCase()];
-  }, { something: 'initial'});
+  const mergedConfig = Object.keys(configValidationStructure).reduce((accum, key) => {
+    accum[key] = yamlConfig[key.toLowerCase()] || process.env[key];
+    return accum;
+  }, {});
+  logger.verbose(JSON.stringify(mergedConfig));
+  return mergedConfig;
 }
 
 export default () => getMergedConfig();
