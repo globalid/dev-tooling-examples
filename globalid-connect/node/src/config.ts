@@ -1,11 +1,11 @@
 import { readFileSync } from 'fs';
 import * as Joi from 'joi';
 import * as yaml from 'js-yaml';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
 const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
-const validationStructure = {
+export const configValidationStructure = {
   YAML_CONFIG_FILENAME: Joi.string().pattern(/.+\.yaml/),
   CLIENT_ID: Joi.string().uuid(),
   CLIENT_SECRET: Joi.string().uuid({ separator: false }),
@@ -19,20 +19,26 @@ const validationStructure = {
   PRIVATE_KEY_PASSPHRASE: Joi.string(),
 };
 
+export const validationSchema = Joi.object(configValidationStructure);
+
 const getYamlConfig = () => {
-  return yaml.load(
-    readFileSync(join(__dirname, '..', YAML_CONFIG_FILENAME), 'utf8'), {
+  const yamlConfig = yaml.load(
+    readFileSync(resolve(`./${YAML_CONFIG_FILENAME}`), 'utf8'), {
       schema: yaml.DEFAULT_SCHEMA,
     }
-  ) as Map<string, any>;
+  );
+  console.log('yamlConfig', yamlConfig);
+  return yamlConfig;
 }
 
 const getMergedConfig = () => {
+  console.log('Config keys', JSON.stringify(Object.keys(configValidationStructure)));
   const yamlConfig = getYamlConfig();
-  return Object.keys(validationStructure).reduce((accum, key) => {
-    return accum[key] = process.env[key] || yamlConfig[key.toLowerCase()];
-  }, {});
+  console.log('yamlConfig2', yamlConfig);
+  return Object.keys(configValidationStructure).reduce((accum, key) => {
+    console.log('accum', accum, 'key', key, 'yamlConfig[key.toLowerCase()]', yamlConfig[key.toLowerCase()]);
+    return accum[key] = process.env[key] ?? yamlConfig[key.toLowerCase()];
+  }, { something: 'initial'});
 }
 
-export const validationSchema = Joi.object(validationStructure);
 export default () => getMergedConfig();
