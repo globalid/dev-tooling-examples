@@ -1,0 +1,14 @@
+client_id: foo
+client_secret: foo
+
+attestations_connect_url: https://connect.global.id?...
+attestations_redirect_uri: http://localhost:3000/verifications/connect/attestations
+
+identity_connect_url: https://connect.global.id?...
+identity_redirect_uri: http://localhost:3000/verifications/connect/identity
+
+pii_connect_url: https://connect.global.id?...
+pii_redirect_uri: http://localhost:3000/verifications/connect/pii
+
+private_key: '-----BEGIN RSA PRIVATE KEY-----\n...private key encrypted with PRIVATE_KEY_PASSPHRASE...\n-----END RSA PRIVATE KEY-----\n'
+private_key_passphrase: foo

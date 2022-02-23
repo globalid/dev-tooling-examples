@@ -3,11 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
 import { VerificationsModule } from './verifications/verifications.module';
-
+import config, { validationSchema } from './config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
+      load: [config],
+      validationSchema: validationSchema
     }),
     VerificationsModule
   ],
