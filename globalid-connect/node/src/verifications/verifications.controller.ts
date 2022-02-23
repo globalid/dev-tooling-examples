@@ -1,5 +1,6 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { v4 as uuid } from 'uuid';
 
 @Controller('verifications')
 export class VerificationsController {
@@ -16,7 +17,8 @@ export class VerificationsController {
   private get piiConnectUrl(): string {
     const value = this.configService.get<string>('PII_CONNECT_URL');
     const url = new URL(value);
-    url.searchParams.set('nonce', `${Date.now()}`);
+    const nonce = uuid();
+    url.searchParams.set('nonce', `${nonce}`);
     return url.toString();
   }
 
