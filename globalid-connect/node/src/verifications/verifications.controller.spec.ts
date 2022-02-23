@@ -26,19 +26,18 @@ describe('VerificationsController', () => {
       const attestationsConnectUrl = 'https://connect.global.id/attestations';
       const identityConnectUrl = 'https://connect.global.id/identity';
       const piiConnectUrl = 'https://connect.global.id/pii';
-      const configServiceSpy = jest.spyOn(configService, 'get')
-        .mockImplementation(key => {
-          switch (key) {
-            case 'ATTESTATIONS_CONNECT_URL':
-              return attestationsConnectUrl
-            case 'IDENTITY_CONNECT_URL':
-              return identityConnectUrl;
-            case 'PII_CONNECT_URL':
-              return piiConnectUrl;
-            default:
-              break;
-          }
-        })
+      const configServiceSpy = jest.spyOn(configService, 'get').mockImplementation((key) => {
+        switch (key) {
+          case 'ATTESTATIONS_CONNECT_URL':
+            return attestationsConnectUrl;
+          case 'IDENTITY_CONNECT_URL':
+            return identityConnectUrl;
+          case 'PII_CONNECT_URL':
+            return piiConnectUrl;
+          default:
+            break;
+        }
+      });
 
       const result = controller.index();
 

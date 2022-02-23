@@ -20,19 +20,17 @@ export const configValidationStructure = {
   PII_CONNECT_URL: Joi.string().uri(),
   PII_REDIRECT_URI: Joi.string().uri(),
   PRIVATE_KEY: Joi.string(),
-  PRIVATE_KEY_PASSPHRASE: Joi.string(),
+  PRIVATE_KEY_PASSPHRASE: Joi.string()
 };
 
 export const validationSchema = Joi.object(configValidationStructure);
 
 const getYamlConfig = () => {
-  const yamlConfig = yaml.load(
-    readFileSync(resolve(`./${YAML_CONFIG_FILENAME}`), 'utf8'), {
-      schema: yaml.DEFAULT_SCHEMA,
-    }
-  );
+  const yamlConfig = yaml.load(readFileSync(resolve(`./${YAML_CONFIG_FILENAME}`), 'utf8'), {
+    schema: yaml.DEFAULT_SCHEMA
+  });
   return yamlConfig;
-}
+};
 
 const getMergedConfig = () => {
   const yamlConfig = getYamlConfig();
@@ -42,6 +40,6 @@ const getMergedConfig = () => {
   }, {});
   logger.verbose(JSON.stringify(mergedConfig));
   return mergedConfig;
-}
+};
 
 export default () => getMergedConfig();

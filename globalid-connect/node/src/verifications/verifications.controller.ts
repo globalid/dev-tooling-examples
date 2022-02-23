@@ -1,4 +1,4 @@
-import { Controller, Get, Logger, Render } from '@nestjs/common';
+import { Controller, Get, Render } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Controller('verifications')
@@ -22,7 +22,7 @@ export class VerificationsController {
 
   @Get()
   @Render('verifications')
-  index() {    
+  index() {
     return {
       connectUrls: [
         {
