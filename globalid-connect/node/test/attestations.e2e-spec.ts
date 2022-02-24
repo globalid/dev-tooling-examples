@@ -1,11 +1,12 @@
-///* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function, jest/valid-expect-in-promise */
-import * as request from 'supertest';
-import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import { AppModule } from '../src/app.module';
 import * as nock from 'nock';
-import { accessToken, code } from './common';
+import * as request from 'supertest';
+
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+
+import { AppModule } from '../src/app.module';
 import { Attestation } from '../src/verifications/attestations/attestation.interface';
+import { accessToken, code } from './common';
 
 describe('Attestations', () => {
   let app: INestApplication;

@@ -9,10 +9,11 @@ import { IdentityService } from './identity/identity.service';
 import { IdentityController } from './identity/identity.controller';
 import { AttestationsService } from './attestations/attestations.service';
 import { AttestationsController } from './attestations/attestations.controller';
+import { NonceService } from './nonce.service';
 
 @Module({
   imports: [HttpModule],
   controllers: [AttestationsController, PiiController, VerificationsController, IdentityController],
-  providers: [AttestationsService, AuthService, PiiService, VaultService, IdentityService]
+  providers: [AttestationsService, AuthService, PiiService, VaultService, IdentityService, NonceService]
 })
 export class VerificationsModule {}
