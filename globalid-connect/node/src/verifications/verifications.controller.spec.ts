@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { mockConfigService } from '../../test/common';
+import { NonceService } from './nonce.service';
 import { VerificationsController } from './verifications.controller';
 
 const attestationsConnectUrl = 'https://connect.global.id/attestations';
@@ -17,6 +18,7 @@ const configServiceMock = mockConfigService({
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
+  let nonceService: NonceService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,7 +28,8 @@ describe('VerificationsController', () => {
       .useMocker(createMock)
       .compile();
 
-    controller = module.get<VerificationsController>(VerificationsController);
+    controller = module.get(VerificationsController);
+    nonceService = module.get(NonceService);
   });
 
   it('should be defined', () => {
@@ -35,6 +38,9 @@ describe('VerificationsController', () => {
 
   describe('index', () => {
     it('should return Connect URLs', async () => {
+      const nonce = 'foo';
+      const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
+
       const result = controller.index();
 
       expect(result).toMatchObject({
@@ -48,11 +54,12 @@ describe('VerificationsController', () => {
             label: 'Connect and get identity'
           },
           {
-            href: expect.stringContaining(piiConnectUrl),
+            href: expect.stringContaining(`nonce=${nonce}`),
             label: 'Connect and get PII'
           }
         ])
       });
+      expect(generateSpy).toHaveBeenCalledTimes(1);
     });
   });
 });

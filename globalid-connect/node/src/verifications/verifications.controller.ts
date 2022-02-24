@@ -1,10 +1,10 @@
 import { Controller, Get, Render } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { v4 as uuid } from 'uuid';
+import { NonceService } from './nonce.service';
 
 @Controller('verifications')
 export class VerificationsController {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(private readonly configService: ConfigService, private readonly nonceService: NonceService) {}
 
   private get attestationsConnectUrl(): string {
     return this.configService.get<string>('ATTESTATIONS_CONNECT_URL');
@@ -17,7 +17,7 @@ export class VerificationsController {
   private get piiConnectUrl(): string {
     const value = this.configService.get<string>('PII_CONNECT_URL');
     const url = new URL(value);
-    const nonce = uuid();
+    const nonce: string = this.nonceService.generate();
     url.searchParams.set('nonce', `${nonce}`);
     return url.toString();
   }
