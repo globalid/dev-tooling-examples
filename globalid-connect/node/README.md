@@ -62,6 +62,12 @@ Then, enter values for the following environment variables in your `.env`:
 - `PRIVATE_KEY` - Private key corresponding to your public key for PII sharing
 - `PRIVATE_KEY_PASSPHRASE` - Passphrase used to encrypt your private key.
 
+(Optional), create a `config.yaml`. You can use `config.example.yaml` as a starting point. YAML options will override environment variables (including those set in `.env`) of the same name.
+
+```bash
+cp config.example.yaml config.yaml
+```
+
 ### Run the Demo App
 
 Once you have everything setup, simply run `npm start` to run the demo app and navigate to <http://localhost:3000/verifications> to follow one of the flows.

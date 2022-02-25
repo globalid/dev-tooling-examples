@@ -1,15 +1,15 @@
-# Note: Don't set node_env or yaml_config_filename here, only use environment variables (including .env).
-client_id: foo
-client_secret: foo
+# Note: Don't set NODE_ENV or YAML_CONFIG_FILENAME here, only use environment variables (including .env).
+CLIENT_ID: foo
+CLIENT_SECRET: foo
 
-attestations_connect_url: https://connect.global.id?asdf
-attestations_redirect_uri: http://localhost:3000/verifications/connect/attestations
+ATTESTATIONS_CONNECT_URL: https://connect.global.id?asdf
+ATTESTATIONS_REDIRECT_URI: http://localhost:3000/verifications/connect/attestations
 
-identity_connect_url: https://connect.global.id?...
-identity_redirect_uri: http://localhost:3000/verifications/connect/identity
+IDENTITY_CONNECT_URL: https://connect.global.id?...
+IDENTITY_REDIRECT_URI: http://localhost:3000/verifications/connect/identity
 
-pii_connect_url: https://connect.global.id?...
-pii_redirect_uri: http://localhost:3000/verifications/connect/pii
+PII_CONNECT_URL: https://connect.global.id?...
+PII_REDIRECT_URI: http://localhost:3000/verifications/connect/pii
 
-private_key: '-----BEGIN RSA PRIVATE KEY-----\n...private key encrypted with PRIVATE_KEY_PASSPHRASE...\n-----END RSA PRIVATE KEY-----\n'
-private_key_passphrase: foo
+PRIVATE_KEY: '-----BEGIN RSA PRIVATE KEY-----\n...private key encrypted with PRIVATE_KEY_PASSPHRASE...\n-----END RSA PRIVATE KEY-----\n'
+PRIVATE_KEY_PASSPHRASE: foo

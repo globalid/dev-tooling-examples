@@ -6,18 +6,18 @@ import { resolve } from 'path';
 const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
 export const configValidationStructure = {
-  NODE_ENV: Joi.string().pattern(/(development|test|production)/),
-  YAML_CONFIG_FILENAME: Joi.string().pattern(/.+\.yaml/),
-  CLIENT_ID: Joi.string().uuid(),
-  CLIENT_SECRET: Joi.string().uuid({ separator: false }),
+  NODE_ENV: Joi.string().valid('development', 'test', 'production'),
+  YAML_CONFIG_FILENAME: Joi.string().pattern(/\.ya?ml$/),
+  CLIENT_ID: Joi.string().not().empty(),
+  CLIENT_SECRET: Joi.string().not().empty(),
   ATTESTATIONS_CONNECT_URL: Joi.string().uri(),
   ATTESTATIONS_REDIRECT_URI: Joi.string().uri(),
   IDENTITY_CONNECT_URL: Joi.string().uri(),
   IDENTITY_REDIRECT_URI: Joi.string().uri(),
   PII_CONNECT_URL: Joi.string().uri(),
   PII_REDIRECT_URI: Joi.string().uri(),
-  PRIVATE_KEY: Joi.string(),
-  PRIVATE_KEY_PASSPHRASE: Joi.string()
+  PRIVATE_KEY: Joi.string().not().empty(),
+  PRIVATE_KEY_PASSPHRASE: Joi.string().not().empty()
 };
 
 export const validationSchema = Joi.object(configValidationStructure);
@@ -32,7 +32,7 @@ const getYamlConfig = () => {
 const getMergedConfig = () => {
   const yamlConfig = getYamlConfig();
   const mergedConfig = Object.keys(configValidationStructure).reduce((accum, key) => {
-    accum[key] = yamlConfig[key.toLowerCase()] || process.env[key];
+    accum[key] = yamlConfig[key] || process.env[key];
     return accum;
   }, {});
   return mergedConfig;

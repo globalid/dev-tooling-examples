@@ -29,4 +29,4 @@ lerna-debug.log*
 .vscode
 
 .env
-**/config.yaml
+config.yaml
