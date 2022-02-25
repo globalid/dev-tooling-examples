@@ -1,7 +1,6 @@
-import * as Joi from 'joi';
+import Joi from 'joi';
 
 export default Joi.object({
-  NODE_ENV: Joi.string(),
   CLIENT_ID: Joi.string(),
   CLIENT_SECRET: Joi.string(),
   ATTESTATIONS_CONNECT_URL: Joi.string().uri(),
