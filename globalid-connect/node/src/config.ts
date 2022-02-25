@@ -1,10 +1,7 @@
 import { readFileSync } from 'fs';
 import * as Joi from 'joi';
 import * as yaml from 'js-yaml';
-import { Logger } from '@nestjs/common';
 import { resolve } from 'path';
-
-const logger = new Logger('Config');
 
 const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
@@ -38,7 +35,6 @@ const getMergedConfig = () => {
     accum[key] = yamlConfig[key.toLowerCase()] || process.env[key];
     return accum;
   }, {});
-  logger.verbose(JSON.stringify(mergedConfig));
   return mergedConfig;
 };
 
