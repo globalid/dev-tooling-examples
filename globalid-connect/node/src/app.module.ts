@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { AppController } from './app.controller';
-import { VerificationsModule } from './verifications/verifications.module';
 import config, { validationSchema } from './config';
+import { VerificationsModule } from './verifications/verifications.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
