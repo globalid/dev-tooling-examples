@@ -1,13 +1,7 @@
-import { readFileSync } from 'fs';
 import * as Joi from 'joi';
-import * as yaml from 'js-yaml';
-import { resolve } from 'path';
-
-const YAML_CONFIG_FILENAME = process.env.YAML_CONFIG_FILENAME || 'config.yaml';
 
 export const configValidationStructure = {
-  NODE_ENV: Joi.string().valid('development', 'test', 'production'),
-  YAML_CONFIG_FILENAME: Joi.string().pattern(/\.ya?ml$/),
+  NODE_ENV: Joi.string().not().empty(),
   CLIENT_ID: Joi.string().not().empty(),
   CLIENT_SECRET: Joi.string().not().empty(),
   ATTESTATIONS_CONNECT_URL: Joi.string().uri(),
@@ -22,20 +16,12 @@ export const configValidationStructure = {
 
 export const validationSchema = Joi.object(configValidationStructure);
 
-const getYamlConfig = () => {
-  const yamlConfig = yaml.load(readFileSync(resolve(`./${YAML_CONFIG_FILENAME}`), 'utf8'), {
-    schema: yaml.DEFAULT_SCHEMA
-  });
-  return yamlConfig;
-};
-
-const getMergedConfig = () => {
-  const yamlConfig = getYamlConfig();
+const getConfig = () => {
   const mergedConfig = Object.keys(configValidationStructure).reduce((accum, key) => {
-    accum[key] = yamlConfig[key] || process.env[key];
+    accum[key] = process.env[key];
     return accum;
   }, {});
   return mergedConfig;
 };
 
-export default () => getMergedConfig();
+export default () => getConfig();
