@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       lines: 100,
       statements: 100
     },
-    'src/{**/*.module.ts,main.ts,config.ts}': {
+    'src/{**/*.module.ts,main.ts,config.schema.ts}': {
       branches: 0,
       functions: 0,
       lines: 0,
