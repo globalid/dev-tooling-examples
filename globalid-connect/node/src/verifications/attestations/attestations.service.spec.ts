@@ -1,3 +1,4 @@
+import { GidApiClient, GidApiClientFactory } from '@globalid/api-client';
 import { createMock } from '@golevelup/ts-jest';
 import { HttpService } from '@nestjs/axios';
 import { Test, TestingModule } from '@nestjs/testing';
@@ -11,6 +12,7 @@ describe('AttestationsService', () => {
   let service: AttestationsService;
   let authService: AuthService;
   let http: HttpService;
+  let apiClient: GidApiClient;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({ providers: [AttestationsService] })
@@ -20,6 +22,16 @@ describe('AttestationsService', () => {
     service = module.get(AttestationsService);
     authService = module.get(AuthService);
     http = module.get(HttpService);
+
+    // Inject this
+    apiClient = await new GidApiClientFactory({
+      clientId: '123abc',
+      clientSecret: 'sekret',
+      redirectUri: 'http://localhost:3000/verifications/connect/attestations',
+      privateKey: '-----BEGIN RSA PRIVATE KEY-----...-----END RSA PRIVATE KEY-----'
+    }).create(code);
+
+    apiClient.pii.get();
   });
 
   it('should be defined', () => {
