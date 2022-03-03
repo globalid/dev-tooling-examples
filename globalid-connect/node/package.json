@@ -25,6 +25,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@globalid/api-client": "file:.yalc/@globalid/api-client",
     "@golevelup/ts-jest": "^0.3.2",
     "@nestjs/axios": "^0.0.5",
     "@nestjs/common": "^8.0.0",
