@@ -42,12 +42,10 @@ describe('VerificationsController', () => {
       const result = controller.index();
 
       expect(result).toMatchObject({
-        connectUrls: expect.arrayContaining([
-          {
-            href: `${connectUrl}&nonce=${nonce}`,
-            label: 'Connect'
-          }
-        ])
+        connectUrl: {
+          href: `${connectUrl}&nonce=${nonce}`,
+          label: 'Connect'
+        }
       });
       expect(generateSpy).toHaveBeenCalledTimes(1);
     });

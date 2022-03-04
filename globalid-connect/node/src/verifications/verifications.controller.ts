@@ -11,12 +11,10 @@ export class VerificationsController {
   @Render('verifications')
   index() {
     return {
-      connectUrls: [
-        {
-          href: this.verificationsService.connectUrl,
-          label: 'Connect'
-        }
-      ]
+      connectUrl: {
+        href: this.verificationsService.connectUrl,
+        label: 'Connect'
+      }
     };
   }
 
