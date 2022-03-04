@@ -1,7 +1,7 @@
 import { GidApiClientFactory } from '@globalid/api-client';
 import { ConfigService } from '@nestjs/config';
 
-export const gidApiClientFactoryService = {
+export const gidApiClientFactoryProvider = {
   provide: GidApiClientFactory,
   inject: [ConfigService],
   useFactory: (configService: ConfigService) =>

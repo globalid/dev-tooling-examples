@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NonceService } from './nonce.service';
 import { validate as validateUuid } from 'uuid';
 
-describe('NonceSevice', () => {
+describe('NonceService', () => {
   let nonceService: NonceService;
 
   beforeEach(async () => {

@@ -23,7 +23,7 @@ jobs:
           - windows-latest
         node_version:
           # - 14
-          # - 16
+          - 16
           - 17
     steps:
       - name: Checkout
