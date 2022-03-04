@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { VerificationsService } from './verifications.service';
-import { accessToken, code } from '../../test/common';
+import { code } from '../../test/common';
 import { gidApiClientFactoryProvider } from './client/gid-api-client.factory';
 import { ConfigService } from '@nestjs/config';
 import { GidApiClient, GidApiClientFactory } from '@globalid/api-client';
@@ -32,8 +32,7 @@ describe('VerificationsService', () => {
         createMock<IdentityClient>(),
         createMock<PiiService>()
       );
-      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create')
-        .mockResolvedValueOnce(gac);
+      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create').mockResolvedValueOnce(gac);
 
       await service.connect(code);
 
@@ -42,13 +41,8 @@ describe('VerificationsService', () => {
     });
 
     it('should return an object of connected services when the PiiService is not provided', async () => {
-      const gac = new GidApiClient(
-        createMock<AttestationsClient>(),
-        createMock<IdentityClient>(),
-        null
-      );
-      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create')
-        .mockResolvedValueOnce(gac);
+      const gac = new GidApiClient(createMock<AttestationsClient>(), createMock<IdentityClient>(), null);
+      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create').mockResolvedValueOnce(gac);
 
       await service.connect(code);
 
