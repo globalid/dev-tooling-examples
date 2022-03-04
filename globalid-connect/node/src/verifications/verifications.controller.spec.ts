@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { mockConfigService } from '../../test/common';
+import { NonceService } from './nonce.service';
 import { VerificationsController } from './verifications.controller';
 
 const connectUrl = 'https://connect.global.id/';
@@ -12,7 +13,7 @@ const configServiceMock = mockConfigService({
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
-
+  let nonceService: NonceService;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [VerificationsController],
@@ -21,6 +22,7 @@ describe('VerificationsController', () => {
       .useMocker(createMock)
       .compile();
 
+    nonceService = module.get(NonceService);
     controller = module.get(VerificationsController);
   });
 
@@ -30,6 +32,8 @@ describe('VerificationsController', () => {
 
   describe('index', () => {
     it('should return Connect URLs', async () => {
+      const nonce = 'foo';
+      const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
       const result = controller.index();
 
       expect(result).toMatchObject({
@@ -37,9 +41,14 @@ describe('VerificationsController', () => {
           {
             href: connectUrl,
             label: 'Connect'
+          },
+          {
+            href: expect.stringContaining(`nonce=${nonce}`),
+            label: 'Connect and get PII'
           }
         ])
       });
+      expect(generateSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
