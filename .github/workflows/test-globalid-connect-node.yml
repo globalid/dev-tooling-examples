@@ -22,8 +22,8 @@ jobs:
           - macos-latest
           - windows-latest
         node_version:
-          - 14
-          - 16
+          # - 14
+          # - 16
           - 17
     steps:
       - name: Checkout
