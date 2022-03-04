@@ -1,7 +1,7 @@
 import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
-  collectCoverageFrom: ['**/*.ts'],
+  collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
   coverageThreshold: {
     global: {
@@ -22,7 +22,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   testRegex: '.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.ts$': 'ts-jest'
+    '^.+\\.(t|j)s$': 'ts-jest'
   },
   verbose: true
 };
