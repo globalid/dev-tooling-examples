@@ -15,6 +15,14 @@ import { gidApiClientFactoryService } from './client/gid-api-client-factory.serv
 @Module({
   imports: [HttpModule],
   controllers: [AttestationsController, PiiController, VerificationsController, IdentityController],
-  providers: [AttestationsService, AuthService, PiiService, VaultService, IdentityService, NonceService, gidApiClientFactoryService]
+  providers: [
+    AttestationsService,
+    AuthService,
+    PiiService,
+    VaultService,
+    IdentityService,
+    NonceService,
+    gidApiClientFactoryService
+  ]
 })
 export class VerificationsModule {}
