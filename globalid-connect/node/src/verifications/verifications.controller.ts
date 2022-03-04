@@ -5,19 +5,7 @@ import { VerificationsService } from './verifications.service';
 
 @Controller('verifications')
 export class VerificationsController {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly nonceService: NonceService,
-    private readonly verificationsService: VerificationsService
-  ) {}
-
-  private get piiConnectUrl(): string {
-    const value = this.configService.get<string>('CONNECT_URL');
-    const url = new URL(value);
-    const nonce: string = this.nonceService.generate();
-    url.searchParams.set('nonce', `${nonce}`);
-    return url.toString();
-  }
+  constructor(private readonly verificationsService: VerificationsService) {}
 
   @Get()
   @Render('verifications')
@@ -25,12 +13,8 @@ export class VerificationsController {
     return {
       connectUrls: [
         {
-          href: this.configService.get<string>('CONNECT_URL'),
+          href: this.verificationsService.connectUrl,
           label: 'Connect'
-        },
-        {
-          href: this.piiConnectUrl,
-          label: 'Connect and get PII'
         }
       ]
     };

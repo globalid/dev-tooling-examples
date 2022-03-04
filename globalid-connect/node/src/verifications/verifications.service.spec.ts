@@ -8,13 +8,14 @@ import { createMock } from '@golevelup/ts-jest';
 import { AttestationsClient } from '@globalid/api-client/dist/attestations';
 import { IdentityClient } from '@globalid/api-client/dist/identity';
 import { PiiService } from '@globalid/api-client/dist/pii';
+import { NonceService } from './nonce.service';
 
 describe('VerificationsService', () => {
   let service: VerificationsService;
   let gidClientApiFactory: GidApiClientFactory;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ConfigService, VerificationsService, gidApiClientFactoryProvider]
+      providers: [ConfigService, NonceService, VerificationsService, gidApiClientFactoryProvider]
     }).compile();
 
     service = module.get(VerificationsService);
