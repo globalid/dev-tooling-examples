@@ -30,5 +30,3 @@ lerna-debug.log*
 
 .env
 config.yaml
-.yalc
-yalc.lock
