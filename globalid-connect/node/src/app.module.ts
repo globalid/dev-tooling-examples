@@ -1,5 +1,8 @@
+import { join } from 'path';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import validationSchema from './config.schema';
@@ -10,6 +13,9 @@ import { VerificationsModule } from './verifications/verifications.module';
     ConfigModule.forRoot({
       isGlobal: true,
       validationSchema
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'views')
     }),
     VerificationsModule
   ],

@@ -1,0 +1,79 @@
+@font-face {
+  font-family: Averta;
+  src: url(./averta/Averta.woff);
+  color: #101010;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: Averta;
+}
+
+.flex-center-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header {
+  margin-top: 25px;
+  margin-bottom: 75px;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 36px;
+  font-weight: 600;
+}
+
+.card-label {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card-focus-text {
+  color: #646466;
+  margin-top: 0px;
+  flex-grow: 1;
+}
+
+.round {
+  border-radius: 16px;
+}
+
+.full-round {
+  border-radius: 9999px;
+}
+
+.display-card {
+  display: flex;
+  background-color: white;
+  justify-content: center;
+  height: 380px;
+  width: 612px;
+  padding: 48px;
+}
+
+.card-content-box {
+  display: flex;
+  flex-direction: column;
+  width: 516px;
+  text-align: center;
+}
+
+.action-button,
+.action-button:visited {
+  color: white;
+  background-color: #0d51ff;
+  text-decoration: none;
+  padding: 10px 20px;
+  align-self: center;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
