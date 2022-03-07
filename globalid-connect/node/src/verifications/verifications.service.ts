@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { NonceService } from './nonce.service';
-import { UserData } from './verifications.interface';
+import { UserData } from './user-data.interface';
 
 @Injectable()
 export class VerificationsService {

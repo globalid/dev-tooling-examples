@@ -10,9 +10,7 @@ export class VerificationsController {
   @Render('verifications')
   index() {
     return {
-      connectUrl: {
-        href: this.verificationsService.makeConnectUrl()
-      }
+      connectUrl: this.verificationsService.makeConnectUrl()
     };
   }
 

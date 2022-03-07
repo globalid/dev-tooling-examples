@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { code, mockConfigService } from '../../test/common';
 import { NonceService } from './nonce.service';
 import { VerificationsController } from './verifications.controller';
-import { UserData } from './verifications.interface';
+import { UserData } from './user-data.interface';
 import { VerificationsService } from './verifications.service';
 
 const connectUrl = 'https://connect.global.id/?scope=openid';
@@ -42,9 +42,7 @@ describe('VerificationsController', () => {
       const result = controller.index();
 
       expect(result).toMatchObject({
-        connectUrl: {
-          href: `${connectUrl}&nonce=${nonce}`
-        }
+        connectUrl: `${connectUrl}&nonce=${nonce}`
       });
       expect(generateSpy).toHaveBeenCalledTimes(1);
     });
