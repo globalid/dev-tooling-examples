@@ -8,18 +8,15 @@ import { VerificationsService } from './verifications.service';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
-  let verificationsService: VerificationsService;
+  let service: VerificationsService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [VerificationsController],
-      providers: [VerificationsService]
-    })
+    const module: TestingModule = await Test.createTestingModule({ controllers: [VerificationsController] })
       .useMocker(createMock)
       .compile();
 
     controller = module.get(VerificationsController);
-    verificationsService = module.get(VerificationsService);
+    service = module.get(VerificationsService);
   });
 
   it('should be defined', () => {
@@ -27,26 +24,25 @@ describe('VerificationsController', () => {
   });
 
   describe('index', () => {
-    it('should return Connect URLs', async () => {
-      const connectUrl = 'https://connect.global.id/?scope=openid';
-      const makeConnectUrlSpy = jest.spyOn(verificationsService, 'makeConnectUrl').mockReturnValueOnce(connectUrl);
+    it('should return view model with Connect URL', async () => {
+      const connectUrl = 'https://connect.global.id';
+      const makeConnectUrlSpy = jest.spyOn(service, 'makeConnectUrl').mockReturnValueOnce(connectUrl);
+
       const result = controller.index();
 
-      expect(result).toMatchObject({
-        connectUrl
-      });
+      expect(result).toStrictEqual({ connectUrl });
       expect(makeConnectUrlSpy).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('connect', () => {
     it('should delegate to the VerificationsService', async () => {
-      const apiClientData = createMock<UserData>();
-      const connectSpy = jest.spyOn(verificationsService, 'connect').mockResolvedValueOnce(apiClientData);
+      const userData = createMock<UserData>();
+      const connectSpy = jest.spyOn(service, 'connect').mockResolvedValueOnce(userData);
 
-      const result = await controller.connect(code);
+      const result = await controller.connect({ code });
 
-      expect(result).toBe(apiClientData);
+      expect(result).toBe(userData);
       expect(connectSpy).toHaveBeenCalledTimes(1);
       expect(connectSpy).toHaveBeenCalledWith(code);
     });

@@ -13,6 +13,15 @@ export class VerificationsService {
     private readonly nonceService: NonceService
   ) {}
 
+  async connect(code: string): Promise<UserData> {
+    const client = await this.gidApiClientFactory.create(code);
+    return {
+      attestations: await client.attestations.get(),
+      identity: await client.identity.get(),
+      pii: await client.pii?.get()
+    };
+  }
+
   makeConnectUrl(): string {
     const value = this.configService.get<string>('CONNECT_URL');
     const url = new URL(value);
@@ -21,14 +30,5 @@ export class VerificationsService {
       url.searchParams.set('nonce', `${nonce}`);
     }
     return url.toString();
-  }
-
-  async connect(code: string): Promise<UserData> {
-    const client = await this.gidApiClientFactory.create(code);
-    return {
-      attestations: await client.attestations.get(),
-      identity: await client.identity.get(),
-      pii: await client.pii?.get()
-    };
   }
 }

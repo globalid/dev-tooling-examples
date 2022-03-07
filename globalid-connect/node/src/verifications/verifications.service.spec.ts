@@ -1,35 +1,28 @@
-import { GidApiClientFactory } from '@globalid/api-client';
+import { Attestation, GidApiClientFactory, Identity, Pii } from '@globalid/api-client';
 import { createGidApiClientMock } from '@globalid/api-client/testing';
+import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code, mockConfigService } from '../../test/common';
-import { gidApiClientFactoryProvider } from './client/gid-api-client.factory';
+import { code } from '../../test/common';
 import { NonceService } from './nonce.service';
 import { VerificationsService } from './verifications.service';
 
-const connectUrl = 'https://connect.global.id/?scope=openid';
-const configServiceMock = mockConfigService({
-  CONNECT_URL: connectUrl
-});
-
 describe('VerificationsService', () => {
   let service: VerificationsService;
+  let configService: ConfigService;
+  let gidApiClientFactory: GidApiClientFactory;
   let nonceService: NonceService;
-  let gidClientApiFactory: GidApiClientFactory;
+
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        { provide: ConfigService, useValue: configServiceMock },
-        NonceService,
-        VerificationsService,
-        gidApiClientFactoryProvider
-      ]
-    }).compile();
+    const module: TestingModule = await Test.createTestingModule({ providers: [VerificationsService] })
+      .useMocker(createMock)
+      .compile();
 
     service = module.get(VerificationsService);
+    configService = module.get(ConfigService);
+    gidApiClientFactory = module.get(GidApiClientFactory);
     nonceService = module.get(NonceService);
-    gidClientApiFactory = module.get(GidApiClientFactory);
   });
 
   it('should be defined', () => {
@@ -37,34 +30,67 @@ describe('VerificationsService', () => {
   });
 
   describe('connect', () => {
-    it('should return a Connect URL', async () => {
+    const attestations = createMock<Attestation[]>();
+    const identity = createMock<Identity>();
+
+    it('should return user data', async () => {
+      const client = createGidApiClientMock(false);
+      client.attestations.get.mockResolvedValueOnce(attestations);
+      client.identity.get.mockResolvedValueOnce(identity);
+      const createSpy = jest.spyOn(gidApiClientFactory, 'create').mockResolvedValueOnce(client);
+
+      const result = await service.connect(code);
+
+      expect(result).toStrictEqual({ attestations, identity, pii: undefined });
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(createSpy).toHaveBeenCalledWith(code);
+      expect(client.attestations.get).toHaveBeenCalledTimes(1);
+      expect(client.identity.get).toHaveBeenCalledTimes(1);
+    });
+
+    it('should return user data with PII', async () => {
+      const pii = createMock<Pii[]>();
+      const client = createGidApiClientMock();
+      client.attestations.get.mockResolvedValueOnce(attestations);
+      client.identity.get.mockResolvedValueOnce(identity);
+      client.pii.get.mockResolvedValueOnce(pii);
+      const createSpy = jest.spyOn(gidApiClientFactory, 'create').mockResolvedValueOnce(client);
+
+      const result = await service.connect(code);
+
+      expect(result).toStrictEqual({ attestations, identity, pii });
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(createSpy).toHaveBeenCalledWith(code);
+      expect(client.attestations.get).toHaveBeenCalledTimes(1);
+      expect(client.identity.get).toHaveBeenCalledTimes(1);
+      expect(client.pii.get).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('makeConnectUrl', () => {
+    it('should return Connect URL', async () => {
+      const connectUrl = 'https://connect.global.id/?scope=public';
+      const getSpy = jest.spyOn(configService, 'get').mockReturnValueOnce(connectUrl);
+
+      const result = service.makeConnectUrl();
+
+      expect(result).toBe(connectUrl);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith('CONNECT_URL');
+    });
+
+    it('should return Connect URL with nonce when scope is OpenID', async () => {
+      const connectUrl = 'https://connect.global.id/?scope=openid';
+      const getSpy = jest.spyOn(configService, 'get').mockReturnValueOnce(connectUrl);
       const nonce = 'foo';
       const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
 
       const result = service.makeConnectUrl();
 
       expect(result).toBe(`${connectUrl}&nonce=${nonce}`);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith('CONNECT_URL');
       expect(generateSpy).toHaveBeenCalledTimes(1);
-    });
-
-    it('should return an object of connected services when the PiiService is provided', async () => {
-      const gacMock = createGidApiClientMock();
-      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create').mockResolvedValueOnce(gacMock);
-
-      await service.connect(code);
-
-      expect(gidClientApiFactoryCreateSpy).toHaveBeenCalledTimes(1);
-      expect(gidClientApiFactoryCreateSpy).toHaveBeenCalledWith(code);
-    });
-
-    it('should return an object of connected services when the PiiService is not provided', async () => {
-      const gacMock = createGidApiClientMock(false);
-      const gidClientApiFactoryCreateSpy = jest.spyOn(gidClientApiFactory, 'create').mockResolvedValueOnce(gacMock);
-
-      await service.connect(code);
-
-      expect(gidClientApiFactoryCreateSpy).toHaveBeenCalledTimes(1);
-      expect(gidClientApiFactoryCreateSpy).toHaveBeenCalledWith(code);
     });
   });
 });
