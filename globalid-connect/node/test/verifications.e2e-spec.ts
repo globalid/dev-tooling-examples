@@ -17,10 +17,12 @@ describe('VerificationsController (e2e)', () => {
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({ imports: [AppModule] })
       .overrideProvider(ConfigService)
-      .useValue(mockConfigService({
-        CONNECT_URL: 'https://connect.global.id?foo=bar',
-        REDIRECT_URI: 'http://localhost:3000/verifications/connect'
-      }))
+      .useValue(
+        mockConfigService({
+          CONNECT_URL: 'https://connect.global.id?foo=bar',
+          REDIRECT_URI: 'http://localhost:3000/verifications/connect'
+        })
+      )
       .compile();
 
     app = moduleFixture.createNestApplication();
