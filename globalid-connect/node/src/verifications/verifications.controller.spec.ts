@@ -1,33 +1,24 @@
 import { createMock } from '@golevelup/ts-jest';
-import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code, mockConfigService } from '../../test/common';
-import { NonceService } from './nonce.service';
+import { code } from '../../test/common';
 import { VerificationsController } from './verifications.controller';
 import { UserData } from './user-data.interface';
 import { VerificationsService } from './verifications.service';
 
-const connectUrl = 'https://connect.global.id/?scope=openid';
-const configServiceMock = mockConfigService({
-  CONNECT_URL: connectUrl
-});
-
 describe('VerificationsController', () => {
   let controller: VerificationsController;
-  let nonceService: NonceService;
   let verificationsService: VerificationsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [VerificationsController],
-      providers: [{ provide: ConfigService, useValue: configServiceMock }, NonceService, VerificationsService]
+      providers: [VerificationsService]
     })
       .useMocker(createMock)
       .compile();
 
     controller = module.get(VerificationsController);
-    nonceService = module.get(NonceService);
     verificationsService = module.get(VerificationsService);
   });
 
@@ -37,14 +28,14 @@ describe('VerificationsController', () => {
 
   describe('index', () => {
     it('should return Connect URLs', async () => {
-      const nonce = 'foo';
-      const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
+      const connectUrl = 'https://connect.global.id/?scope=openid';
+      const makeConnectUrlSpy = jest.spyOn(verificationsService, 'makeConnectUrl').mockReturnValueOnce(connectUrl);
       const result = controller.index();
 
       expect(result).toMatchObject({
-        connectUrl: `${connectUrl}&nonce=${nonce}`
+        connectUrl
       });
-      expect(generateSpy).toHaveBeenCalledTimes(1);
+      expect(makeConnectUrlSpy).toHaveBeenCalledTimes(1);
     });
   });
 
