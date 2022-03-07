@@ -1,6 +1,7 @@
 import { GidApiClientFactory } from '@globalid/api-client';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { NonceService } from './nonce.service';
 import { ApiClientData } from './verifications.interface';
 
