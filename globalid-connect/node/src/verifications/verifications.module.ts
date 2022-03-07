@@ -1,5 +1,6 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+
 import { gidApiClientFactoryProvider } from './client/gid-api-client.factory';
 import { NonceService } from './nonce.service';
 import { VerificationsController } from './verifications.controller';

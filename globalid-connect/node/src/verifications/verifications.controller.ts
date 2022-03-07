@@ -1,6 +1,5 @@
 import { Controller, Get, Param, Render } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { NonceService } from './nonce.service';
+
 import { VerificationsService } from './verifications.service';
 
 @Controller('verifications')

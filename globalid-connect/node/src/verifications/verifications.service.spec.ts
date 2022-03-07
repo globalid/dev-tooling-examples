@@ -1,14 +1,15 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { VerificationsService } from './verifications.service';
-import { code } from '../../test/common';
-import { gidApiClientFactoryProvider } from './client/gid-api-client.factory';
-import { ConfigService } from '@nestjs/config';
 import { GidApiClient, GidApiClientFactory } from '@globalid/api-client';
-import { createMock } from '@golevelup/ts-jest';
 import { AttestationsClient } from '@globalid/api-client/dist/attestations';
 import { IdentityClient } from '@globalid/api-client/dist/identity';
 import { PiiService } from '@globalid/api-client/dist/pii';
+import { createMock } from '@golevelup/ts-jest';
+import { ConfigService } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
+
+import { code } from '../../test/common';
+import { gidApiClientFactoryProvider } from './client/gid-api-client.factory';
 import { NonceService } from './nonce.service';
+import { VerificationsService } from './verifications.service';
 
 describe('VerificationsService', () => {
   let service: VerificationsService;

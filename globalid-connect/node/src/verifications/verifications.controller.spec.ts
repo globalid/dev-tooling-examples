@@ -36,7 +36,7 @@ describe('VerificationsController', () => {
   });
 
   describe('index', () => {
-    it('should return Connect URLs ', async () => {
+    it('should return Connect URLs', async () => {
       const nonce = 'foo';
       const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
       const result = controller.index();
