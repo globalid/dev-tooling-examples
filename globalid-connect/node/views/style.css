@@ -16,8 +16,8 @@ body {
 }
 
 .page-header {
-  margin-top: 25px;
-  margin-bottom: 75px;
+  margin-top: 2.25rem;
+  margin-bottom: 4.69em;
 }
 
 .flex-column {
@@ -25,18 +25,18 @@ body {
 }
 
 .card-title {
-  font-size: 36px;
+  font-size: 2.25rem;
   font-weight: 600;
 }
 
 .card-label {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
 }
 
 .card-focus-text {
   color: #646466;
-  margin-top: 0px;
+  margin-top: 0;
   flex-grow: 1;
 }
 
@@ -52,15 +52,22 @@ body {
   display: flex;
   background-color: white;
   justify-content: center;
-  height: 380px;
-  width: 612px;
-  padding: 48px;
+  height: 23.75rem;
+  width: 38.25rem;
+  padding: 3rem;
+}
+
+.card-content-index {
+  width: 32.25rem;
+}
+
+.card-content-results {
+  width: 72.25rem;
 }
 
 .card-content-box {
   display: flex;
   flex-direction: column;
-  width: 516px;
   text-align: center;
 }
 
@@ -69,7 +76,7 @@ body {
   color: white;
   background-color: #0d51ff;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 0.63rem 1.25rem;
   align-self: center;
 }
 
