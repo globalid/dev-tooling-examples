@@ -5,6 +5,9 @@
   "author": "GlobaliD",
   "private": true,
   "license": "ISC",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
@@ -71,5 +74,8 @@
     "ts-node": "10.6.0",
     "tsconfig-paths": "3.13.0",
     "typescript": "4.6.2"
+  },
+  "peerDependencies": {
+    "webpack": "5.66.0"
   }
 }
