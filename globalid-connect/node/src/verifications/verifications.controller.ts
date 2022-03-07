@@ -12,8 +12,7 @@ export class VerificationsController {
   index() {
     return {
       connectUrl: {
-        href: this.verificationsService.connectUrl,
-        label: 'Connect'
+        href: this.verificationsService.makeConnectUrl()
       }
     };
   }

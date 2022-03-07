@@ -2,7 +2,7 @@ import { GidApiClientFactory } from '@globalid/api-client';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NonceService } from './nonce.service';
-import { ApiClientData } from './verifications.interface';
+import { UserData } from './verifications.interface';
 
 @Injectable()
 export class VerificationsService {
@@ -12,7 +12,7 @@ export class VerificationsService {
     private readonly nonceService: NonceService
   ) {}
 
-  get connectUrl(): string {
+  makeConnectUrl(): string {
     const value = this.configService.get<string>('CONNECT_URL');
     const url = new URL(value);
     if (url.searchParams.get('scope') === 'openid') {
@@ -22,7 +22,7 @@ export class VerificationsService {
     return url.toString();
   }
 
-  async connect(code: string): Promise<ApiClientData> {
+  async connect(code: string): Promise<UserData> {
     const client = await this.gidApiClientFactory.create(code);
     return {
       attestations: await client.attestations.get(),

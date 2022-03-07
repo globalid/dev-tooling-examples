@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { code, mockConfigService } from '../../test/common';
 import { NonceService } from './nonce.service';
 import { VerificationsController } from './verifications.controller';
-import { ApiClientData } from './verifications.interface';
+import { UserData } from './verifications.interface';
 import { VerificationsService } from './verifications.service';
 
 const connectUrl = 'https://connect.global.id/?scope=openid';
@@ -43,8 +43,7 @@ describe('VerificationsController', () => {
 
       expect(result).toMatchObject({
         connectUrl: {
-          href: `${connectUrl}&nonce=${nonce}`,
-          label: 'Connect'
+          href: `${connectUrl}&nonce=${nonce}`
         }
       });
       expect(generateSpy).toHaveBeenCalledTimes(1);
@@ -53,7 +52,7 @@ describe('VerificationsController', () => {
 
   describe('connect', () => {
     it('should delegate to the VerificationsService', async () => {
-      const apiClientData = createMock<ApiClientData>();
+      const apiClientData = createMock<UserData>();
       const connectSpy = jest.spyOn(verificationsService, 'connect').mockResolvedValueOnce(apiClientData);
 
       const result = await controller.connect(code);
