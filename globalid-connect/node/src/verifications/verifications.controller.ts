@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Render } from '@nestjs/common';
+import { Controller, Get, Query, Render } from '@nestjs/common';
 
+import { ConnectParams } from './connect-params';
 import { VerificationsService } from './verifications.service';
 
 @Controller('verifications')
@@ -15,7 +16,7 @@ export class VerificationsController {
   }
 
   @Get('connect')
-  connect(@Param('code') code: string) {
-    return this.verificationsService.connect(code);
+  connect(@Query() query: ConnectParams) {
+    return this.verificationsService.connect(query.code);
   }
 }
