@@ -14,9 +14,6 @@ import { VerificationsModule } from './verifications/verifications.module';
       isGlobal: true,
       validationSchema
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'views')
-    }),
     VerificationsModule
   ],
   controllers: [AppController],
