@@ -3,7 +3,7 @@
  *
  * @param env Key-Value pairs where Key is used to `get` a value from `ConfigService`
  */
-export function mockConfigService(env: Record<string, any>): { get: jest.Mock<any, [key: string]>; } {
+export function mockConfigService(env: Record<string, any>) {
   return {
     get: jest.fn((key: string) => env[key])
   };
