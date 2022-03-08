@@ -1,8 +1,5 @@
-import { join } from 'path';
-
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { ServeStaticModule } from '@nestjs/serve-static';
 
 import { AppController } from './app.controller';
 import validationSchema from './config.schema';
