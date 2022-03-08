@@ -1,35 +1,22 @@
 import { createMock } from '@golevelup/ts-jest';
-import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { mockConfigService } from '../../test/common';
-import { NonceService } from './nonce.service';
+import { code } from '../../test/common';
 import { VerificationsController } from './verifications.controller';
-
-const attestationsConnectUrl = 'https://connect.global.id/attestations';
-const identityConnectUrl = 'https://connect.global.id/identity';
-const piiConnectUrl = 'https://connect.global.id/pii';
-
-const configServiceMock = mockConfigService({
-  ATTESTATIONS_CONNECT_URL: attestationsConnectUrl,
-  IDENTITY_CONNECT_URL: identityConnectUrl,
-  PII_CONNECT_URL: piiConnectUrl
-});
+import { UserData } from './user-data.interface';
+import { VerificationsService } from './verifications.service';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
-  let nonceService: NonceService;
+  let service: VerificationsService;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [VerificationsController],
-      providers: [{ provide: ConfigService, useValue: configServiceMock }]
-    })
+    const module: TestingModule = await Test.createTestingModule({ controllers: [VerificationsController] })
       .useMocker(createMock)
       .compile();
 
     controller = module.get(VerificationsController);
-    nonceService = module.get(NonceService);
+    service = module.get(VerificationsService);
   });
 
   it('should be defined', () => {
@@ -37,29 +24,27 @@ describe('VerificationsController', () => {
   });
 
   describe('index', () => {
-    it('should return Connect URLs', async () => {
-      const nonce = 'foo';
-      const generateSpy = jest.spyOn(nonceService, 'generate').mockReturnValueOnce(nonce);
+    it('should return view model with Connect URL', async () => {
+      const connectUrl = 'https://connect.global.id';
+      const makeConnectUrlSpy = jest.spyOn(service, 'makeConnectUrl').mockReturnValueOnce(connectUrl);
 
       const result = controller.index();
 
-      expect(result).toMatchObject({
-        connectUrls: expect.arrayContaining([
-          {
-            href: attestationsConnectUrl,
-            label: 'Connect and get attestations'
-          },
-          {
-            href: identityConnectUrl,
-            label: 'Connect and get identity'
-          },
-          {
-            href: expect.stringContaining(`nonce=${nonce}`),
-            label: 'Connect and get PII'
-          }
-        ])
-      });
-      expect(generateSpy).toHaveBeenCalledTimes(1);
+      expect(result).toStrictEqual({ connectUrl });
+      expect(makeConnectUrlSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('connect', () => {
+    it('should delegate to the VerificationsService', async () => {
+      const userData = createMock<UserData>();
+      const connectSpy = jest.spyOn(service, 'connect').mockResolvedValueOnce(userData);
+
+      const result = await controller.connect({ code });
+
+      expect(result).toBe(userData);
+      expect(connectSpy).toHaveBeenCalledTimes(1);
+      expect(connectSpy).toHaveBeenCalledWith(code);
     });
   });
 });

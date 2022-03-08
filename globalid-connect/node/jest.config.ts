@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       lines: 100,
       statements: 100
     },
-    'src/{**/*.module.ts,main.ts,config.schema.ts}': {
+    'src/{**/*.module.ts,**/*.schema.ts,verifications/gid-api-client.factory.ts,main.ts}': {
       branches: 0,
       functions: 0,
       lines: 0,
