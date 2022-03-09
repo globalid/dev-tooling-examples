@@ -1,13 +1,18 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <title>NestJS GlobaliD Connect Demo</title>
+    <title>GlobaliD Connect Demo</title>
+    <link rel='StyleSheet' href='./style.css' type='text/css' />
   </head>
-  <body>
-    <ul>
-      <li>
-        <a href='{{connectUrl}}'>Connect</a>
-      </li>
-    </ul>
+  <body class='flex-center-center flex-column'>
+    <div class='page-header'><img src='./gid-logo.svg' alt='GlobaliD logo' /></div>
+    <div class='display-card round'>
+      <div class='card-content-box'>
+        <p class='card-label'>Demo App</p>
+        <h1 class='card-title'>GlobaliD Connect Demo</h1>
+        <p class='card-focus-text'>Human give me attention meow relentlessly pursues moth.</p>
+        <a class='action-button full-round' href='{{connectUrl}}'>Log in with GlobaliD</a>
+      </div>
+    </div>
   </body>
 </html>
