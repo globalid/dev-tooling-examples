@@ -83,3 +83,12 @@ body {
   list-style: none;
   padding: 0;
 }
+
+/****************** Styles for results go HERE ******************/
+.border-row {
+  border-top: solid 1px black;
+}
+
+.cell {
+  text-align: left;
+}

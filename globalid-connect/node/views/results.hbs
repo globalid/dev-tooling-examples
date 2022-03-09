@@ -5,16 +5,32 @@
     <link REL='StyleSheet' HREF='./style.css' TYPE='text/css' />
   </head>
   <body class='flex-center-center flex-column'>
-    <div class='page-header'><img src='./assets/gid-logo.svg' alt='GlobaliD logo' /></div>
+    <div class='page-header'><img src='./gid-logo.svg' alt='GlobaliD logo' /></div>
     <div class='display-card round'>
       <div class='card-content-box card-content-results'>
         <p class='card-label'>Demo App</p>
         <h1 class='card-title'>GlobaliD connect node demo</h1>
         <p class='card-focus-text'>Dolor sit amet discovered siamesecalico peaceful her Gizmo peaceful boy rutrum
           caturday enim lived quis Mauris sit malesuada</p>
+        <h2 class='table-title'>Attestations</h1>
+        <table>
+          <tr>
+          <th class='header-title cell'>attestor</th>
+          <th class='header-title cell'>attestee</th>
+          <th class='header-title cell'>type</th>
+          <th class='header-title cell'>created_at</th>
+          </tr>
+        
         {{#each results.attestations}}
-          {{attestee}}
+          <tr><td class="border-row" colspan="4"></td></tr>
+          <tr>
+            <td class='data cell'>{{attestor}}</td>
+            <td class='data cell'>{{attestee}}</td>
+            <td class='data cell'>{{type}}</td>
+            <td class='data cell'>{{created_at}}</td>
+          </tr>
         {{/each}}
+        </table>
       </div>
     </div>
   </body>
