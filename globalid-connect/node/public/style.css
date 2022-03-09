@@ -1,6 +1,6 @@
 @font-face {
   font-family: Averta;
-  src: url(./assets/averta/Averta.woff);
+  src: url(./averta/Averta.woff);
   color: #101010;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .round {
-  border-radius: 16px;
+  border-radius: 8px;
 }
 
 .full-round {
@@ -52,12 +52,9 @@ body {
   display: flex;
   background-color: white;
   justify-content: center;
+  height: 14.75rem;
+  width: 38.25rem;
   padding: 3rem;
-}
-
-.card-content-index {
-  width: 32.25rem;
-  height: 23.75rem;
 }
 
 .card-content-results {
@@ -73,15 +70,11 @@ body {
 .action-button,
 .action-button:visited {
   color: white;
+  width: 10rem;
   background-color: #0d51ff;
   text-decoration: none;
   padding: 0.63rem 1.25rem;
   align-self: center;
-}
-
-.list {
-  list-style: none;
-  padding: 0;
 }
 
 /****************** Styles for results go HERE ******************/
