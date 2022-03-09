@@ -57,10 +57,6 @@ body {
   padding: 3rem;
 }
 
-.card-content-results {
-  width: 72.25rem;
-}
-
 .card-content-box {
   display: flex;
   flex-direction: column;
@@ -70,7 +66,7 @@ body {
 .action-button,
 .action-button:visited {
   color: white;
-  width: 10rem;
+  width: 11rem;
   background-color: #0d51ff;
   text-decoration: none;
   padding: 0.63rem 1.25rem;
