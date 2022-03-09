@@ -3,6 +3,11 @@
   src: url(./averta/Averta.woff);
   color: #101010;
 }
+@font-face {
+  font-family: Averta-SemiBold;
+  src: url(./averta/AvertaSemiBold.woff);
+  color: #101010;
+}
 
 body {
   background-color: #e5e5e5;
@@ -24,20 +29,24 @@ body {
   flex-direction: column;
 }
 
+.card-label {
+  font-family: Averta-SemiBold;
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
 .card-title {
   font-size: 2.25rem;
   font-weight: 600;
-}
-
-.card-label {
-  font-size: 1rem;
-  font-weight: 700;
 }
 
 .card-focus-text {
   color: #646466;
   margin-top: 0;
   flex-grow: 1;
+  font-size: 1.5rem;
+  line-height: 2rem;
 }
 
 .round {
@@ -52,9 +61,8 @@ body {
   display: flex;
   background-color: white;
   justify-content: center;
-  height: 14.75rem;
-  width: 38.25rem;
-  padding: 3rem;
+  width: 35rem;
+  padding: 2rem;
 }
 
 .card-content-box {
@@ -66,7 +74,6 @@ body {
 .action-button,
 .action-button:visited {
   color: white;
-  width: 11rem;
   background-color: #0d51ff;
   text-decoration: none;
   padding: 0.63rem 1.25rem;
