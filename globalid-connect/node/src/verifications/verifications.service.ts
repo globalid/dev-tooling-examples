@@ -13,6 +13,11 @@ export class VerificationsService {
     private readonly nonceService: NonceService
   ) {}
 
+  /**
+   * Handle authentication and return the User's data from the API
+   *
+   * @param code Authorization code provided to the developer app
+   */
   async connect(code: string): Promise<UserData> {
     const client = await this.gidApiClientFactory.create(code);
     return {
