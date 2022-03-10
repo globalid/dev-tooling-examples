@@ -10,24 +10,38 @@
   color: #101010;
 }
 
-body {
-  background-color: #e5e5e5;
-  font-family: Averta;
+.attestations-table td:not(td:last-child) {
+  width: 33%;
 }
 
-.flex-center-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.page-header {
-  margin-top: 2.25rem;
+.brand {
   margin-bottom: 4.69em;
+  margin-top: 2.25rem;
 }
 
-.flex-column {
+.button,
+.button:visited {
+  align-self: center;
+  background-color: #0d51ff;
+  border-radius: 9999px;
+  color: white;
+  min-width: 10rem;
+  padding: 0.63rem 1.25rem;
+  text-decoration: none;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card-connect {
+  width: 57rem;
 }
 
 .card-label {
@@ -44,48 +58,73 @@ body {
 
 .card-focus-text {
   color: #646466;
-  margin-top: 0;
   flex-grow: 1;
   font-size: 1.5rem;
   line-height: 2rem;
+  margin-top: 0;
 }
 
-.round {
-  border-radius: 8px;
-}
-
-.full-round {
-  border-radius: 9999px;
-}
-
-.display-card {
-  display: flex;
-  background-color: white;
-  justify-content: center;
+.card-verifications {
   width: 35rem;
-  padding: 2rem;
 }
 
-.card-content-box {
+.flex-center-center {
+  align-items: center;
   display: flex;
+  justify-content: center;
+}
+
+.flex-column {
   flex-direction: column;
-  text-align: center;
 }
 
-.action-button,
-.action-button:visited {
-  color: white;
-  background-color: #0d51ff;
-  text-decoration: none;
-  padding: 0.63rem 1.25rem;
-  align-self: center;
+.pii-table td:not(td:last-child) {
+  width: 55%;
 }
 
-/****************** Styles for results go HERE ******************/
-.border-row {
-  border-top: solid 1px black;
+.spacer {
+  height: 4rem;
 }
 
-.cell {
+.vertical-table th {
+  width: 100%;
+}
+
+.vertical-table td:last-child {
+  text-align: right;
+}
+
+.vertical-table tr:hover,
+tr:nth-child(n + 2):hover {
+  background-color: #f7f7f7;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: Averta;
+}
+
+h2 {
   text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: courier;
+}
+
+td,
+th {
+  border: 0;
+  padding: 0.5rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+tr {
+  border-top: solid 1px #e5e5e5;
+}
+
+tr:first-child {
+  border: none;
 }
