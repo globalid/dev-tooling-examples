@@ -16,6 +16,7 @@ export class VerificationsController {
   }
 
   @Get('connect')
+  @Render('connect')
   connect(@Query() query: ConnectParams) {
     return this.verificationsService.connect(query.code);
   }
