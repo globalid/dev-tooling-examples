@@ -9,59 +9,64 @@
     <div class='card card-connect'>
       <p class='card-label'>Demo App</p>
       <h1 class='card-title'>GlobaliD Connect Demo</h1>
-      <p class='card-focus-text'>Dolor sit amet discovered siamesecalico peaceful her Gizmo peaceful boy rutrum
-        caturday enim lived quis Mauris sit malesuada</p>
+      <p class='card-focus-text'>
+        Dolor sit amet discovered siamesecalico peaceful her Gizmo peaceful boy rutrum caturday enim lived quis Mauris
+        sit malesuada
+      </p>
+
       <h2>Identity</h2>
-      <table class="vertical-table">
+      <table class='vertical-table'>
         <tr>
-          <th>gid_uuid</td>
+          <th>gid_uuid</th>
           <td>{{identity.gid_uuid}}</td>
         </tr>
         <tr>
-          <th>gid_name</td>
+          <th>gid_name</th>
           <td>{{identity.gid_name}}</td>
         </tr>
         <tr>
-          <th>display_name</td>
+          <th>display_name</th>
           <td>{{identity.display_name}}</td>
         </tr>
       </table>
+
       <h2>Attestations</h2>
-      <table class="attestations-table">
+      <table class='attestations-table'>
         <tr>
           <th>type</th>
           <th>attestor</th>
           <th>verification_type</th>
           <th>created_at</th>
         </tr>
-      
-      {{#each attestations}}
-        <tr>
-          <td>{{type}}</td>
-          <td>{{attestor}}</td>
-          <td>{{verification_type}}</td>
-          <td>{{created_at}}</td>
-        </tr>
-      {{/each}}
+        {{#each attestations}}
+          <tr>
+            <td>{{type}}</td>
+            <td>{{attestor}}</td>
+            <td>{{verification_type}}</td>
+            <td>{{created_at}}</td>
+          </tr>
+        {{/each}}
       </table>
+
       {{#if pii}}
         <h2>PII</h2>
-        <table class="pii-table">
+        <table class='pii-table'>
           <tr>
             <th>type</th>
             <th>value</th>
             <th>timestamp</th>
           </tr>
-        {{#each pii}}
-          <tr>
-            <td>{{type}}</td>
-            <td>{{value}}</td>
-            <td>{{timestamp}}</td>
-          </tr>
-        {{/each}}
+          {{#each pii}}
+            <tr>
+              <td>{{type}}</td>
+              <td>{{value}}</td>
+              <td>{{timestamp}}</td>
+            </tr>
+          {{/each}}
         </table>
       {{/if}}
-      <div class="spacer"></div>
+
+      <div class='spacer'></div>
       <a class='button' href='/verifications'>Go Back</a>
     </div>
   </body>
