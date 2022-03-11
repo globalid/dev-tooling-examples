@@ -1,14 +1,14 @@
 import { join } from 'path';
 import * as request from 'supertest';
 
+import { Attestation, Identity } from '@globalid/api-client';
+import { GidApiMockBuilder } from '@globalid/api-client/testing';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppModule } from '../src/app.module';
-import { GidApiMockBuilder } from '@globalid/api-client/dist/testing';
-import { Attestation, Identity } from '@globalid/api-client';
-import { ValidationPipe } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
 import { mockConfigService } from './common';
 
 describe('VerificationsController (e2e)', () => {
@@ -59,7 +59,7 @@ describe('VerificationsController (e2e)', () => {
         .get('/verifications/connect')
         .query('code=foo')
         .expect(200)
-        .expect({ attestations, identity });
+        .expect('Content-Type', /^text\/html/);
       expect(scope.isDone()).toBe(true);
     });
 

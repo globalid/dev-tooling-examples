@@ -9,6 +9,6 @@ import { VerificationsService } from './verifications.service';
 @Module({
   imports: [HttpModule],
   controllers: [VerificationsController],
-  providers: [NonceService, VerificationsService, gidApiClientFactoryProvider]
+  providers: [gidApiClientFactoryProvider, NonceService, VerificationsService]
 })
 export class VerificationsModule {}
