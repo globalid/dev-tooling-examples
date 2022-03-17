@@ -1,4 +1,4 @@
-import { GidApiClientFactory } from '@globalid/api-client';
+import { ConsentCommand, GidApiClientFactory } from '@globalid/api-client';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -25,6 +25,11 @@ export class VerificationsService {
       identity: await client.identity.get(),
       pii: await client.pii?.get()
     };
+  }
+
+  async getDelayedVerificationsStatus(code: string, decoupledId: string): Promise<ConsentCommand> {
+    const client = await this.gidApiClientFactory.create(code);
+    return client.consent.getCommand(decoupledId);
   }
 
   makeConnectUrl(): string {

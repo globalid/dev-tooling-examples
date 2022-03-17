@@ -9,7 +9,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppModule } from '../src/app.module';
-import { mockConfigService } from './common';
+import { code, decoupledId, mockConfigService } from './common';
 
 describe('VerificationsController (e2e)', () => {
   let app: NestExpressApplication;
@@ -57,7 +57,18 @@ describe('VerificationsController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/verifications/connect')
-        .query('code=foo')
+        .query(`code=${code}`)
+        .expect(200)
+        .expect('Content-Type', /^text\/html/);
+      expect(scope.isDone()).toBe(true);
+    });
+
+    it('should support delayed verifications flow', async () => {
+      const scope = new GidApiMockBuilder().mockGetConsentCommand(decoupledId).build();
+
+      await request(app.getHttpServer())
+        .get('/verifications/connect')
+        .query(`code=${code}&decoupled_id=${decoupledId}`)
         .expect(200)
         .expect('Content-Type', /^text\/html/);
       expect(scope.isDone()).toBe(true);
