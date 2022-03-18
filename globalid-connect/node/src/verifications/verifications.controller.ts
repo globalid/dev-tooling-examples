@@ -1,27 +1,28 @@
-import { Controller, Get, Query, Render } from '@nestjs/common';
+import { Response } from 'express';
+
+import { Controller, Get, Query, Render, Res } from '@nestjs/common';
 
 import { ConnectParams } from './connect-params';
 import { VerificationsService } from './verifications.service';
 
 @Controller('verifications')
 export class VerificationsController {
-  constructor(private readonly verificationsService: VerificationsService) {}
+  constructor(private readonly service: VerificationsService) {}
 
   @Get()
   @Render('verifications')
   index() {
     return {
-      connectUrl: this.verificationsService.makeConnectUrl()
+      connectUrl: this.service.makeConnectUrl()
     };
   }
 
   @Get('connect')
-  @Render('connect')
-  connect(@Query() query: ConnectParams) {
+  async connect(@Query() query: ConnectParams, @Res() res: Response) {
     if (query.decoupled_id === undefined) {
-      return this.verificationsService.connect(query.code);
+      res.render('connect', await this.service.connect(query.code));
     } else {
-      return this.verificationsService.getDelayedVerificationsStatus(query.code, query.decoupled_id);
+      res.render('delayed', await this.service.getDelayedVerificationsStatus(query.code, query.decoupled_id));
     }
   }
 }
