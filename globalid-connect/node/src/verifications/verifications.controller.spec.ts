@@ -1,11 +1,13 @@
+import { Response } from 'express';
+
+import { ConsentCommand } from '@globalid/api-client';
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { code, decoupledId } from '../../test/common';
-import { VerificationsController } from './verifications.controller';
 import { UserData } from './user-data.interface';
+import { VerificationsController } from './verifications.controller';
 import { VerificationsService } from './verifications.service';
-import { ConsentCommand } from '@globalid/api-client';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
@@ -37,15 +39,22 @@ describe('VerificationsController', () => {
   });
 
   describe('connect', () => {
+    let res;
+
+    beforeEach(() => {
+      res = createMock<Response>();
+    });
+
     it('should delegate to the VerificationsService', async () => {
       const userData = createMock<UserData>();
       const connectSpy = jest.spyOn(service, 'connect').mockResolvedValueOnce(userData);
 
-      const result = await controller.connect({ code });
+      await controller.connect({ code }, res);
 
-      expect(result).toBe(userData);
       expect(connectSpy).toHaveBeenCalledTimes(1);
       expect(connectSpy).toHaveBeenCalledWith(code);
+      expect(res.render).toHaveBeenCalledTimes(1);
+      expect(res.render).toHaveBeenCalledWith('connect', userData);
     });
 
     it('should support delayed verifications flow', async () => {
@@ -54,11 +63,12 @@ describe('VerificationsController', () => {
         .spyOn(service, 'getDelayedVerificationsStatus')
         .mockResolvedValueOnce(consentCommand);
 
-      const result = await controller.connect({ code, decoupled_id: decoupledId });
+      await controller.connect({ code, decoupled_id: decoupledId }, res);
 
-      expect(result).toBe(consentCommand);
       expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledTimes(1);
       expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledWith(code, decoupledId);
+      expect(res.render).toHaveBeenCalledTimes(1);
+      expect(res.render).toHaveBeenCalledWith('delayed', consentCommand);
     });
   });
 });
