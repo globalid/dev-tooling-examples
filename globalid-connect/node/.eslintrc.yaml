@@ -18,4 +18,4 @@ rules:
   '@typescript-eslint/no-explicit-any': off
   jest/expect-expect:
     - error
-    - assertFunctionNames: [expect, request.*.expect]
+    - assertFunctionNames: [expect, request.**.expect]

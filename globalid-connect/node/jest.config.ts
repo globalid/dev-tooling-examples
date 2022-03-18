@@ -3,18 +3,19 @@ import type { Config } from '@jest/types';
 const config: Config.InitialOptions = {
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
+  coveragePathIgnorePatterns: [
+    '<rootDir>/.*\\.module.ts$',
+    '<rootDir>/.*\\.provider.ts$',
+    '<rootDir>/.*\\.schema.ts$',
+    '<rootDir>/main.ts$',
+    '<rootDir>/setup.ts$'
+  ],
   coverageThreshold: {
     global: {
       branches: 100,
       functions: 100,
       lines: 100,
       statements: 100
-    },
-    'src/{**/*.module.ts,**/*.schema.ts,**/*.provider.ts,main.ts}': {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0
     }
   },
   moduleFileExtensions: ['js', 'json', 'ts'],

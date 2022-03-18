@@ -8,6 +8,7 @@ import { code, decoupledId } from '../../test/common';
 import { UserData } from './user-data.interface';
 import { VerificationsController } from './verifications.controller';
 import { VerificationsService } from './verifications.service';
+import { ErrorParams } from './error-params';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
@@ -57,13 +58,22 @@ describe('VerificationsController', () => {
       expect(res.render).toHaveBeenCalledWith('connect', userData);
     });
 
-    it('should support delayed verifications flow', async () => {
+    it('should handle user decline flow', async () => {
+      const errorParams = new ErrorParams();
+
+      await controller.connect(errorParams, res);
+
+      expect(res.render).toHaveBeenCalledTimes(1);
+      expect(res.render).toHaveBeenCalledWith('error', errorParams);
+    });
+
+    it('should handle delayed verifications flow', async () => {
       const consentCommand = createMock<ConsentCommand>();
       const getDelayedVerificationsStatusSpy = jest
         .spyOn(service, 'getDelayedVerificationsStatus')
         .mockResolvedValueOnce(consentCommand);
 
-      await controller.connect({ code, decoupled_id: decoupledId }, res);
+      await controller.connect({ code, decoupledId }, res);
 
       expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledTimes(1);
       expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledWith(code, decoupledId);
