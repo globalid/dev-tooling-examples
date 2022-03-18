@@ -1,10 +1,11 @@
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code } from '../../test/common';
+import { code, decoupledId } from '../../test/common';
 import { VerificationsController } from './verifications.controller';
 import { UserData } from './user-data.interface';
 import { VerificationsService } from './verifications.service';
+import { ConsentCommand } from '@globalid/api-client';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;
@@ -45,6 +46,19 @@ describe('VerificationsController', () => {
       expect(result).toBe(userData);
       expect(connectSpy).toHaveBeenCalledTimes(1);
       expect(connectSpy).toHaveBeenCalledWith(code);
+    });
+
+    it('should support delayed verifications flow', async () => {
+      const consentCommand = createMock<ConsentCommand>();
+      const getDelayedVerificationsStatusSpy = jest
+        .spyOn(service, 'getDelayedVerificationsStatus')
+        .mockResolvedValueOnce(consentCommand);
+
+      const result = await controller.connect({ code, decoupled_id: decoupledId });
+
+      expect(result).toBe(consentCommand);
+      expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledTimes(1);
+      expect(getDelayedVerificationsStatusSpy).toHaveBeenCalledWith(code, decoupledId);
     });
   });
 });

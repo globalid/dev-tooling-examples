@@ -18,6 +18,10 @@ export class VerificationsController {
   @Get('connect')
   @Render('connect')
   connect(@Query() query: ConnectParams) {
-    return this.verificationsService.connect(query.code);
+    if (query.decoupled_id === undefined) {
+      return this.verificationsService.connect(query.code);
+    } else {
+      return this.verificationsService.getDelayedVerificationsStatus(query.code, query.decoupled_id);
+    }
   }
 }

@@ -11,3 +11,4 @@ export function mockConfigService(env: Record<string, any>) {
 
 export const code = '123abc';
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
+export const decoupledId = 'a1eb812d-7420-48b1-82b1-766f9ef031e2';
