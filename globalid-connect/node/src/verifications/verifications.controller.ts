@@ -3,6 +3,8 @@ import { Response } from 'express';
 import { Controller, Get, Query, Render, Res } from '@nestjs/common';
 
 import { ConnectParams } from './connect-params';
+import { ConnectParamsPipe } from './connect-params.pipe';
+import { ErrorParams } from './error-params';
 import { VerificationsService } from './verifications.service';
 
 @Controller('verifications')
@@ -18,11 +20,13 @@ export class VerificationsController {
   }
 
   @Get('connect')
-  async connect(@Query() query: ConnectParams, @Res() res: Response) {
-    if (query.decoupled_id === undefined) {
-      res.render('connect', await this.service.connect(query.code));
+  async connect(@Query(ConnectParamsPipe) query: ConnectParams | ErrorParams, @Res() res: Response) {
+    if (query instanceof ErrorParams) {
+      res.render('error', query);
+    } else if (query.decoupledId !== undefined) {
+      res.render('delayed', await this.service.getDelayedVerificationsStatus(query.code, query.decoupledId));
     } else {
-      res.render('delayed', await this.service.getDelayedVerificationsStatus(query.code, query.decoupled_id));
+      res.render('connect', await this.service.connect(query.code));
     }
   }
 }
