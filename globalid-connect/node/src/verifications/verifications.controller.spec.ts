@@ -5,10 +5,10 @@ import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { code, decoupledId } from '../../test/common';
+import { ErrorParams } from './error-params';
 import { UserData } from './user-data.interface';
 import { VerificationsController } from './verifications.controller';
 import { VerificationsService } from './verifications.service';
-import { ErrorParams } from './error-params';
 
 describe('VerificationsController', () => {
   let controller: VerificationsController;

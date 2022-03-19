@@ -8,29 +8,23 @@
     <div class='brand'><img src='../gid-logo.svg' alt='GlobaliD logo' /></div>
     <div class='card'>
       <p class='card-label'>GlobaliD Connect Demo</p>
-      <h1 class='card-title'>Delayed Verifications Flow</h1>
+      <h1 class='card-title'>User Decline Flow</h1>
       <div class='card-focus'>
         <p class='card-focus-text'>
-          This page demonstrates the flow for required verifications that take longer to complete. In addition to an
-          authorization
-          <code>code</code>, you will receive a
-          <code>decoupled_id</code>
-          that you can use to retrieve the verification status.
+          When the user declines the request to connect using GlobaliD, you will receive an
+          <code>error</code>
+          and an
+          <code>error_description</code>.
         </p>
       </div>
-
       <table class='vertical-table'>
         <tr>
-          <th>status</th>
-          <td>{{status}}</td>
+          <th>error</th>
+          <td>{{error}}</td>
         </tr>
         <tr>
-          <th>requested_at</th>
-          <td>{{requested_at}}</td>
-        </tr>
-        <tr>
-          <th>expires_at</th>
-          <td>{{expires_at}}</td>
+          <th>error_description</th>
+          <td>{{errorDescription}}</td>
         </tr>
       </table>
 
