@@ -38,6 +38,7 @@
   justify-content: center;
   padding: 2rem;
   text-align: center;
+  min-width: 55rem;
 }
 
 .card-focus {
@@ -105,8 +106,20 @@ body {
   font-family: Averta;
 }
 
+code {
+  color: #153a9a;
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  background-color: rgba(100, 100, 102, 0.1);
+}
+
 h2 {
   text-align: left;
+}
+
+hr {
+  border: solid 1px #e5e5e5;
+  width: 100%;
 }
 
 table {
