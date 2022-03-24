@@ -22,7 +22,6 @@ export class VerificationsController {
   @Get('connect')
   async connect(@Query(ConnectParamsPipe) query: ConnectParams | ErrorParams, @Res() res: Response) {
     if (query instanceof ErrorParams) {
-      //TODO fix this on render. Still displays as htmlEncoded string
       res.render('error', query);
     } else if (query.decoupledId !== undefined) {
       res.render('delayed', await this.service.getDelayedVerificationsStatus(query.code, query.decoupledId));

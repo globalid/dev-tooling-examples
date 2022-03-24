@@ -17,6 +17,7 @@ export class ConnectParamsPipe implements PipeTransform<Record<string, unknown>>
     }
     return params;
   }
+
   private parse(value: Record<string, unknown>): ConnectParams | ErrorParams {
     if (value.code === undefined) {
       const error = plainToClass(ErrorParams, value);

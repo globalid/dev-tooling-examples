@@ -33,6 +33,7 @@ describe('ConnectParamsPipe', () => {
   it('should transform error and error_description to ErrorParams', async () => {
     const error = 'foo';
     const description = 'Lorem ipsum';
+
     const result = await pipe.transform({ error, error_description: description });
 
     expect(result).toBeInstanceOf(ErrorParams);
