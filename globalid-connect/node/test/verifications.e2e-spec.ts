@@ -1,15 +1,14 @@
-import { join } from 'path';
 import * as request from 'supertest';
 
 import { Attestation, Identity } from '@globalid/api-client';
 import { GidApiMockBuilder } from '@globalid/api-client/testing';
-import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppModule } from '../src/app.module';
-import { mockConfigService } from './common';
+import { setup } from '../src/setup';
+import { code, decoupledId, mockConfigService } from './common';
 
 describe('VerificationsController (e2e)', () => {
   let app: NestExpressApplication;
@@ -26,9 +25,7 @@ describe('VerificationsController (e2e)', () => {
       .compile();
 
     app = moduleFixture.createNestApplication();
-    app.useGlobalPipes(new ValidationPipe());
-    app.setBaseViewsDir(join(__dirname, '..', 'views'));
-    app.setViewEngine('hbs');
+    setup(app);
     await app.init();
   });
 
@@ -57,13 +54,32 @@ describe('VerificationsController (e2e)', () => {
 
       await request(app.getHttpServer())
         .get('/verifications/connect')
-        .query('code=foo')
+        .query(`code=${code}`)
         .expect(200)
         .expect('Content-Type', /^text\/html/);
       expect(scope.isDone()).toBe(true);
     });
 
-    it('should 400 without an authorization code', () => {
+    it('should handle user decline flow', () => {
+      return request(app.getHttpServer())
+        .get('/verifications/connect')
+        .query('error=foo&error_description=Lorem+ipsum')
+        .expect(200)
+        .expect('Content-Type', /^text\/html/);
+    });
+
+    it('should handle delayed verifications flow', async () => {
+      const scope = new GidApiMockBuilder().mockGetConsentCommand(decoupledId).build();
+
+      await request(app.getHttpServer())
+        .get('/verifications/connect')
+        .query(`code=${code}&decoupled_id=${decoupledId}`)
+        .expect(200)
+        .expect('Content-Type', /^text\/html/);
+      expect(scope.isDone()).toBe(true);
+    });
+
+    it('should 400 without query params', () => {
       return request(app.getHttpServer()).get('/verifications/connect').expect(400);
     });
   });

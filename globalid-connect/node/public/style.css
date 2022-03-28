@@ -38,6 +38,7 @@
   justify-content: center;
   padding: 2rem;
   text-align: center;
+  min-width: 55rem;
 }
 
 .card-focus {
@@ -103,6 +104,13 @@ tr:nth-child(n + 2):hover {
 body {
   background-color: #e5e5e5;
   font-family: Averta;
+}
+
+code {
+  color: #153a9a;
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  background-color: rgba(100, 100, 102, 0.1);
 }
 
 h2 {

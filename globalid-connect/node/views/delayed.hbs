@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <meta charset='utf-8' />
+    <title>GlobaliD Connect Demo</title>
+    <link rel='stylesheet' href='../style.css' type='text/css' />
+  </head>
+  <body class='flex-center-center flex-column'>
+    <div class='brand'><img src='../gid-logo.svg' alt='GlobaliD logo' /></div>
+    <div class='card'>
+      <p class='card-label'>GlobaliD Connect Demo</p>
+      <h1 class='card-title'>Delayed Verifications Flow</h1>
+      <div class='card-focus'>
+        <p class='card-focus-text'>
+          This page demonstrates the flow for required verifications that take longer to complete. In addition to an
+          authorization
+          <code>code</code>, you will receive a
+          <code>decoupled_id</code>
+          that you can use to retrieve the verification status.
+        </p>
+      </div>
+
+      <table class='vertical-table'>
+        <tr>
+          <th>status</th>
+          <td>{{status}}</td>
+        </tr>
+        <tr>
+          <th>requested_at</th>
+          <td>{{requested_at}}</td>
+        </tr>
+        <tr>
+          <th>expires_at</th>
+          <td>{{expires_at}}</td>
+        </tr>
+      </table>
+
+      <div class='spacer'></div>
+      <a class='button' href='/verifications'>Go Back</a>
+    </div>
+  </body>
+</html>

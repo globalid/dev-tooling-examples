@@ -1,10 +1,10 @@
-import { Attestation, GidApiClientFactory, Identity, Pii } from '@globalid/api-client';
+import { Attestation, ConsentCommand, GidApiClientFactory, Identity, Pii } from '@globalid/api-client';
 import { createGidApiClientMock } from '@globalid/api-client/testing';
 import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { code } from '../../test/common';
+import { code, decoupledId } from '../../test/common';
 import { NonceService } from './nonce.service';
 import { VerificationsService } from './verifications.service';
 
@@ -64,6 +64,23 @@ describe('VerificationsService', () => {
       expect(client.attestations.get).toHaveBeenCalledTimes(1);
       expect(client.identity.get).toHaveBeenCalledTimes(1);
       expect(client.pii.get).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('getDelayedVerificationsStatus', () => {
+    it('should call consent.getCommand()', async () => {
+      const consentCommand = createMock<ConsentCommand>();
+      const client = createGidApiClientMock();
+      client.consent.getCommand.mockResolvedValueOnce(consentCommand);
+      const createSpy = jest.spyOn(gidApiClientFactory, 'create').mockResolvedValueOnce(client);
+
+      const result = await service.getDelayedVerificationsStatus(code, decoupledId);
+
+      expect(result).toBe(consentCommand);
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(createSpy).toHaveBeenCalledWith(code);
+      expect(client.consent.getCommand).toHaveBeenCalledTimes(1);
+      expect(client.consent.getCommand).toHaveBeenCalledWith(decoupledId);
     });
   });
 
