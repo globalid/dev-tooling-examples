@@ -1,4 +1,10 @@
 export interface ProofRequestDto {
+  presentationRequirements: PresentationRequirements;
+  trackingId: string;
+  webhookUrl: string;
+}
+
+export interface PresentationRequirements {
   comment: string;
   presentation_definition: PresentationDefinition;
 }
