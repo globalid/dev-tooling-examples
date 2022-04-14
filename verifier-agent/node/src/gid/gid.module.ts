@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module } from '@nestjs/common'
+import { AuthClient } from './auth.service'
 
-@Module({})
-export class GidModule {}
+@Module({
+  providers: [ AuthClient ],
+})
+export class GidModule {
+  constructor(private authClient: AuthClient) {}
+}
