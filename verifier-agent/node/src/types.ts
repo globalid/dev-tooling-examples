@@ -8,3 +8,7 @@ export enum HttpMethod {
 export enum HttpMimeType {
   ApplicationJSON = 'application/json'
 }
+
+export enum GrantType {
+  ClientCredentials = 'client_credentials',
+}

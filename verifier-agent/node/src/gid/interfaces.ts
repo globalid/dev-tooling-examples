@@ -1,7 +1,7 @@
 export interface IAuthClient {
-  clientID: string
+  clientId: string
   clientSecret: string
 
-  init(clientID: string, cliendSecret: string): void
+  init(clientId: string, cliendSecret: string): void
   getAppAccessToken(): Promise<string>
 }

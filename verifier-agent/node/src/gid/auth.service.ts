@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ClientCredentialsMissingError } from '../errors'
-import { HttpMimeType, HttpMethod } from '../types'
+import { HttpMimeType, HttpMethod, GrantType } from '../types'
 import { IAuthClient } from './interfaces'
 // TODO uncomment and change path when config is figured out
 // import config from './somewhere/config'
@@ -11,22 +11,18 @@ const config: { apiBaseURL: string } = {
   apiBaseURL: '',
 }
 
-export enum GrantType {
-  ClientCredentials = 'client_credentials',
-}
-
 @Injectable()
 export class AuthClient implements IAuthClient {
-  clientID: string
+  clientId: string
   clientSecret: string
 
-  init(clientID: string, cliendSecret: string): void {
-    this.clientID = clientID
-    this.clientSecret = cliendSecret
+  init(clientId: string, clientSecret: string): void {
+    this.clientId = clientId
+    this.clientSecret = clientSecret
   }
 
   async getAppAccessToken(): Promise<string> {
-    if (!this.clientID || !this.clientSecret) {
+    if (!this.clientId || !this.clientSecret) {
       throw new ClientCredentialsMissingError()
     }
 
@@ -51,7 +47,7 @@ export class AuthClient implements IAuthClient {
         'Accept': HttpMimeType.ApplicationJSON,
       },
       data: {
-        client_id: this.clientID,
+        client_id: this.clientId,
         client_secret: this.clientSecret,
         grant_type: GrantType.ClientCredentials,
       }
