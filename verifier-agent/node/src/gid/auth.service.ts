@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common'
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import { ClientCredentialsMissingError } from '../errors'
 import { HttpMimeType, HttpMethod, GrantType } from '../types'
-import { IAuthClient } from './interfaces'
+import { IAuthClient } from './auth.interface'
 // TODO uncomment and change path when config is figured out
 // import config from './somewhere/config'
 
@@ -11,12 +10,11 @@ const config: { apiBaseURL: string } = {
   apiBaseURL: '',
 }
 
-@Injectable()
 export class AuthClient implements IAuthClient {
-  clientId: string
-  clientSecret: string
+  private clientId: string
+  private clientSecret: string
 
-  init(clientId: string, clientSecret: string): void {
+  constructor(clientId: string, clientSecret: string) {
     this.clientId = clientId
     this.clientSecret = clientSecret
   }
