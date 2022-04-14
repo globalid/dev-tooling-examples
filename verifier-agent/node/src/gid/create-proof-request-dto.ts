@@ -76,7 +76,7 @@ export interface InputDescriptor {
   /**
    * An object with one or more properties matching the registered Claim Format Designations (e.g., jwt, jwt_vc, jwt_vp, etc.).
    * Specifies which Claim Formats the Verifier can process.
-   * 
+   *
    * This format property is identical in value signature to the top-level format object,
    * but can be used to specifically constrain submission of a single input to a subset of formats or algorithms.
    * @see https://identity.foundation/presentation-exchange/#claim-format-designations
@@ -123,5 +123,5 @@ export enum SubmissionRequirementRule {
 
 export enum LimitDisclosureSetting {
   Preferred = 'preferred',
-  Required = 'required',
+  Required = 'required'
 }
