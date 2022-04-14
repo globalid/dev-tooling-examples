@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { ClientCredentialsMissingError } from '../errors'
 import { HttpMimeType, HttpMethod, GrantType } from '../types'
 import { IAuthClient } from './auth.interface'
 // TODO uncomment and change path when config is figured out
@@ -20,10 +19,6 @@ export class AuthClient implements IAuthClient {
   }
 
   async getAppAccessToken(): Promise<string> {
-    if (!this.clientId || !this.clientSecret) {
-      throw new ClientCredentialsMissingError()
-    }
-
     interface Request {
       client_id: string
       client_secret: string
