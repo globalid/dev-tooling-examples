@@ -18,7 +18,7 @@ export interface PresentationDefinition {
    * Specifies which Claim Formats the Verifier can process.
    * @see https://identity.foundation/presentation-exchange/#claim-format-designations
    */
-  format?: Object;
+  format?: any;
   /**
    * A JSON LD Framing Document object.
    * @see https://w3c.github.io/json-ld-framing/
@@ -81,7 +81,7 @@ export interface InputDescriptor {
    * but can be used to specifically constrain submission of a single input to a subset of formats or algorithms.
    * @see https://identity.foundation/presentation-exchange/#claim-format-designations
    */
-  format?: Object;
+  format?: any;
   /**
    * Array of group names used by `SubmissionRequirement` to pick some number of requirements, if `rule` = "pick"
    */
