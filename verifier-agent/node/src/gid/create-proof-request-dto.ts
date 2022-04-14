@@ -116,6 +116,6 @@ export interface Field {
   purpose?: string;
 }
 
-export type SubmissionRequirementRule = 'all' | 'pick'
+export type SubmissionRequirementRule = 'all' | 'pick';
 
 export type LimitDisclosureSetting = 'preferred' | 'required';
