@@ -1,4 +1,4 @@
-export interface ProofRequestDto {
+export interface CreateProofRequestDto {
   presentationRequirements: PresentationRequirements;
   trackingId: string;
   webhookUrl: string;
@@ -13,7 +13,12 @@ export interface PresentationRequirements {
  * @see https://identity.foundation/presentation-exchange/#presentation-definition
  */
 export interface PresentationDefinition {
-  format?: any;
+  /**
+   * An object with one or more properties matching the registered Claim Format Designations. (e.g., jwt, jwt_vc, jwt_vp, etc.)
+   * Specifies which Claim Formats the Verifier can process.
+   * @see https://identity.foundation/presentation-exchange/#claim-format-designations
+   */
+  format?: Object;
   /**
    * A JSON LD Framing Document object.
    * @see https://w3c.github.io/json-ld-framing/
@@ -51,21 +56,41 @@ export interface SubmissionRequirement {
   /**
    * If "pick," at least `count` requirements must be met.
    */
-  rule: 'all' | 'pick';
+  rule: SubmissionRequirementRule;
 }
 
 export interface InputDescriptor {
+  /**
+   * Field constraints and disclosure setting
+   */
   constraints?: Constraints;
   id: string;
+  /**
+   * A descriptive name.
+   */
   name?: string;
+  /**
+   * Purpose of this descriptor.
+   */
   purpose?: string;
-  format?: any;
+  /**
+   * An object with one or more properties matching the registered Claim Format Designations (e.g., jwt, jwt_vc, jwt_vp, etc.).
+   * Specifies which Claim Formats the Verifier can process.
+   * 
+   * This format property is identical in value signature to the top-level format object,
+   * but can be used to specifically constrain submission of a single input to a subset of formats or algorithms.
+   * @see https://identity.foundation/presentation-exchange/#claim-format-designations
+   */
+  format?: Object;
+  /**
+   * Array of group names used by `SubmissionRequirement` to pick some number of requirements, if `rule` = "pick"
+   */
   group?: string[];
 }
 
 export interface Constraints {
   fields?: Field[];
-  limit_disclosure?: 'required' | 'preferred';
+  limit_disclosure?: LimitDisclosureSetting;
 }
 
 export interface Field {
@@ -90,3 +115,6 @@ export interface Field {
    */
   purpose?: string;
 }
+
+export type SubmissionRequirementRule = 'all' | 'pick';
+export type LimitDisclosureSetting = 'required' | 'preferred';
