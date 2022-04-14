@@ -116,12 +116,6 @@ export interface Field {
   purpose?: string;
 }
 
-export enum SubmissionRequirementRule {
-  All = 'all',
-  Pick = 'pick'
-}
+export type SubmissionRequirementRule = 'all' | 'pick'
 
-export enum LimitDisclosureSetting {
-  Preferred = 'preferred',
-  Required = 'required'
-}
+export type LimitDisclosureSetting = 'preferred' | 'required';
