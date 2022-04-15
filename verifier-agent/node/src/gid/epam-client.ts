@@ -14,9 +14,10 @@ export class EpamClient {
         screening_webhook_url: createProofRequestDto.webhookUrl
       },
       {
-        headers: { Authorization: `Bearer ${this.authClient.getAppAccessToken()}` }
+        headers: { Authorization: `Bearer ${await this.authClient.getAppAccessToken()}` }
       }
     );
+
     return response.data;
   }
 }
