@@ -1,7 +1,10 @@
 import { AxiosResponse } from 'axios';
 
-import { GrantType } from '../types';
 import axios from './axios';
+
+export enum GrantType {
+  ClientCredentials = 'client_credentials'
+}
 
 export interface AuthToken {
   access_token: string;
