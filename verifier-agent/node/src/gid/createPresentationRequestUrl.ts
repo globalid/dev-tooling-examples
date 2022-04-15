@@ -1,12 +1,12 @@
 import { randomUUID } from 'crypto';
 
-export interface params {
+export interface CreatePresentationUrlParams {
   clientId: string;
   initiationUrl: string;
   redirectUrl?: string;
 }
 
-export const createPresentationRequestUrl = (params: params): URL => {
+export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): URL => {
   const trackingId = randomUUID();
   const { clientId, initiationUrl, redirectUrl } = params;
 

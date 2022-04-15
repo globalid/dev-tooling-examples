@@ -1,11 +1,13 @@
-import { createPresentationRequestUrl, params } from './createPresentationRequestUrl';
+import {
+    createPresentationRequestUrl, CreatePresentationUrlParams
+} from './createPresentationRequestUrl';
 
 describe('createPresentationRequestUrl', () => {
-  const paramsNoRedirect: params = {
+  const paramsNoRedirect: CreatePresentationUrlParams = {
     clientId: 'abc-123',
     initiationUrl: 'https://www.example.com'
   };
-  const paramsRedirect: params = {
+  const paramsRedirect: CreatePresentationUrlParams = {
     clientId: 'abc-123',
     initiationUrl: 'https://www.example.com',
     redirectUrl: 'https://www.hompage.com'
