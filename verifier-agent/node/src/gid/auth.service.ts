@@ -1,13 +1,7 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios from '../utils/axios'
 import { HttpMimeType, HttpMethod, GrantType } from '../types'
 import { IAuthClient } from './auth.interface'
-// TODO uncomment and change path when config is figured out
-// import config from './somewhere/config'
-
-// TODO remove when config is figured out
-const config: { apiBaseURL: string } = {
-  apiBaseURL: '',
-}
 
 export class AuthClient implements IAuthClient {
   constructor(private readonly clientId: string, private readonly clientSecret: string) {}
@@ -28,7 +22,7 @@ export class AuthClient implements IAuthClient {
 
     const requestConfig: AxiosRequestConfig<Request> = {
       method: HttpMethod.Post,
-      url: `${config.apiBaseURL}/v1/auth/token`,
+      url: '/v1/auth/token',
       headers: {
         'Content-Type': HttpMimeType.ApplicationJSON,
         'Accept': HttpMimeType.ApplicationJSON,
