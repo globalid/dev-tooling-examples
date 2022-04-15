@@ -10,13 +10,7 @@ const config: { apiBaseURL: string } = {
 }
 
 export class AuthClient implements IAuthClient {
-  private clientId: string
-  private clientSecret: string
-
-  constructor(clientId: string, clientSecret: string) {
-    this.clientId = clientId
-    this.clientSecret = clientSecret
-  }
+  constructor(private readonly clientId: string, private readonly clientSecret: string) {}
 
   async getAppAccessToken(): Promise<string> {
     interface Request {
