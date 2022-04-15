@@ -3,18 +3,17 @@ import {
 } from './createPresentationRequestUrl';
 
 describe('createPresentationRequestUrl', () => {
-  const paramsNoRedirect: CreatePresentationUrlParams = {
+  const baseParams: CreatePresentationUrlParams = {
     clientId: 'abc-123',
     initiationUrl: 'https://www.example.com'
   };
   const paramsRedirect: CreatePresentationUrlParams = {
-    clientId: 'abc-123',
-    initiationUrl: 'https://www.example.com',
+    ...baseParams,
     redirectUrl: 'https://www.hompage.com'
   };
 
   it('should return a URL with origin https://link.global.id', () => {
-    const proofUrl = createPresentationRequestUrl(paramsNoRedirect);
+    const proofUrl = createPresentationRequestUrl(baseParams);
     expect(proofUrl.origin).toBe('https://link.global.id');
   });
 
