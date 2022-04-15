@@ -6,19 +6,20 @@ export interface CreatePresentationUrlParams {
   redirectUrl?: string;
 }
 
-export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): URL => {
+export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): [URL, string] => {
   const trackingId = randomUUID();
   const { clientId, initiationUrl, redirectUrl } = params;
 
-  const lintUrl = new URL('https://link.global.id');
-  lintUrl.searchParams.append('app_uuid', clientId);
+  const linkUrl = new URL('https://link.global.id');
+  linkUrl.searchParams.append('app_uuid', clientId);
   const proofRequestUrl = new URL(initiationUrl);
   proofRequestUrl.searchParams.append('tracking_id', trackingId);
-  lintUrl.searchParams.append('proof_request_url', proofRequestUrl.toString());
+  console.log('proofRequestUrl', proofRequestUrl);
+  linkUrl.searchParams.append('proof_request_url', proofRequestUrl.toString());
   if (redirectUrl !== undefined) {
     const redirect = new URL(redirectUrl);
     redirect.searchParams.append('tracking_id', trackingId);
-    lintUrl.searchParams.append('redirect_url', redirect.toString());
+    linkUrl.searchParams.append('redirect_url', redirect.toString());
   }
-  return lintUrl;
+  return [linkUrl, trackingId];
 };
