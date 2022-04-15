@@ -17,7 +17,7 @@ describe('createPresentationRequestUrl', () => {
     expect(proofUrl.origin).toBe('https://link.global.id');
   });
 
-  it('should return a URL with origin https://link.global.id with redirectURL', () => {
+  it('should return a URL with origin https://link.global.id with redirectUrl', () => {
     const proofUrl = createPresentationRequestUrl(paramsRedirect);
     expect(proofUrl.origin).toBe('https://link.global.id');
     expect(proofUrl.href).toContain('www.hompage.com');
