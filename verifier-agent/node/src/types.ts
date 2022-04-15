@@ -2,7 +2,7 @@ export enum HttpMethod {
   Get = 'GET',
   Post = 'POST',
   Put = 'PUT',
-  Delete = 'DELETE',
+  Delete = 'DELETE'
 }
 
 export enum HttpMimeType {
@@ -10,5 +10,12 @@ export enum HttpMimeType {
 }
 
 export enum GrantType {
-  ClientCredentials = 'client_credentials',
+  ClientCredentials = 'client_credentials'
+}
+
+export interface ClientOptions {
+  /** Developer app's client ID */
+  clientId: string;
+  /** Developer app's client secret */
+  clientSecret: string;
 }
