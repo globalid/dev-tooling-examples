@@ -14,7 +14,6 @@ export const createPresentationRequestUrl = (params: CreatePresentationUrlParams
   linkUrl.searchParams.append('app_uuid', clientId);
   const proofRequestUrl = new URL(initiationUrl);
   proofRequestUrl.searchParams.append('tracking_id', trackingId);
-  console.log('proofRequestUrl', proofRequestUrl);
   linkUrl.searchParams.append('proof_request_url', proofRequestUrl.toString());
   if (redirectUrl !== undefined) {
     const redirect = new URL(redirectUrl);
