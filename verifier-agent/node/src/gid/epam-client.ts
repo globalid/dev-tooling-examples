@@ -1,31 +1,13 @@
 import { AuthClient } from './auth-client';
 import axios from './axios';
 import { CreateProofRequestDto } from './create-proof-request-dto';
-import { CreateProofRequestEpamDto } from './create-proof-request-epam-dto';
 
 export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}
 
   async createProofRequest(createProofRequestDto: CreateProofRequestDto): Promise<any> {
     const accessToken = await this.authClient.getAppAccessToken();
-    const response = await axios.post(
-      '/v2/aries/management/external-party/proof-requests',
-      {
-        proof_requirements: createProofRequestDto.presentationRequirements,
-        tracking_id: createProofRequestDto.trackingId,
-        screening_webhook_url: createProofRequestDto.webhookUrl
-      },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      }
-    );
-
-    return response.data;
-  }
-
-  async createProofRequestEpam(createProofRequestEpamDto: CreateProofRequestEpamDto): Promise<any> {
-    const accessToken = await this.authClient.getAppAccessToken();
-    const response = await axios.post('/v2/aries/management/external-party/proof-requests', createProofRequestEpamDto, {
+    const response = await axios.post('/v2/aries/management/external-party/proof-requests', createProofRequestDto, {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
 

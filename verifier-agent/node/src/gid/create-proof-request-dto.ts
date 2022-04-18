@@ -1,125 +1,161 @@
 import { UnknownRecord } from '../interfaces';
 
 export interface CreateProofRequestDto {
-  presentationRequirements: PresentationRequirements;
-  trackingId: string;
-  webhookUrl: string;
-}
-
-export interface PresentationRequirements {
-  comment: string;
-  presentation_definition: PresentationDefinition;
+  /**
+   * presentationRequirements
+   */
+  proof_requirements: ProofRequirements;
+  /**
+   * trackingId
+   */
+  tracking_id: string;
+  /**
+   * webhookUrl
+   */
+  screening_webhook_url: string;
 }
 
 /**
- * @see https://identity.foundation/presentation-exchange/#presentation-definition
+ * PresentationDefinition
  */
-export interface PresentationDefinition {
-  /**
-   * An object with one or more properties matching the registered Claim Format Designations. (e.g., jwt, jwt_vc, jwt_vp, etc.)
-   * Specifies which Claim Formats the Verifier can process.
-   * @see https://identity.foundation/presentation-exchange/#claim-format-designations
-   */
-  format?: UnknownRecord;
-  /**
-   * A JSON LD Framing Document object.
-   * @see https://w3c.github.io/json-ld-framing/
-   */
-  frame?: UnknownRecord;
+export interface ProofRequirements {
+  name?: string;
+  purpose?: string;
   id: string;
-  input_descriptors: InputDescriptor[];
-  name?: string;
-  purpose?: string;
-  submission_requirements: SubmissionRequirement[];
+  format: Format;
+  input_descriptors: InputDescriptors[];
 }
 
-export interface SubmissionRequirement {
-  /**
-   * If `rule` is "pick," the minimum number of met requirements in the group `from`.
-   */
-  count?: number;
-  /**
-   * If `rule` is "pick," which `group` to require from.
-   */
-  from?: string;
-
-  from_nested?: SubmissionRequirement[];
-
-  min?: number;
-  max?: number;
-  /**
-   * A descriptive name.
-   */
-  name?: string;
-  /**
-   * Purpose of this requirement.
-   */
-  purpose?: string;
-  /**
-   * If "pick," at least `count` requirements must be met.
-   */
-  rule: SubmissionRequirementRule;
+export interface Format {
+  ldp_vp?: ProofType;
+  ldp_vc?: ProofType;
 }
 
-export interface InputDescriptor {
-  /**
-   * Field constraints and disclosure setting
-   */
-  constraints?: InputDescriptorConstraints;
-  /**
-   * An object with one or more properties matching the registered Claim Format Designations (e.g., jwt, jwt_vc, jwt_vp, etc.).
-   * Specifies which Claim Formats the Verifier can process.
-   *
-   * This format property is identical in value signature to the top-level format object,
-   * but can be used to specifically constrain submission of a single input to a subset of formats or algorithms.
-   * @see https://identity.foundation/presentation-exchange/#claim-format-designations
-   */
-  format?: UnknownRecord;
+export interface ProofType {
+  proof_type: ProofAlgorithm[];
+}
 
-  /**
-   * Array of group names used by `SubmissionRequirement` to pick some number of requirements, if `rule` = "pick"
-   */
+export enum AllowanceStatus {
+  allowed = 'allowed',
+  disallowed = 'disallowed'
+}
+
+export enum RequiredStatus {
+  allowed = 'allowed',
+  disallowed = 'disallowed',
+  required = 'required'
+}
+
+export enum RequirementStatus {
+  required = 'required',
+  preferred = 'preferred'
+}
+
+/**
+ * InputDescriptor
+ */
+export interface InputDescriptors {
+  constraints: InputDescriptorsConstraints;
+  id: string;
+  name: string;
   group?: string[];
-
-  id: string;
-  /**
-   * A descriptive name.
-   */
-  name?: string;
-  /**
-   * Purpose of this descriptor.
-   */
-  purpose?: string;
+  metadata?: UnknownRecord;
+  schema: InputDescriptorsSchema | InputDescriptorsSchemaOneofFilter[];
 }
 
-export interface InputDescriptorConstraints {
-  fields?: Field[];
-  limit_disclosure?: LimitDisclosureSetting;
+export interface InputDescriptorsSchema {
+  oneof_filter?: InputDescriptorsSchemaOneofFilter[];
 }
 
-export interface Field {
-  /**
-   * A JSON Schema descriptor used to filter against the values returned from evaluation of the
-   * JSONPath string expressions in the path array.
-   */
-  filter?: UnknownRecord;
-  /**
-   * A string that is unique from every other field object’s id property, including those contained in
-   * other Input Descriptor Objects.
-   */
+export interface InputDescriptorsSchemaOneofFilter {
+  required?: boolean;
+  uri: string;
+}
+
+/**
+ * InputDescriptorConstraints
+ */
+export interface InputDescriptorsConstraints {
+  limit_disclosure: RequirementStatus;
+  is_holder?: InputDescriptorsConstraintsIsHolder[];
+  status_active?: AllowanceStatus;
+  status_revoked?: AllowanceStatus;
+  status_suspended?: RequiredStatus;
+  subject_is_issuer?: RequirementStatus;
+  fields: InputDescriptorsConstraintsFields[];
+}
+
+export interface InputDescriptorsConstraintsIsHolder {
+  directive: string;
+  field_id: string[];
+}
+
+export interface InputDescriptorsConstraintsFields {
   id?: string;
-  /**
-   * An array of one or more JSONPath string expressions that select a target value from the input.
-   *
-   * @see https://identity.foundation/presentation-exchange/#jsonpath-syntax-definition
-   */
   path: string[];
-  /**
-   * A string that describes the purpose for which the field is being requested.
-   */
   purpose?: string;
+  filter?: InputDescriptorsConstraintsFilter;
 }
 
-export type SubmissionRequirementRule = 'all' | 'pick';
+export interface InputDescriptorsConstraintsFilter {
+  maximum?: string | number;
+  minimum?: string | number;
+  type?: FilterValueType;
+  format?: FilterValueTypeDate;
+  const?: string | number;
+  enum?: string[] | number[];
+  exclusiveMaximum?: string | number;
+  exclusiveMinimum?: string | number;
+  maxLength?: number;
+  mimLength?: number;
+  not?: boolean;
+  pattern?: string;
+}
 
-export type LimitDisclosureSetting = 'preferred' | 'required';
+export enum FilterValueType {
+  string = 'string',
+  number = 'number'
+}
+
+export enum FilterValueTypeDate {
+  date = 'date',
+  date_time = 'date-time'
+}
+
+export enum ProofAlgorithm {
+  BbsBlsSignature2020 = 'BbsBlsSignature2020'
+}
+
+export interface ProofRequestResponseDto {
+  '@type'?: string;
+  '@id': string;
+  will_confirm?: boolean;
+  'request_presentations~attach': RequestPresentationAttach[];
+  comment?: string;
+  formats: PresRequestFormat[];
+}
+
+export interface RequestPresentationAttach {
+  '@id'?: string;
+  mime_type?: string;
+  data: PresRequestData;
+}
+
+export interface PresRequestData {
+  json: PresRequestDataJson;
+}
+
+export interface PresRequestFormat {
+  attach_id: string;
+  format: string;
+}
+
+export interface PresRequestDataJson {
+  options: Options;
+  presentation_definition: ProofRequirements;
+}
+
+export interface Options {
+  challenge: string;
+  domain: string;
+}

@@ -27,11 +27,17 @@ describe('AuthClient', () => {
 
       expect(result).toBe(accessToken);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
-      expect(axiosMock.post).toHaveBeenCalledWith('/v1/auth/token', {
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: GrantType.ClientCredentials
-      });
+      expect(axiosMock.post).toHaveBeenCalledWith(
+        '/v1/auth/token',
+        {
+          client_id: clientId,
+          client_secret: clientSecret,
+          grant_type: GrantType.ClientCredentials
+        },
+        {
+          baseURL: expect.any(String)
+        }
+      );
     });
   });
 });

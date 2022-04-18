@@ -2,10 +2,10 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { AuthClient } from './auth-client';
-import { EpamClient } from './epam-client';
 import { accessToken, createProofRequestAxiosResponse } from '../../test/common';
+import { AuthClient } from './auth-client';
 import { CreateProofRequestDto } from './create-proof-request-dto';
+import { EpamClient } from './epam-client';
 
 describe('EpamClient', () => {
   let client: EpamClient;
@@ -22,7 +22,7 @@ describe('EpamClient', () => {
     axiosMock.reset();
   });
 
-  describe('createProofRequest', () => {
+  describe('createProofRequestEpam', () => {
     it('should call the EPAM proof requests API', async () => {
       const result: any = await client.createProofRequest(createProofRequestDto);
 
@@ -30,11 +30,7 @@ describe('EpamClient', () => {
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
       expect(axiosMock.post).toHaveBeenCalledWith(
         '/v2/aries/management/external-party/proof-requests',
-        {
-          proof_requirements: createProofRequestDto.presentationRequirements,
-          tracking_id: createProofRequestDto.trackingId,
-          screening_webhook_url: createProofRequestDto.webhookUrl
-        },
+        createProofRequestDto,
         {
           headers: { Authorization: `Bearer ${accessToken}` }
         }
