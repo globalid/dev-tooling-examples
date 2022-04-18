@@ -13,4 +13,9 @@ export class EpamClient {
 
     return response.data;
   }
+
+  // TODO: replace for actual implementation
+  async getPublicKey(): Promise<string> {
+    return 'key';
+  }
 }
