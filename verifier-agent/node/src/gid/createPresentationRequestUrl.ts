@@ -6,7 +6,7 @@ export interface CreatePresentationUrlParams {
   redirectUrl?: string;
 }
 
-export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): string => {
+export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): [URL, string] => {
   const trackingId = randomUUID();
   const { clientId, initiationUrl, redirectUrl } = params;
 
@@ -20,5 +20,5 @@ export const createPresentationRequestUrl = (params: CreatePresentationUrlParams
     redirect.searchParams.append('tracking_id', trackingId);
     linkUrl.searchParams.append('redirect_url', redirect.toString());
   }
-  return linkUrl.toString();
+  return [linkUrl, trackingId];
 };
