@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-// import { version } from '../version'
-
-// TODO remove when above import is in place
-const version = '0.1.0';
+import { version } from '../version';
 
 export default axios.create({
-  baseURL: 'https://api.global.id',
+  baseURL: process.env.CREDENTIALS_BASE_URL || 'https://credentials.global.id',
   headers: {
     'User-Agent': `GlobaliD-API-Client/${version}`
   }

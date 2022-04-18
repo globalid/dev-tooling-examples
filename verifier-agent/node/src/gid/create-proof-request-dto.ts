@@ -1,4 +1,4 @@
-import { UnknownRecord } from './create-proof-request-dto-epam';
+import { UnknownRecord } from '../interfaces';
 
 export interface CreateProofRequestDto {
   presentationRequirements: PresentationRequirements;
@@ -75,7 +75,7 @@ export interface InputDescriptor {
    * @see https://identity.foundation/presentation-exchange/#claim-format-designations
    */
   format?: UnknownRecord;
-  
+
   /**
    * Array of group names used by `SubmissionRequirement` to pick some number of requirements, if `rule` = "pick"
    */
