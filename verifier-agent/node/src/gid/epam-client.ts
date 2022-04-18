@@ -6,6 +6,7 @@ export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}
 
   async createProofRequest(createProofRequestDto: CreateProofRequestDto): Promise<any> {
+    const accessToken = await this.authClient.getAppAccessToken();
     const response = await axios.post(
       '/v2/aries/management/external-party/proof-requests',
       {
@@ -14,7 +15,7 @@ export class EpamClient {
         screening_webhook_url: createProofRequestDto.webhookUrl
       },
       {
-        headers: { Authorization: `Bearer ${await this.authClient.getAppAccessToken()}` }
+        headers: { Authorization: `Bearer ${accessToken}` }
       }
     );
 
