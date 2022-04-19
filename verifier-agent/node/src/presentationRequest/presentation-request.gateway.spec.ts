@@ -1,9 +1,8 @@
-import { TrackingId } from '../types';
+import { trackingId } from '../../test/common';
 import { PresentationRequestGateway } from './presentation-request.gateway';
 import { VerifiablePresentation } from './presentation-request.types';
 
 describe('PresentationRequestGateway', () => {
-  const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
   let gateway: PresentationRequestGateway;
   let mockClient;
 

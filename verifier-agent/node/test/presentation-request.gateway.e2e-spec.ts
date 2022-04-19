@@ -7,13 +7,13 @@ import { createNestApp } from './common';
 describe('PresentationRequestGateway', () => {
   let gateway: PresentationRequestGateway;
   let app: INestApplication;
-  let ws: WebSocket
+  let ws: WebSocket;
 
   beforeEach(async () => {
     app = await createNestApp([PresentationRequestGateway]);
     await app.listen(3000);
     ws = new WebSocket('ws://localhost:8080');
-  })
+  });
 
   afterEach(async () => await app.close());
 
