@@ -11,12 +11,11 @@ describe('PresentationRequestGateway', () => {
     mockClient = {
       send: jest.fn()
     };
+    gateway = new PresentationRequestGateway();
   });
 
   describe('register', () => {
     it('should register a client successfully', async () => {
-      gateway = new PresentationRequestGateway();
-
       const data = gateway.register(mockClient, { trackingId });
 
       expect(data.event).toBe('client-registered');
@@ -24,8 +23,6 @@ describe('PresentationRequestGateway', () => {
     });
 
     it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
-      gateway = new PresentationRequestGateway();
-
       gateway.register(mockClient, { trackingId });
       const data = gateway.register(mockClient, { trackingId });
 
@@ -34,8 +31,6 @@ describe('PresentationRequestGateway', () => {
     });
 
     it('should return an error if no trackingId provided', async () => {
-      gateway = new PresentationRequestGateway();
-
       const data = gateway.register(mockClient, { trackingId: null });
 
       expect(data.event).toBe('client-register-error');
@@ -45,7 +40,6 @@ describe('PresentationRequestGateway', () => {
 
   describe('acceptPresentation', () => {
     it('should send acceptPresentation message successfully', async () => {
-      gateway = new PresentationRequestGateway();
       const verifiablePresentation: VerifiablePresentation = {
         id: '1234',
         accept: true
@@ -64,7 +58,6 @@ describe('PresentationRequestGateway', () => {
     });
 
     it("should throw an exception when sending confirmation for trackingId that doesn't exist", async () => {
-      gateway = new PresentationRequestGateway();
       const verifiablePresentation: VerifiablePresentation = {
         id: '1234',
         accept: true
@@ -78,7 +71,6 @@ describe('PresentationRequestGateway', () => {
 
   describe('rejectPresentaion', () => {
     it('should send rejectPresentation message successfully', async () => {
-      gateway = new PresentationRequestGateway();
       gateway.register(mockClient, { trackingId });
 
       gateway.rejectPresentation(trackingId, 'user rejected');
@@ -93,7 +85,6 @@ describe('PresentationRequestGateway', () => {
     });
 
     it("should throw an exception when rejecting presentation for trackingId that doesn't exist", async () => {
-      gateway = new PresentationRequestGateway();
       gateway.register(mockClient, { trackingId });
 
       expect(() => gateway.rejectPresentation('1234', 'user rejected')).toThrow(
