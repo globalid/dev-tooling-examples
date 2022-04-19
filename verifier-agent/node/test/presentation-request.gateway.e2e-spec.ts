@@ -2,7 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { TrackingId } from '../src/types';
 import { WebSocket } from 'ws';
 import { PresentationRequestGateway } from '../src/presentationRequest/presentation-request.gateway';
-import { createNestApp } from './common';
+import { createNestApp, webSocketUrl } from './common';
 
 describe('PresentationRequestGateway', () => {
   let gateway: PresentationRequestGateway;
@@ -12,7 +12,7 @@ describe('PresentationRequestGateway', () => {
   beforeEach(async () => {
     app = await createNestApp([PresentationRequestGateway]);
     await app.listen(3000);
-    ws = new WebSocket('ws://localhost:8080');
+    ws = new WebSocket(webSocketUrl);
   });
 
   afterEach(async () => await app.close());

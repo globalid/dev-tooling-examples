@@ -13,4 +13,6 @@ export const createNestApp = async (imports: any[]): Promise<INestApplication> =
   return app;
 };
 
+export const webSocketUrl = 'ws://localhost:8080';
+
 export const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
