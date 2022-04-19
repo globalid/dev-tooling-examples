@@ -3,9 +3,6 @@ import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
 import { createNestApp } from './common';
 
-import { INestApplication } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
-
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
