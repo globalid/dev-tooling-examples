@@ -7,15 +7,19 @@ import { createNestApp } from './common';
 describe('PresentationRequestGateway', () => {
   let gateway: PresentationRequestGateway;
   let app: INestApplication;
+  let ws: WebSocket
+
+  beforeEach(async () => {
+    app = await createNestApp([PresentationRequestGateway]);
+    await app.listen(3000);
+    ws = new WebSocket('ws://localhost:8080');
+  })
 
   afterEach(async () => await app.close());
 
   describe('register', () => {
     it('should register a client successfully', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -36,10 +40,7 @@ describe('PresentationRequestGateway', () => {
     });
 
     it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       const trackingId: TrackingId = 'b9a4f323-a8f7-4b85-8aab-d98b7f423e942';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -67,9 +68,6 @@ describe('PresentationRequestGateway', () => {
     });
 
     it('should return an error if no trackingId provided', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -92,10 +90,7 @@ describe('PresentationRequestGateway', () => {
 
   describe('unregister', () => {
     it('should unregister a client successfully', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -122,11 +117,8 @@ describe('PresentationRequestGateway', () => {
     });
 
     it('should throw exception trying to send data after unregister', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -150,11 +142,8 @@ describe('PresentationRequestGateway', () => {
 
   describe('acceptPresentation', () => {
     it('should send acceptPresentation message successfully', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '89140555-cce2-4e37-80f9-01af4c24cdd6';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -179,11 +168,8 @@ describe('PresentationRequestGateway', () => {
     });
 
     it("should throw an exception when sending confirmation for trackingId that doesn't exist", async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '89140555-cce2-4e37-80f9-01af4c24cdd6';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -201,11 +187,8 @@ describe('PresentationRequestGateway', () => {
 
   describe('rejectPresentaion', () => {
     it('should send rejectPresentation message successfully', async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '0fd0d264-9e5b-411c-aed1-6d128f676072';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
@@ -229,11 +212,8 @@ describe('PresentationRequestGateway', () => {
     });
 
     it("should throw an exception when rejecting presentation for trackingId that doesn't exist", async () => {
-      app = await createNestApp([PresentationRequestGateway]);
-      await app.listen(3000);
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '616ef657-fccb-4b47-bf8f-ebf0fe56089a';
-      const ws = new WebSocket('ws://localhost:8080');
       await new Promise((resolve) => ws.on('open', resolve));
 
       ws.send(
