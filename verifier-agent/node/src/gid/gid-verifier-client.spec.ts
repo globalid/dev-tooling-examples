@@ -11,11 +11,14 @@ describe('GidVerifierClient', () => {
   const epamClient = createMock<EpamClient>();
   const createProofRequestDto = createMock<CreateProofRequestDto>();
 
+  beforeEach(() => {
+    epamClient.createProofRequest.mockResolvedValueOnce(createProofRequestAxiosResponse);
+    epamClient.getPublicKey.mockResolvedValueOnce(publicKey);
+    client = new GidVerifierClient(epamClient);
+  });
+
   describe('createPresentationRequest', () => {
     it('should call the EPAM service to create proof request', async () => {
-      epamClient.createProofRequest.mockResolvedValueOnce(createProofRequestAxiosResponse);
-      client = new GidVerifierClient(epamClient);
-
       const result: any = await client.createPresentationRequest(createProofRequestDto);
 
       expect(result).toBe(createProofRequestAxiosResponse);
@@ -29,8 +32,6 @@ describe('GidVerifierClient', () => {
       const dataToSign: any = { data: 'any-data' };
       const bufferToSign = Buffer.from(JSON.stringify(dataToSign));
       const signature: string = crypto.sign(null, bufferToSign, privateKey).toString('base64');
-      epamClient.getPublicKey.mockResolvedValueOnce(publicKey);
-      client = new GidVerifierClient(epamClient);
 
       const result: any = await client.verifySignature(signature, dataToSign);
 
