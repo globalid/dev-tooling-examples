@@ -7,7 +7,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  async getQrCode(): Promise<string> {
+    const qrCode = await this.appService.getQrCode();
+    return `<img src=${qrCode} />`;
   }
 }

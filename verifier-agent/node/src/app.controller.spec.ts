@@ -1,3 +1,4 @@
+import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppController } from './app.controller';
@@ -10,14 +11,21 @@ describe('AppController', () => {
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [AppService]
-    }).compile();
+    })
+      .useMocker(createMock)
+      .compile();
 
     appController = app.get<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('root getQrCode', () => {
+    it('should return a base64 img', async () => {
+      const makeQrCodeSpy = jest.spyOn(appController, 'getQrCode');
+      const qrCode = await appController.getQrCode();
+
+      expect(makeQrCodeSpy).toHaveBeenCalledTimes(1);
+      expect(makeQrCodeSpy).toHaveReturned();
+      expect(qrCode).toContain('<img src=data:image/png;base64,');
     });
   });
 });
