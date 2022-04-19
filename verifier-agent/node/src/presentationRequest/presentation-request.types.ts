@@ -5,6 +5,7 @@ export interface RegisterClientEvent {
 export enum SocketEvent {
   ClientRegistered = 'client-registered',
   ClientRegisterError = 'client-register-error',
+  ClientUnregistered = 'client-unregistered',
   PresentationAccepted = 'presentation-accepted',
   PresentationRejected = 'presentation-rejected'
 }

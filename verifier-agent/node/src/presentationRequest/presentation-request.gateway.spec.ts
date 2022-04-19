@@ -38,6 +38,24 @@ describe('PresentationRequestGateway', () => {
     });
   });
 
+  describe('unregister', () => {
+    it('should unregister a client successfully', async () => {
+      gateway.register(mockClient, { trackingId });
+      const data = gateway.unregister(trackingId);
+
+      expect(data.event).toBe('client-unregistered');
+      expect(data.data).toBe('client successfully unregistered');
+    });
+
+    it('should throw exception trying to send data after unregister', () => {
+      gateway.register(mockClient, { trackingId });
+      gateway.unregister(trackingId);
+
+      expect(() => gateway.rejectPresentation(trackingId, 'rejected')).toThrow()
+      expect(mockClient.send).toHaveBeenCalledTimes(0);
+    })
+  })
+
   describe('acceptPresentation', () => {
     it('should send acceptPresentation message successfully', async () => {
       const verifiablePresentation: VerifiablePresentation = {

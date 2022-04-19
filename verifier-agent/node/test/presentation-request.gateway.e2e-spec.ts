@@ -90,6 +90,63 @@ describe('PresentationRequestGateway', () => {
     });
   });
 
+  describe('unregister', () => {
+    it('should unregister a client successfully', async () => {
+      app = await createNestApp([PresentationRequestGateway]);
+      await app.listen(3000);
+      const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
+      const ws = new WebSocket('ws://localhost:8080');
+      await new Promise((resolve) => ws.on('open', resolve));
+
+      ws.send(
+        JSON.stringify({
+          event: 'register-client',
+          data: { trackingId }
+        })
+      );
+      await new Promise(resolve => ws.on('message', resolve))
+      ws.send(
+        JSON.stringify({
+          event: 'unregister-client',
+          data: { trackingId }
+        })
+      );
+      await new Promise<void>(resolve => 
+        ws.on('message', (event: any) => {
+          const data = JSON.parse(event);
+          expect(data.event).toBe('client-unregistered');
+          expect(data.data).toBe('client successfully unregistered');
+          resolve();
+      }));
+    });
+
+    it('should throw exception trying to send data after unregister', async () => {
+      app = await createNestApp([PresentationRequestGateway]);
+      await app.listen(3000);
+      gateway = app.get(PresentationRequestGateway)
+      const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
+      const ws = new WebSocket('ws://localhost:8080');
+      await new Promise((resolve) => ws.on('open', resolve));
+
+      ws.send(
+        JSON.stringify({
+          event: 'register-client',
+          data: { trackingId }
+        })
+      );
+      await new Promise(resolve => ws.on('message', resolve))
+      ws.send(
+        JSON.stringify({
+          event: 'unregister-client',
+          data: { trackingId }
+        })
+      );
+      await new Promise(resolve => ws.on('message', resolve))
+
+      expect(() => gateway.rejectPresentation(trackingId, 'user rejected')).toThrow()
+    })
+  })
+
   describe('acceptPresentation', () => {
     it('should send acceptPresentation message successfully', async () => {
       app = await createNestApp([PresentationRequestGateway]);
