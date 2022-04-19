@@ -1,5 +1,7 @@
-import { createMock } from '@golevelup/ts-jest';
 import { randomUUID } from 'crypto';
+
+import { createMock } from '@golevelup/ts-jest';
+
 import { ProofRequirements } from './create-proof-request-dto';
 import { CreateProofRequestDtoFactory } from './create-proof-request-dto-factory';
 

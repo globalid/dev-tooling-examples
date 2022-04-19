@@ -137,7 +137,7 @@ export interface ProofRequestResponseDto {
 
 export interface RequestPresentationAttach {
   '@id'?: string;
-  mime_type?: string;
+  'mime-type'?: string;
   data: PresRequestData;
 }
 

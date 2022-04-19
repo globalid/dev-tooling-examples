@@ -1,10 +1,10 @@
 import {
   AllowanceStatus,
-  ProofRequirements,
   CreateProofRequestDto,
   FilterValueType,
   FilterValueTypeDate,
   ProofAlgorithm,
+  ProofRequirements,
   RequiredStatus,
   RequirementStatus
 } from './create-proof-request-dto';
