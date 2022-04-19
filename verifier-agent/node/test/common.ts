@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
+import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
 import { Test } from '@nestjs/testing';
 import { TrackingId } from 'src/types';
 
@@ -17,8 +18,6 @@ export const webSocketUrl = 'ws://localhost:8080';
 
 export const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
 
-import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
-
 /**
  * Mock values returned by `ConfigService.get`
  *
@@ -33,7 +32,6 @@ export function mockConfigService(env: Record<string, any>) {
 export const clientId = '123abc';
 export const clientSecret = '456def';
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
-export const trackingId = 'e6a35daf-684d-4ed5-bdb9-3c94b299d8de';
 export const createProofRequestAxiosResponse = {
   data: <ProofRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
