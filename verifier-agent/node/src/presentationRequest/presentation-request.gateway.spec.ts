@@ -51,10 +51,10 @@ describe('PresentationRequestGateway', () => {
       gateway.register(mockClient, { trackingId });
       gateway.unregister(trackingId);
 
-      expect(() => gateway.rejectPresentation(trackingId, 'rejected')).toThrow()
+      expect(() => gateway.rejectPresentation(trackingId, 'rejected')).toThrow();
       expect(mockClient.send).toHaveBeenCalledTimes(0);
-    })
-  })
+    });
+  });
 
   describe('acceptPresentation', () => {
     it('should send acceptPresentation message successfully', async () => {

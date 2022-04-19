@@ -34,8 +34,8 @@ export class PresentationRequestGateway {
 
   @SubscribeMessage('unregister-client')
   unregister(@MessageBody('trackingId') trackingId: string): WsResponse<string> {
-    this.removeSocketFromRegistry(trackingId)
-    return { event: SocketEvent.ClientUnregistered, data: 'client successfully unregistered' }
+    this.removeSocketFromRegistry(trackingId);
+    return { event: SocketEvent.ClientUnregistered, data: 'client successfully unregistered' };
   }
 
   acceptPresentation(trackingId: TrackingId, payload: VerifiablePresentation) {
@@ -47,7 +47,7 @@ export class PresentationRequestGateway {
   }
 
   private removeSocketFromRegistry(trackingId: string) {
-    this.websocketRegistry.delete(trackingId)
+    this.websocketRegistry.delete(trackingId);
   }
 
   private addSocketToRegistry(trackingId: TrackingId, socket: WebSocket): boolean {
