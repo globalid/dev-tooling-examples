@@ -26,7 +26,8 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
-  verbose: true
+  verbose: true,
+  setupFilesAfterEnv: ["../test/setup.ts"]
 };
 
 export default config;
