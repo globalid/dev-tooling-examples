@@ -4,7 +4,7 @@ export interface CreateProofRequestDto {
   /**
    * presentationRequirements
    */
-  proof_requirements: ProofRequirements;
+  proof_requirements: PresentationRequirements;
   /**
    * trackingId
    */
@@ -18,7 +18,7 @@ export interface CreateProofRequestDto {
 /**
  * PresentationDefinition
  */
-export interface ProofRequirements {
+export interface PresentationRequirements {
   name?: string;
   purpose?: string;
   id: string;
@@ -152,7 +152,7 @@ export interface PresRequestFormat {
 
 export interface PresRequestDataJson {
   options: Options;
-  presentation_definition: ProofRequirements;
+  presentation_definition: PresentationRequirements;
 }
 
 export interface Options {

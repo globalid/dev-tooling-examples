@@ -1,8 +1,6 @@
 import { randomUUID } from 'crypto';
 
-import { createMock } from '@golevelup/ts-jest';
-
-import { ProofRequirements } from './create-proof-request-dto';
+import { PresentationRequirementsFactory } from '../presentationRequest/presentation-requirements-factory';
 import { CreateProofRequestDtoFactory } from './create-proof-request-dto-factory';
 
 describe('CreateProofRequestDtoFactory', () => {
@@ -10,16 +8,15 @@ describe('CreateProofRequestDtoFactory', () => {
     it('should build a CreateProofRequestDto', async () => {
       const trackingId = randomUUID();
       const webhookUrl = 'https://something.com/webhook';
-      const createProofRequestDtoFactory = new CreateProofRequestDtoFactory();
-      const proofRequirementsMock = createMock<ProofRequirements>();
-      const createSpy = jest
-        .spyOn(createProofRequestDtoFactory, 'createProofRequirements')
-        .mockReturnValueOnce(proofRequirementsMock);
+      const presentationRequirementsFactory = new PresentationRequirementsFactory();
+      const createProofRequestDtoFactory = new CreateProofRequestDtoFactory(presentationRequirementsFactory);
 
-      const createProofRequestDto = createProofRequestDtoFactory.buildCreateProofRequestDto(trackingId, webhookUrl);
+      const createSpy = jest.spyOn(presentationRequirementsFactory, 'create');
+
+      const createProofRequestDto = createProofRequestDtoFactory.create(trackingId, webhookUrl);
 
       expect(createSpy).toHaveBeenCalledTimes(1);
-      expect(createProofRequestDto.proof_requirements).toBe(proofRequirementsMock);
+      expect(createProofRequestDto.proof_requirements).toEqual(presentationRequirementsFactory.create());
     });
   });
 });
