@@ -9,7 +9,9 @@ describe('CreatePresentationRequestDtoFactory', () => {
       const trackingId = randomUUID();
       const webhookUrl = 'https://something.com/webhook';
       const presentationRequirementsFactory = new PresentationRequirementsFactory();
-      const createPresentationRequestDtoFactory = new CreatePresentationRequestDtoFactory(presentationRequirementsFactory);
+      const createPresentationRequestDtoFactory = new CreatePresentationRequestDtoFactory(
+        presentationRequirementsFactory
+      );
 
       const createSpy = jest.spyOn(presentationRequirementsFactory, 'create');
 

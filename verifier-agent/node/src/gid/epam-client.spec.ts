@@ -24,7 +24,9 @@ describe('EpamClient', () => {
   describe('createPresentationRequest', () => {
     it('should create a Presentation Request', async () => {
       axiosMock.post.mockResolvedValueOnce(createPresentationRequestAxiosResponse);
-      const result: PresentationRequestResponseDto = await client.createPresentationRequest(createPresentationRequestDto);
+      const result: PresentationRequestResponseDto = await client.createPresentationRequest(
+        createPresentationRequestDto
+      );
 
       expect(result).toBe(createPresentationRequestAxiosResponse.data);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);

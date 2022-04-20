@@ -5,7 +5,9 @@ import { CreatePresentationRequestDto, PresentationRequestResponseDto } from './
 export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}
 
-  async createPresentationRequest(createPresentationRequestDto: CreatePresentationRequestDto): Promise<PresentationRequestResponseDto> {
+  async createPresentationRequest(
+    createPresentationRequestDto: CreatePresentationRequestDto
+  ): Promise<PresentationRequestResponseDto> {
     const accessToken = await this.authClient.getAppAccessToken();
     const response = await axios.post<PresentationRequestResponseDto>(
       '/v2/aries/management/external-party/proof-requests',
