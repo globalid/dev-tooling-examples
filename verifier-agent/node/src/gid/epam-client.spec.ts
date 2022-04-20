@@ -2,15 +2,15 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { accessToken, createProofRequestAxiosResponse, publicKey } from '../../test/common';
+import { accessToken, createPresentationRequestAxiosResponse, publicKey } from '../../test/common';
 import { AuthClient } from './auth-client';
-import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
+import { CreatePresentationRequestDto, PresentationRequestResponseDto } from './create-presentation-request-dto';
 import { EpamClient } from './epam-client';
 
 describe('EpamClient', () => {
   let client: EpamClient;
   const authClient = createMock<AuthClient>();
-  const createProofRequestDto = createMock<CreateProofRequestDto>();
+  const createPresentationRequestDto = createMock<CreatePresentationRequestDto>();
 
   beforeEach(() => {
     authClient.getAppAccessToken.mockResolvedValueOnce(accessToken);
@@ -21,16 +21,18 @@ describe('EpamClient', () => {
     axiosMock.reset();
   });
 
-  describe('createProofRequest', () => {
-    it('should create a Proof Request', async () => {
-      axiosMock.post.mockResolvedValueOnce(createProofRequestAxiosResponse);
-      const result: ProofRequestResponseDto = await client.createProofRequest(createProofRequestDto);
+  describe('createPresentationRequest', () => {
+    it('should create a Presentation Request', async () => {
+      axiosMock.post.mockResolvedValueOnce(createPresentationRequestAxiosResponse);
+      const result: PresentationRequestResponseDto = await client.createPresentationRequest(
+        createPresentationRequestDto
+      );
 
-      expect(result).toBe(createProofRequestAxiosResponse.data);
+      expect(result).toBe(createPresentationRequestAxiosResponse.data);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
       expect(axiosMock.post).toHaveBeenCalledWith(
         '/v2/aries/management/external-party/proof-requests',
-        createProofRequestDto,
+        createPresentationRequestDto,
         {
           headers: { Authorization: `Bearer ${accessToken}` }
         }

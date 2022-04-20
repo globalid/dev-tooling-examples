@@ -1,24 +1,15 @@
 import { UnknownRecord } from '../interfaces';
 
-export interface CreateProofRequestDto {
-  /**
-   * presentationRequirements
-   */
-  proof_requirements: ProofRequirements;
-  /**
-   * trackingId
-   */
-  tracking_id: string;
-  /**
-   * webhookUrl
-   */
+export interface CreatePresentationRequestDto {
+  proof_requirements: PresentationRequirements;
   screening_webhook_url: string;
+  tracking_id: string;
 }
 
 /**
  * PresentationDefinition
  */
-export interface ProofRequirements {
+export interface PresentationRequirements {
   name?: string;
   purpose?: string;
   id: string;
@@ -126,7 +117,7 @@ export enum ProofAlgorithm {
   BbsBlsSignature2020 = 'BbsBlsSignature2020'
 }
 
-export interface ProofRequestResponseDto {
+export interface PresentationRequestResponseDto {
   '@type'?: string;
   '@id': string;
   will_confirm?: boolean;
@@ -152,7 +143,7 @@ export interface PresRequestFormat {
 
 export interface PresRequestDataJson {
   options: Options;
-  presentation_definition: ProofRequirements;
+  presentation_definition: PresentationRequirements;
 }
 
 export interface Options {

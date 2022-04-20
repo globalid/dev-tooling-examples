@@ -1,24 +1,15 @@
 import {
   AllowanceStatus,
-  CreateProofRequestDto,
   FilterValueType,
   FilterValueTypeDate,
+  PresentationRequirements,
   ProofAlgorithm,
-  ProofRequirements,
   RequiredStatus,
   RequirementStatus
-} from './create-proof-request-dto';
+} from '../gid/create-presentation-request-dto';
 
-export class CreateProofRequestDtoFactory {
-  buildCreateProofRequestDto = (trackingId: string, webhookUrl: string) => {
-    return {
-      proof_requirements: this.createProofRequirements(),
-      screening_webhook_url: webhookUrl,
-      tracking_id: trackingId
-    } as CreateProofRequestDto;
-  };
-
-  createProofRequirements = (): ProofRequirements => ({
+export class PresentationRequirementsFactory {
+  create = (): PresentationRequirements => ({
     name: 'Proof Requirements',
     purpose: 'To demonstrate creating the Proof Requirements for a Proof Request',
     id: 'c4272baf-1c96-4246-95e2-ed816f471793',

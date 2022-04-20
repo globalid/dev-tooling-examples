@@ -1,9 +1,11 @@
 import * as crypto from 'crypto';
+import { TrackingId } from 'src/types';
+
 import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
 import { Test } from '@nestjs/testing';
-import { TrackingId } from 'src/types';
+
+import { PresentationRequestResponseDto } from '../src/gid/create-presentation-request-dto';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
@@ -44,8 +46,8 @@ export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     format: 'pem'
   }
 });
-export const createProofRequestAxiosResponse = {
-  data: <ProofRequestResponseDto>{
+export const createPresentationRequestAxiosResponse = {
+  data: <PresentationRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
     '@id': '78d1b09d-a7f2-4523-b125-92509480ba10',
     will_confirm: true,

@@ -1,14 +1,13 @@
 import * as crypto from 'crypto';
 
 import { EpamClient } from './epam-client';
-import { CreateProofRequestDto } from './create-proof-request-dto';
+import { CreatePresentationRequestDto } from './create-presentation-request-dto';
 
-export type CreatePresentationRequestDto = CreateProofRequestDto;
 export class GidVerifierClient {
   constructor(private readonly epamClient: EpamClient) {}
 
   async createPresentationRequest(createPresentationRequestDto: CreatePresentationRequestDto): Promise<any> {
-    return this.epamClient.createProofRequest(createPresentationRequestDto);
+    return this.epamClient.createPresentationRequest(createPresentationRequestDto);
   }
 
   async verifySignature(signature: string, data: any): Promise<boolean> {

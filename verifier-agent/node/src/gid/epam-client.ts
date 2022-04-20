@@ -1,15 +1,17 @@
 import { AuthClient } from './auth-client';
 import axios from './axios';
-import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
+import { CreatePresentationRequestDto, PresentationRequestResponseDto } from './create-presentation-request-dto';
 
 export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}
 
-  async createProofRequest(createProofRequestDto: CreateProofRequestDto): Promise<ProofRequestResponseDto> {
+  async createPresentationRequest(
+    createPresentationRequestDto: CreatePresentationRequestDto
+  ): Promise<PresentationRequestResponseDto> {
     const accessToken = await this.authClient.getAppAccessToken();
-    const response = await axios.post<ProofRequestResponseDto>(
+    const response = await axios.post<PresentationRequestResponseDto>(
       '/v2/aries/management/external-party/proof-requests',
-      createProofRequestDto,
+      createPresentationRequestDto,
       {
         headers: { Authorization: `Bearer ${accessToken}` }
       }
@@ -24,6 +26,6 @@ export class EpamClient {
   }
 }
 
-export interface PublicKeyResponse {
+interface PublicKeyResponse {
   public_key: string;
 }
