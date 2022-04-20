@@ -1,8 +1,10 @@
+import { TrackingId } from 'src/types';
+
 import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { PresentationRequestResponseDto } from '../src/gid/create-presentation-request-dto';
 import { Test } from '@nestjs/testing';
-import { TrackingId } from 'src/types';
+
+import { PresentationRequestResponseDto } from '../src/gid/create-presentation-request-dto';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({

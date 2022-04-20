@@ -1,11 +1,11 @@
 import {
+  AllowanceStatus,
+  FilterValueType,
+  FilterValueTypeDate,
   PresentationRequirements,
   ProofAlgorithm,
-  RequirementStatus,
-  AllowanceStatus,
   RequiredStatus,
-  FilterValueType,
-  FilterValueTypeDate
+  RequirementStatus
 } from '../gid/create-presentation-request-dto';
 
 export class PresentationRequirementsFactory {
