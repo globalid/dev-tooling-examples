@@ -1,6 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
+import { PresentationRequestResponseDto } from '../src/gid/create-presentation-request-dto';
 import { Test } from '@nestjs/testing';
 import { TrackingId } from 'src/types';
 
@@ -32,8 +32,8 @@ export function mockConfigService(env: Record<string, any>) {
 export const clientId = '123abc';
 export const clientSecret = '456def';
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
-export const createProofRequestAxiosResponse = {
-  data: <ProofRequestResponseDto>{
+export const createPresentationRequestAxiosResponse = {
+  data: <PresentationRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
     '@id': '78d1b09d-a7f2-4523-b125-92509480ba10',
     will_confirm: true,

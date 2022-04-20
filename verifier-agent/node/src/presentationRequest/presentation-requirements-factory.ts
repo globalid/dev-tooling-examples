@@ -6,7 +6,7 @@ import {
   RequiredStatus,
   FilterValueType,
   FilterValueTypeDate
-} from '../gid/create-proof-request-dto';
+} from '../gid/create-presentation-request-dto';
 
 export class PresentationRequirementsFactory {
   create = (): PresentationRequirements => ({

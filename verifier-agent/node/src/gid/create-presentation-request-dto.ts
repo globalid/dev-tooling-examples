@@ -1,18 +1,9 @@
 import { UnknownRecord } from '../interfaces';
 
-export interface CreateProofRequestDto {
-  /**
-   * presentationRequirements
-   */
+export interface CreatePresentationRequestDto {
   proof_requirements: PresentationRequirements;
-  /**
-   * trackingId
-   */
-  tracking_id: string;
-  /**
-   * webhookUrl
-   */
   screening_webhook_url: string;
+  tracking_id: string;
 }
 
 /**
@@ -126,7 +117,7 @@ export enum ProofAlgorithm {
   BbsBlsSignature2020 = 'BbsBlsSignature2020'
 }
 
-export interface ProofRequestResponseDto {
+export interface PresentationRequestResponseDto {
   '@type'?: string;
   '@id': string;
   will_confirm?: boolean;

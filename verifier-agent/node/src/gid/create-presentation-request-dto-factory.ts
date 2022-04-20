@@ -1,13 +1,13 @@
 import { PresentationRequirementsFactory } from '../presentationRequest/presentation-requirements-factory';
-import { CreateProofRequestDto } from './create-proof-request-dto';
+import { CreatePresentationRequestDto } from './create-presentation-request-dto';
 
-export class CreateProofRequestDtoFactory {
+export class CreatePresentationRequestDtoFactory {
   constructor(private readonly presentationRequirementsFactory: PresentationRequirementsFactory) {}
-  create(trackingId: string, webhookUrl: string): CreateProofRequestDto {
-    return (<CreateProofRequestDto>{
+  create(trackingId: string, webhookUrl: string): CreatePresentationRequestDto {
+    return (<CreatePresentationRequestDto>{
       proof_requirements: this.presentationRequirementsFactory.create(),
       screening_webhook_url: webhookUrl,
       tracking_id: trackingId
-    }) as CreateProofRequestDto;
+    }) as CreatePresentationRequestDto;
   }
 }
