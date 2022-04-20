@@ -2,9 +2,9 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { accessToken, createProofRequestAxiosResponse } from '../../test/common';
+import { accessToken, createProofRequestAxiosResponse, publicKey } from '../../test/common';
 import { AuthClient } from './auth-client';
-import { CreateProofRequestDto } from './create-proof-request-dto';
+import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
 import { EpamClient } from './epam-client';
 
 describe('EpamClient', () => {
@@ -15,16 +15,16 @@ describe('EpamClient', () => {
   beforeEach(() => {
     authClient.getAppAccessToken.mockResolvedValueOnce(accessToken);
     client = new EpamClient(authClient);
-    axiosMock.post.mockResolvedValueOnce(createProofRequestAxiosResponse);
   });
 
   afterEach(() => {
     axiosMock.reset();
   });
 
-  describe('createProofRequestEpam', () => {
-    it('should call the EPAM proof requests API', async () => {
-      const result: any = await client.createProofRequest(createProofRequestDto);
+  describe('createProofRequest', () => {
+    it('should create a Proof Request', async () => {
+      axiosMock.post.mockResolvedValueOnce(createProofRequestAxiosResponse);
+      const result: ProofRequestResponseDto = await client.createProofRequest(createProofRequestDto);
 
       expect(result).toBe(createProofRequestAxiosResponse.data);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
@@ -35,6 +35,16 @@ describe('EpamClient', () => {
           headers: { Authorization: `Bearer ${accessToken}` }
         }
       );
+    });
+  });
+
+  describe('getPublicKey', () => {
+    it('should get the public key', async () => {
+      axiosMock.get.mockResolvedValueOnce({ data: { public_key: publicKey } });
+      const result: string = await client.getPublicKey();
+
+      expect(result).toBe(publicKey);
+      expect(axiosMock.get).toHaveBeenCalledTimes(1);
     });
   });
 });

@@ -2,8 +2,8 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { AuthClient, AuthToken, GrantType } from './auth-client';
 import { accessToken, clientId, clientSecret } from '../../test/common';
+import { AuthClient, AuthToken, GrantType } from './auth-client';
 
 describe('AuthClient', () => {
   let client: AuthClient;

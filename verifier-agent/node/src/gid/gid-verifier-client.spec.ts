@@ -12,7 +12,7 @@ describe('GidVerifierClient', () => {
   const createProofRequestDto = createMock<CreateProofRequestDto>();
 
   beforeEach(() => {
-    epamClient.createProofRequest.mockResolvedValueOnce(createProofRequestAxiosResponse);
+    epamClient.createProofRequest.mockResolvedValueOnce(createProofRequestAxiosResponse.data);
     epamClient.getPublicKey.mockResolvedValueOnce(publicKey);
     client = new GidVerifierClient(epamClient);
   });
@@ -21,7 +21,7 @@ describe('GidVerifierClient', () => {
     it('should call the EPAM service to create proof request', async () => {
       const result: any = await client.createPresentationRequest(createProofRequestDto);
 
-      expect(result).toBe(createProofRequestAxiosResponse);
+      expect(result).toBe(createProofRequestAxiosResponse.data);
       expect(epamClient.createProofRequest).toHaveBeenCalledTimes(1);
       expect(epamClient.createProofRequest).toHaveBeenCalledWith(createProofRequestDto);
     });

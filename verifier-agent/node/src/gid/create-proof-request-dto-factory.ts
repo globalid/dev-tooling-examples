@@ -1,10 +1,10 @@
 import {
   AllowanceStatus,
-  ProofRequirements,
   CreateProofRequestDto,
   FilterValueType,
   FilterValueTypeDate,
   ProofAlgorithm,
+  ProofRequirements,
   RequiredStatus,
   RequirementStatus
 } from './create-proof-request-dto';
@@ -68,7 +68,7 @@ export class CreateProofRequestDtoFactory {
             {
               id: '29cccc89-ad6d-4f55-990d-1a7b8ea6c67f',
               path: ['$.credentialSubject.issuer'],
-              purpose: 'User must be under 21',
+              purpose: 'Issuer must be <veriff did key>',
               filter: { const: 'did:key:<veriff did key>' }
             }
           ]
