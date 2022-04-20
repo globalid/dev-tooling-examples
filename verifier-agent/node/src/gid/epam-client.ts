@@ -24,6 +24,6 @@ export class EpamClient {
   }
 }
 
-export interface PublicKeyResponse {
+interface PublicKeyResponse {
   public_key: string;
 }

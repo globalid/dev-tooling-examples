@@ -11,12 +11,12 @@ describe('CreateProofRequestDtoFactory', () => {
       const presentationRequirementsFactory = new PresentationRequirementsFactory();
       const createProofRequestDtoFactory = new CreateProofRequestDtoFactory(presentationRequirementsFactory);
 
-      const createSpy = jest.spyOn(presentationRequirementsFactory, 'create'); 
+      const createSpy = jest.spyOn(presentationRequirementsFactory, 'create');
 
       const createProofRequestDto = createProofRequestDtoFactory.create(trackingId, webhookUrl);
 
       expect(createSpy).toHaveBeenCalledTimes(1);
       expect(createProofRequestDto.proof_requirements).toEqual(presentationRequirementsFactory.create());
     });
-  })
+  });
 });

@@ -27,7 +27,7 @@ export class AuthClient {
         grant_type: GrantType.ClientCredentials
       },
       {
-        baseURL: process.env.API_BASE_URL || 'https://api.global.id'
+        baseURL: process.env.GID_API_BASE_URL || 'https://api.global.id'
       }
     );
     return response.data.access_token;
