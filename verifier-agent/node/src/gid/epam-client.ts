@@ -1,5 +1,5 @@
 import { AuthClient } from './auth-client';
-import axios from './axios';
+import { credentialsAxios as axios } from './axios';
 import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
 
 export class EpamClient {

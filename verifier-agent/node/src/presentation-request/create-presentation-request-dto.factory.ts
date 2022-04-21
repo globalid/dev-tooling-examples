@@ -8,8 +8,8 @@ export class CreatePresentationRequestDtoFactory {
   create(trackingId: string, webhookUrl: string): CreatePresentationRequestDto {
     return {
       presentationRequirements: this.presentationRequirementsFactory.create(),
-      webhookUrl,
-      trackingId
+      trackingId,
+      webhookUrl
     };
   }
 }
