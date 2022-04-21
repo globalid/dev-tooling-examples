@@ -1,14 +1,32 @@
 import { UnknownRecord } from '../interfaces';
 
-export interface CreatePresentationRequestDto {
+/**
+ * Used by `GidVerifierClient`
+ */
+export interface CreateProofRequestDto {
+  presentationRequirements: PresentationRequirements;
+  webhookUrl: string;
+  trackingId: string;
+}
+
+/**
+ * Used by `EpamClient`
+ */
+export interface CreateProofRequestDto {
   proof_requirements: PresentationRequirements;
   screening_webhook_url: string;
   tracking_id: string;
 }
 
-/**
- * PresentationDefinition
- */
+export interface PresentationRequestResponseDto {
+  '@type'?: string;
+  '@id': string;
+  will_confirm?: boolean;
+  'request_presentations~attach': RequestPresentationAttach[];
+  comment?: string;
+  formats: PresRequestFormat[];
+}
+
 export interface PresentationRequirements {
   name?: string;
   purpose?: string;
@@ -115,15 +133,6 @@ export enum FilterValueTypeDate {
 
 export enum ProofAlgorithm {
   BbsBlsSignature2020 = 'BbsBlsSignature2020'
-}
-
-export interface PresentationRequestResponseDto {
-  '@type'?: string;
-  '@id': string;
-  will_confirm?: boolean;
-  'request_presentations~attach': RequestPresentationAttach[];
-  comment?: string;
-  formats: PresRequestFormat[];
 }
 
 export interface RequestPresentationAttach {

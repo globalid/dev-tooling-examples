@@ -18,7 +18,7 @@ describe('CreatePresentationRequestDtoFactory', () => {
       const createPresentationRequestDto = createPresentationRequestDtoFactory.create(trackingId, webhookUrl);
 
       expect(createSpy).toHaveBeenCalledTimes(1);
-      expect(createPresentationRequestDto.proof_requirements).toEqual(presentationRequirementsFactory.create());
+      expect(createPresentationRequestDto.presentationRequirements).toEqual(presentationRequirementsFactory.create());
     });
   });
 });
