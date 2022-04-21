@@ -14,7 +14,10 @@ export class WebsocketExceptionFilter<TError = any> implements WsExceptionFilter
       const error = exception.getError();
 
       const payload = isObject(error)
-        ? error
+        ? {
+            event: 'error',
+            data: error
+          }
         : {
             event: 'error',
             data: exception.getError()

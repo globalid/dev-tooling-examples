@@ -9,8 +9,8 @@ describe('PresentationRequestGateway', () => {
 
   beforeEach(async () => {
     const testModule = await Test.createTestingModule({
-      providers: [ PresentationRequestGateway ]
-    }).compile()
+      providers: [PresentationRequestGateway]
+    }).compile();
 
     mockClient = {
       send: jest.fn()
@@ -21,7 +21,7 @@ describe('PresentationRequestGateway', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
-  })
+  });
 
   describe('register', () => {
     it('should register a client successfully', async () => {
@@ -33,7 +33,7 @@ describe('PresentationRequestGateway', () => {
 
     it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
       gateway.register(mockClient, { trackingId });
-      expect(() => gateway.register(mockClient, { trackingId })).toThrow()
+      expect(() => gateway.register(mockClient, { trackingId })).toThrow();
     });
   });
 

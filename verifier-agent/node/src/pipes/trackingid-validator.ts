@@ -10,10 +10,8 @@ interface MaybeHasTrackingId {
 }
 
 const hasTrackingId = (x: MaybeHasTrackingId): x is HasTrackingId => {
-  return 'trackingId' in x
-    && (<HasTrackingId>x).trackingId !== undefined
-    && (<HasTrackingId>x).trackingId !== null
-}
+  return 'trackingId' in x && (<HasTrackingId>x).trackingId !== undefined && (<HasTrackingId>x).trackingId !== null;
+};
 
 @Injectable()
 export class TrackingIdValidationPipe implements PipeTransform<MaybeHasTrackingId, HasTrackingId> {

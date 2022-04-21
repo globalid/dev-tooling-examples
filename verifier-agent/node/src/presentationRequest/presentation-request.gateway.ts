@@ -36,7 +36,7 @@ export class PresentationRequestGateway {
   ): WsResponse<string> {
     const registered = this.addSocketToRegistry(data.trackingId, client);
     if (!registered) {
-      throw new WsException(`trackingId "${data.trackingId}" already exists`)
+      throw new WsException(`trackingId "${data.trackingId}" already exists`);
     }
 
     return { event: SocketEvent.ClientRegistered, data: 'client successfully registered' };
