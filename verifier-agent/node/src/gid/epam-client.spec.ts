@@ -4,7 +4,7 @@ import { createMock } from '@golevelup/ts-jest';
 
 import { accessToken, createProofRequestAxiosResponse, publicKey } from '../../test/common';
 import { AuthClient } from './auth-client';
-import { CreatePresentationRequestDto, ProofRequestResponseDto } from './create-presentation-request-dto';
+import { ProofRequestResponseDto } from './create-presentation-request-dto';
 import { EpamClient } from './epam-client';
 import { CreateProofRequestDto } from './create-proof-request-dto';
 
@@ -25,9 +25,7 @@ describe('EpamClient', () => {
   describe('createProofRequest', () => {
     it('should create a Presentation Request', async () => {
       axiosMock.post.mockResolvedValueOnce(createProofRequestAxiosResponse);
-      const result: ProofRequestResponseDto = await client.createProofRequest(
-        createProofRequestDto
-      );
+      const result: ProofRequestResponseDto = await client.createProofRequest(createProofRequestDto);
 
       expect(result).toBe(createProofRequestAxiosResponse.data);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
