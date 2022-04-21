@@ -1,13 +1,24 @@
 import { WebSocket } from 'ws';
 
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
+import {
+  ConnectedSocket,
+  MessageBody,
+  SubscribeMessage,
+  WebSocketGateway,
+  WsException,
+  WsResponse
+} from '@nestjs/websockets';
 
 import { Maybe, TrackingId } from '../types';
 import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';
+import { UseFilters } from '@nestjs/common';
+import { WebsocketExceptionFilter } from '../filters/ws-filter';
+import { TrackingIdValidationPipe } from '../pipes/trackingid-validator';
 
 // TODO remove when config is figured out
 const websocketPort = 8080;
 
+@UseFilters(new WebsocketExceptionFilter())
 @WebSocketGateway(websocketPort)
 export class PresentationRequestGateway {
   private websocketRegistry: Map<TrackingId, WebSocket>;
@@ -19,14 +30,13 @@ export class PresentationRequestGateway {
   }
 
   @SubscribeMessage('register-client')
-  register(@ConnectedSocket() client: WebSocket, @MessageBody() data: RegisterClientEvent): WsResponse<string> {
-    if (!data.trackingId) {
-      return { event: SocketEvent.ClientRegisterError, data: 'trackingId required' };
-    }
-
+  register(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody(new TrackingIdValidationPipe()) data: RegisterClientEvent
+  ): WsResponse<string> {
     const registered = this.addSocketToRegistry(data.trackingId, client);
     if (!registered) {
-      return { event: SocketEvent.ClientRegisterError, data: `trackingId "${data.trackingId}" already exists` };
+      throw new WsException(`trackingId "${data.trackingId}" already exists`)
     }
 
     return { event: SocketEvent.ClientRegistered, data: 'client successfully registered' };

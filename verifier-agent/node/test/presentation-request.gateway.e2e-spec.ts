@@ -60,7 +60,7 @@ describe('PresentationRequestGateway', () => {
       await new Promise<void>((resolve) =>
         ws.on('message', (event: any) => {
           const data = JSON.parse(event);
-          expect(data.event).toBe('client-register-error');
+          expect(data.event).toBe('error');
           expect(data.data).toContain('already exists');
           resolve();
         })
@@ -80,8 +80,8 @@ describe('PresentationRequestGateway', () => {
       await new Promise<void>((resolve) =>
         ws.on('message', (event: any) => {
           const data = JSON.parse(event);
-          expect(data.event).toBe('client-register-error');
-          expect(data.data).toBe('trackingId required');
+          expect(data.event).toBe('error');
+          expect(data.data).toBe('param [trackingId] required but found null');
           resolve();
         })
       );

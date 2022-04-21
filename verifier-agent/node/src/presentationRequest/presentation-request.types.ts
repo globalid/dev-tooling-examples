@@ -1,3 +1,10 @@
+// import { IsUUID } from "class-validator";
+
+// export class RegisterClientEvent {
+//   @IsUUID('4')
+//   trackingId: string;
+// }
+
 export interface RegisterClientEvent {
   trackingId: string;
 }
