@@ -1,15 +1,16 @@
 import { AuthClient } from './auth-client';
 import axios from './axios';
-import { CreateProofRequestDto, PresentationRequestResponseDto } from './create-presentation-request-dto';
+import { ProofRequestResponseDto } from './create-presentation-request-dto';
+import { CreateProofRequestDto } from './create-proof-request-dto';
 
 export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}
 
   async createProofRequest(
     createProofRequestDto: CreateProofRequestDto
-  ): Promise<PresentationRequestResponseDto> {
+  ): Promise<ProofRequestResponseDto> {
     const accessToken = await this.authClient.getAppAccessToken();
-    const response = await axios.post<PresentationRequestResponseDto>(
+    const response = await axios.post<ProofRequestResponseDto>(
       '/v2/aries/management/external-party/proof-requests',
       createProofRequestDto,
       {

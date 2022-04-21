@@ -4,7 +4,7 @@ import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 
-import { PresentationRequestResponseDto } from '../src/gid/create-presentation-request-dto';
+import { ProofRequestResponseDto } from '../src/gid/create-presentation-request-dto';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
@@ -34,8 +34,8 @@ export function mockConfigService(env: Record<string, any>) {
 export const clientId = '123abc';
 export const clientSecret = '456def';
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
-export const createPresentationRequestAxiosResponse = {
-  data: <PresentationRequestResponseDto>{
+export const createProofRequestAxiosResponse = {
+  data: <ProofRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
     '@id': '78d1b09d-a7f2-4523-b125-92509480ba10',
     will_confirm: true,

@@ -3,22 +3,13 @@ import { UnknownRecord } from '../interfaces';
 /**
  * Used by `GidVerifierClient`
  */
-export interface CreateProofRequestDto {
+export interface CreatePresentationRequestDto {
   presentationRequirements: PresentationRequirements;
   webhookUrl: string;
   trackingId: string;
 }
 
-/**
- * Used by `EpamClient`
- */
-export interface CreateProofRequestDto {
-  proof_requirements: PresentationRequirements;
-  screening_webhook_url: string;
-  tracking_id: string;
-}
-
-export interface PresentationRequestResponseDto {
+export interface ProofRequestResponseDto {
   '@type'?: string;
   '@id': string;
   will_confirm?: boolean;

@@ -2,15 +2,16 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
-import { accessToken, createPresentationRequestAxiosResponse, publicKey } from '../../test/common';
+import { accessToken, createProofRequestAxiosResponse, publicKey } from '../../test/common';
 import { AuthClient } from './auth-client';
-import { CreateProofRequestDto, PresentationRequestResponseDto } from './create-presentation-request-dto';
+import { CreatePresentationRequestDto, ProofRequestResponseDto } from './create-presentation-request-dto';
 import { EpamClient } from './epam-client';
+import { CreateProofRequestDto } from './create-proof-request-dto';
 
 describe('EpamClient', () => {
   let client: EpamClient;
   const authClient = createMock<AuthClient>();
-  const createPresentationRequestDto = createMock<CreateProofRequestDto>();
+  const createProofRequestDto = createMock<CreateProofRequestDto>();
 
   beforeEach(() => {
     authClient.getAppAccessToken.mockResolvedValueOnce(accessToken);
@@ -21,18 +22,18 @@ describe('EpamClient', () => {
     axiosMock.reset();
   });
 
-  describe('createPresentationRequest', () => {
+  describe('createProofRequest', () => {
     it('should create a Presentation Request', async () => {
-      axiosMock.post.mockResolvedValueOnce(createPresentationRequestAxiosResponse);
-      const result: PresentationRequestResponseDto = await client.createProofRequest(
-        createPresentationRequestDto
+      axiosMock.post.mockResolvedValueOnce(createProofRequestAxiosResponse);
+      const result: ProofRequestResponseDto = await client.createProofRequest(
+        createProofRequestDto
       );
 
-      expect(result).toBe(createPresentationRequestAxiosResponse.data);
+      expect(result).toBe(createProofRequestAxiosResponse.data);
       expect(axiosMock.post).toHaveBeenCalledTimes(1);
       expect(axiosMock.post).toHaveBeenCalledWith(
         '/v2/aries/management/external-party/proof-requests',
-        createPresentationRequestDto,
+        createProofRequestDto,
         {
           headers: { Authorization: `Bearer ${accessToken}` }
         }
