@@ -1,7 +1,6 @@
 import { AuthClient } from './auth-client';
 import axios from './axios';
-import { ProofRequestResponseDto } from './create-presentation-request-dto';
-import { CreateProofRequestDto } from './create-proof-request-dto';
+import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
 
 export class EpamClient {
   constructor(private readonly authClient: AuthClient) {}

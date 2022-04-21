@@ -4,9 +4,8 @@ import { createMock } from '@golevelup/ts-jest';
 
 import { accessToken, createProofRequestAxiosResponse, publicKey } from '../../test/common';
 import { AuthClient } from './auth-client';
-import { ProofRequestResponseDto } from './create-presentation-request-dto';
+import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
 import { EpamClient } from './epam-client';
-import { CreateProofRequestDto } from './create-proof-request-dto';
 
 describe('EpamClient', () => {
   let client: EpamClient;

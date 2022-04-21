@@ -9,15 +9,6 @@ export interface CreatePresentationRequestDto {
   trackingId: string;
 }
 
-export interface ProofRequestResponseDto {
-  '@type'?: string;
-  '@id': string;
-  will_confirm?: boolean;
-  'request_presentations~attach': RequestPresentationAttach[];
-  comment?: string;
-  formats: PresRequestFormat[];
-}
-
 export interface PresentationRequirements {
   name?: string;
   purpose?: string;

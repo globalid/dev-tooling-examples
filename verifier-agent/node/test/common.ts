@@ -3,8 +3,7 @@ import { TrackingId } from 'src/types';
 import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
-
-import { ProofRequestResponseDto } from '../src/gid/create-presentation-request-dto';
+import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
