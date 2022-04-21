@@ -5,7 +5,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import validationSchema from './config.schema';
 import { GidModule } from './gid/gid.module';
-import { PresentationRequestGateway } from './presentationRequest/presentation-request.gateway';
+import { CreatePresentationRequestDtoFactory } from './presentation-request/create-presentation-request-dto.factory';
+import { PresentationRequestGateway } from './presentation-request/presentation-request.gateway';
+import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
 
 @Module({
   imports: [
@@ -17,6 +19,6 @@ import { PresentationRequestGateway } from './presentationRequest/presentation-r
     GidModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, CreatePresentationRequestDtoFactory, PresentationRequirementsFactory]
 })
 export class AppModule {}
