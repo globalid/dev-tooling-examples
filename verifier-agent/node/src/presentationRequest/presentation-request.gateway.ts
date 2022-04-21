@@ -1,13 +1,6 @@
 import { WebSocket } from 'ws';
 
-import {
-  ConnectedSocket,
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-  WsException,
-  WsResponse
-} from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 
 import { Maybe, TrackingId } from '../types';
 import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';

@@ -1,6 +1,5 @@
 import { ArgumentsHost, WsExceptionFilter } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
-import { isObject } from 'class-validator';
 import { WebSocket } from 'ws';
 
 export class WebsocketExceptionFilter<TError = any> implements WsExceptionFilter<TError> {
@@ -14,7 +13,7 @@ export class WebsocketExceptionFilter<TError = any> implements WsExceptionFilter
       const payload = {
         event: 'error',
         data: exception.getError()
-      }
+      };
 
       return this.sendMessage(client, payload);
     }
