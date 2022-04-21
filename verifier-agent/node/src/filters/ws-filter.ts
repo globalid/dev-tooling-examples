@@ -11,17 +11,10 @@ export class WebsocketExceptionFilter<TError = any> implements WsExceptionFilter
 
   private handleError<TClient extends WebSocket>(client: TClient, exception: TError) {
     if (exception instanceof WsException) {
-      const error = exception.getError();
-
-      const payload = isObject(error)
-        ? {
-            event: 'error',
-            data: error
-          }
-        : {
-            event: 'error',
-            data: exception.getError()
-          };
+      const payload = {
+        event: 'error',
+        data: exception.getError()
+      }
 
       return this.sendMessage(client, payload);
     }
