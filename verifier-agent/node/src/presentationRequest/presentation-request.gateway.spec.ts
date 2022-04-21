@@ -31,9 +31,12 @@ describe('PresentationRequestGateway', () => {
       expect(data.data).toBe('client successfully registered');
     });
 
-    it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
+    it('should still register 2nd client with the same trackingId', async () => {
       gateway.register(mockClient, { trackingId });
-      expect(() => gateway.register(mockClient, { trackingId })).toThrow();
+      const data = gateway.register(mockClient, { trackingId });
+
+      expect(data.event).toBe('client-registered');
+      expect(data.data).toBe('client successfully registered');
     });
   });
 
