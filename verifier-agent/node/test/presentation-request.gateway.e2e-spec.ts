@@ -1,7 +1,9 @@
-import { INestApplication } from '@nestjs/common';
-import { TrackingId } from '../src/types';
 import { WebSocket } from 'ws';
-import { PresentationRequestGateway } from '../src/presentationRequest/presentation-request.gateway';
+
+import { INestApplication } from '@nestjs/common';
+
+import { PresentationRequestGateway } from '../src/presentation-request/presentation-request.gateway';
+import { TrackingId } from '../src/types';
 import { createNestApp, webSocketUrl } from './common';
 
 describe('PresentationRequestGateway', () => {

@@ -2,14 +2,12 @@ import axiosMock from 'jest-mock-axios';
 
 import { createMock } from '@golevelup/ts-jest';
 
+import { accessToken, clientId, clientSecret } from '../../test/common';
 import { AuthClient, AuthToken, GrantType } from './auth-client';
 
 describe('AuthClient', () => {
   let client: AuthClient;
 
-  const clientId = 'f64ebca2';
-  const clientSecret = '8379881c';
-  const accessToken = '09e9be92891e8cf7468a4d6f63d2daaf';
   const authTokenResponse = createMock<AuthToken>({
     access_token: accessToken
   });
