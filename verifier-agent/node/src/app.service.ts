@@ -8,6 +8,10 @@ import { createPresentationRequestUrl } from './gid/createPresentationRequestUrl
 
 @Injectable()
 export class AppService {
+  getHello(): string {
+    return 'Hello World!';
+  }
+
   async getQrCode(): Promise<string> {
     const [url] = createPresentationRequestUrl({
       clientId: '1234',

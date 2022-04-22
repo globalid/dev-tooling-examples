@@ -20,12 +20,7 @@ describe('AppController', () => {
 
   describe('root getQrCode', () => {
     it('should return a base64 img', async () => {
-      const makeQrCodeSpy = jest.spyOn(appController, 'getQrCode');
-      const qrCode = await appController.getQrCode();
-
-      expect(makeQrCodeSpy).toHaveBeenCalledTimes(1);
-      expect(makeQrCodeSpy).toHaveReturned();
-      expect(qrCode).toContain('<img src=data:image/png;base64,');
+      expect(appController.getHello()).toBe('Hello World!');
     });
   });
 });
