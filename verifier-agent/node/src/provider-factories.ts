@@ -27,7 +27,11 @@ export const gidVerifierClientProviderFactory = {
 
 export const presentationRequestServiceProviderFactory = {
   provide: PresentationRequestService,
-  useFactory: (configService: ConfigService, gidVerifierClient: GidVerifierClient, presentationRequirementsFactory: PresentationRequirementsFactory) => {
+  useFactory: (
+    configService: ConfigService,
+    gidVerifierClient: GidVerifierClient,
+    presentationRequirementsFactory: PresentationRequirementsFactory
+  ) => {
     return new PresentationRequestService(configService, gidVerifierClient, presentationRequirementsFactory);
   },
   inject: [ConfigService, GidVerifierClient, PresentationRequirementsFactory]

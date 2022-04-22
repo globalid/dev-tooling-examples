@@ -58,15 +58,19 @@ describe('PresentationRequestService', () => {
 
   describe('verifySignature', () => {
     it('should verify a signature', async () => {
-      const proofRequestResponseDtoMock = createMock<ProofRequestResponseDto>();
-      const createProofRequestSpy = jest
-        .spyOn(epamClient, 'createProofRequest')
-        .mockResolvedValueOnce(proofRequestResponseDtoMock);
+      const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(true);
 
-      const proofRequestResponseDto = await service.requestPresentation(trackingId);
+      await service.verifySignature('asdf', '1234');
 
-      expect(proofRequestResponseDto).toBeDefined();
-      expect(createProofRequestSpy).toHaveBeenCalledTimes(1);
+      expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should fail with an invalid signature', async () => {
+      const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(false);
+
+      // expect(async () => await service.verifySignature('asdf', '1234')).toThrow();
+      // await service.verifySignature('asdf', '1234');
+      // expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
