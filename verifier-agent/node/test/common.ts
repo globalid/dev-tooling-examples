@@ -4,13 +4,17 @@ import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
+import { join } from 'path';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
     imports: [...imports]
   }).compile();
 
-  const app = moduleFixture.createNestApplication();
+  const app: any = moduleFixture.createNestApplication();
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
   app.useWebSocketAdapter(new WsAdapter(app));
   return app;
 };
