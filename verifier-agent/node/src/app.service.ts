@@ -7,8 +7,6 @@ import { ConfigService } from '@nestjs/config';
 
 import { createPresentationRequestUrl } from './gid/create-presentation-request-url';
 
-import { createPresentationRequestUrl } from './gid/createPresentationRequestUrl';
-
 @Injectable()
 export class AppService {
   constructor(private readonly configService: ConfigService) {}
@@ -26,7 +24,8 @@ export class AppService {
   }
 
   async getQrCode(): Promise<string> {
-    const [url] = createPresentationRequestUrl({
+    const url = createPresentationRequestUrl({
+      trackingId: 'abc-123',
       clientId: '1234',
       initiationUrl: 'https://www.localhost.com:3000'
     });
