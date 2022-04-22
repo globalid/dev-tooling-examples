@@ -16,4 +16,10 @@ export class AppController {
 
     return { trackingId, qrCode };
   }
+
+  // @Get()
+  // async getQrCode(): Promise<string> {
+  //   const qrCode = await this.appService.getQrCode();
+  //   return `<img src=${qrCode} />`;
+  // }
 }

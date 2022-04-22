@@ -1,5 +1,7 @@
+import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { trackingId } from '../test/common';
 import { AppService } from './app.service';
 import * as presentationRequestService from './gid/create-presentation-request-url';
@@ -19,10 +21,15 @@ describe('AppService', () => {
 
   it('should generate qr code', () => {
     const url = 'http://example.com/';
-    jest.spyOn(presentationRequestService, 'createPresentationRequestUrl').mockImplementation(() => new URL(url));
+    const makeQrCodeSpy = jest
+      .spyOn(presentationRequestService, 'createPresentationRequestUrl')
+      .mockImplementation(() => new URL(url));
 
     const qrCode = appService.getPresentationRequestQrCode(trackingId);
 
+    expect(makeQrCodeSpy).toHaveBeenCalledTimes(1);
+    expect(makeQrCodeSpy).toHaveReturned();
+    expect(qrCode).toContain('data:image/png;base64,');
     expect(qrCode).toBe(url);
   });
 });
