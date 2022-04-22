@@ -4,7 +4,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { CreatePresentationRequestDto } from './create-presentation-request-dto';
 import { EpamClient } from './epam-client';
 import { GidVerifierClient } from './gid-verifier-client';
-import { createPresentationRequestAxiosResponse, privateKey, publicKey } from '../../test/common';
+import { createProofRequestAxiosResponse, privateKey, publicKey } from '../../test/common';
 
 describe('GidVerifierClient', () => {
   let client: GidVerifierClient;
@@ -17,13 +17,13 @@ describe('GidVerifierClient', () => {
 
   describe('createPresentationRequest', () => {
     it('should call the EPAM service to create proof request', async () => {
-      epamClient.createPresentationRequest.mockResolvedValueOnce(createPresentationRequestAxiosResponse.data);
+      epamClient.createProofRequest.mockResolvedValueOnce(createProofRequestAxiosResponse.data);
 
       const result: any = await client.createPresentationRequest(createPresentationRequestDto);
 
-      expect(result).toBe(createPresentationRequestAxiosResponse.data);
-      expect(epamClient.createPresentationRequest).toHaveBeenCalledTimes(1);
-      expect(epamClient.createPresentationRequest).toHaveBeenCalledWith(createPresentationRequestDto);
+      expect(result).toBe(createProofRequestAxiosResponse.data);
+      expect(epamClient.createProofRequest).toHaveBeenCalledTimes(1);
+      expect(epamClient.createProofRequest).toHaveBeenCalledWith(createPresentationRequestDto);
     });
   });
 

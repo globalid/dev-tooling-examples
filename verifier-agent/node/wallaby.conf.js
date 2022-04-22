@@ -2,7 +2,7 @@ module.exports = function () {
   return {
     filesWithNoCoverageCalculated: [
       'src/**/*-dto.ts',
-      'src/**/*-dto-factory.ts',
+      'src/**/*.factory.ts',
       'src/**/*.module.ts',
       'src/**/*.provider.ts',
       'src/**/*.schema.ts',

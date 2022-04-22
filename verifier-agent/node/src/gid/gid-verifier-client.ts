@@ -7,7 +7,11 @@ export class GidVerifierClient {
   constructor(private readonly epamClient: EpamClient) {}
 
   async createPresentationRequest(createPresentationRequestDto: CreatePresentationRequestDto): Promise<any> {
-    return this.epamClient.createPresentationRequest(createPresentationRequestDto);
+    return this.epamClient.createProofRequest({
+      proof_requirements: createPresentationRequestDto.presentationRequirements,
+      screening_webhook_url: createPresentationRequestDto.webhookUrl,
+      tracking_id: createPresentationRequestDto.trackingId
+    });
   }
 
   async verifySignature(signature: string, data: any): Promise<boolean> {

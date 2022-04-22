@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../coverage',
   coveragePathIgnorePatterns: [
     '<rootDir>/.*-dto.ts$',
-    '<rootDir>/.*-dto-factory.ts$',
+    '<rootDir>/.*.factory.ts$',
     '<rootDir>/.*\\.module.ts$',
     '<rootDir>/.*\\.provider.ts$',
     '<rootDir>/.*\\.schema.ts$',

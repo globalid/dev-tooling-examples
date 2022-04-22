@@ -2,7 +2,7 @@ import { WebSocket } from 'ws';
 
 import { INestApplication } from '@nestjs/common';
 
-import { PresentationRequestGateway } from '../src/presentationRequest/presentation-request.gateway';
+import { PresentationRequestGateway } from '../src/presentation-request/presentation-request.gateway';
 import { TrackingId } from '../src/types';
 import { createNestApp, webSocketUrl } from './common';
 

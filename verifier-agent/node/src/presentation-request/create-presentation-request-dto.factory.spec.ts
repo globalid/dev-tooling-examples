@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 
-import { PresentationRequirementsFactory } from '../presentationRequest/presentation-requirements-factory';
-import { CreatePresentationRequestDtoFactory } from './create-presentation-request-dto-factory';
+import { PresentationRequirementsFactory } from './presentation-requirements.factory';
+import { CreatePresentationRequestDtoFactory } from './create-presentation-request-dto.factory';
 
 describe('CreatePresentationRequestDtoFactory', () => {
   describe('buildCreatePresentationRequestEpamDto', () => {
@@ -18,7 +18,7 @@ describe('CreatePresentationRequestDtoFactory', () => {
       const createPresentationRequestDto = createPresentationRequestDtoFactory.create(trackingId, webhookUrl);
 
       expect(createSpy).toHaveBeenCalledTimes(1);
-      expect(createPresentationRequestDto.proof_requirements).toEqual(presentationRequirementsFactory.create());
+      expect(createPresentationRequestDto.presentationRequirements).toEqual(presentationRequirementsFactory.create());
     });
   });
 });
