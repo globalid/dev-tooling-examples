@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { AuthClient } from './auth-client';
 import { credentialsAxios as axios } from './axios';
 import { CreateProofRequestDto, ProofRequestResponseDto } from './create-proof-request-dto';
