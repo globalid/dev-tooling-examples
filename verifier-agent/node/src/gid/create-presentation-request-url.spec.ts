@@ -1,4 +1,4 @@
-import { createPresentationRequestUrl, CreatePresentationUrlParams } from './createPresentationRequestUrl';
+import { createPresentationRequestUrl, CreatePresentationUrlParams } from './create-presentation-request-url';
 
 describe('createPresentationRequestUrl', () => {
   const baseParams: CreatePresentationUrlParams = {

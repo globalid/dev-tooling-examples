@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 
-import axios from './axios';
+import { apiAxios as axios } from './axios';
 
 export enum GrantType {
   ClientCredentials = 'client_credentials'
