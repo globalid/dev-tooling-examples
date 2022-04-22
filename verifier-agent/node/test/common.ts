@@ -1,3 +1,4 @@
+import * as crypto from 'crypto';
 import { TrackingId } from 'src/types';
 
 import { INestApplication } from '@nestjs/common';
@@ -33,6 +34,17 @@ export function mockConfigService(env: Record<string, any>) {
 export const clientId = '123abc';
 export const clientSecret = '456def';
 export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
+export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
+  modulusLength: 2048,
+  publicKeyEncoding: {
+    type: 'spki',
+    format: 'pem'
+  },
+  privateKeyEncoding: {
+    type: 'pkcs8',
+    format: 'pem'
+  }
+});
 export const createProofRequestAxiosResponse = {
   data: <ProofRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
@@ -132,5 +144,3 @@ export const createProofRequestAxiosResponse = {
     ]
   }
 };
-
-export const publicKey = '-----BEGIN PUBLIC KEY----- ... -----END PUBLIC KEY-----\n';
