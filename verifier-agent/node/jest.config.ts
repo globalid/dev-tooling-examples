@@ -4,6 +4,8 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: ['**/*.(t|j)s'],
   coverageDirectory: '../coverage',
   coveragePathIgnorePatterns: [
+    '<rootDir>/.*-dto.ts$',
+    '<rootDir>/.*.factory.ts$',
     '<rootDir>/.*\\.module.ts$',
     '<rootDir>/.*\\.provider.ts$',
     '<rootDir>/.*\\.schema.ts$',
@@ -24,7 +26,8 @@ const config: Config.InitialOptions = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest'
   },
-  verbose: true
+  verbose: true,
+  setupFilesAfterEnv: ["../test/setup.ts"]
 };
 
 export default config;

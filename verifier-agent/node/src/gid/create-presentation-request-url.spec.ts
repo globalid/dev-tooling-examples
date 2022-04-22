@@ -1,4 +1,4 @@
-import { createPresentationRequestUrl, CreatePresentationUrlParams } from './createPresentationRequestUrl';
+import { createPresentationRequestUrl, CreatePresentationUrlParams } from './create-presentation-request-url';
 
 describe('createPresentationRequestUrl', () => {
   const baseParams: CreatePresentationUrlParams = {
@@ -8,7 +8,6 @@ describe('createPresentationRequestUrl', () => {
 
   it('should return a URL with origin https://link.global.id', () => {
     const [url, tracking_id] = createPresentationRequestUrl(baseParams);
-
     expect(url.origin).toBe('https://link.global.id');
     expect(url.searchParams.get('app_uuid')).toBe(baseParams.clientId);
     expect(url.searchParams.get('proof_request_url')).toBe(`${baseParams.initiationUrl}/?tracking_id=${tracking_id}`);

@@ -1,13 +1,18 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
-// import { version } from '../version'
+import { version } from './version';
 
-// TODO remove when above import is in place
-const version = '0.1.0';
-
-export default axios.create({
-  baseURL: 'https://api.global.id',
+const axiosConfig: AxiosRequestConfig = {
   headers: {
-    'User-Agent': `GlobaliD-API-Client/${version}`
+    'User-Agent': `Globalid-Verifier-Toolkit/${version}`
   }
+};
+export const credentialsAxios = axios.create({
+  ...axiosConfig,
+  baseURL: process.env.GID_CREDENTIALS_BASE_URL || 'https://credentials.global.id'
+});
+
+export const apiAxios = axios.create({
+  ...axiosConfig,
+  baseURL: process.env.GID_API_BASE_URL || 'https://api.global.id'
 });
