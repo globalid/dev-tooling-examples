@@ -1,3 +1,5 @@
+import { randomUUID } from 'crypto';
+
 import { Controller, Get, Render } from '@nestjs/common';
 
 import { AppService } from './app.service';
@@ -7,9 +9,11 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  @Render('connect')
-  getHello(): any {
-    // return this.appService.connect();
-    return { foo: 'hahahah' };
+  @Render('index')
+  renderHomeView(): Record<string, any> {
+    const trackingId = randomUUID();
+    const qrCode = this.appService.getPresentationRequestQrCode(trackingId);
+
+    return { trackingId, qrCode };
   }
 }

@@ -1,6 +1,10 @@
 // Create WebSocket connection.
-const trackingId = '96f5ad768582857b';
-const socket = new WebSocket("ws://localhost:8080");
+// const trackingId = '96f5ad768582857b';
+
+
+function functionThing(trackingId) {
+  console.log("this came from another script", trackingId);
+  const socket = new WebSocket("ws://localhost:8080");
 
 // attach event listeners
 socket.onopen = onopen;
@@ -8,9 +12,7 @@ socket.onmessage = onmessage;
 socket.onerror = onerror;
 socket.onclose = onclose;
 
-function documentWrite(s) {
-  document.write(s);
-}
+
 
 function onopen(event) {
   console.log('onopen called');
@@ -33,19 +35,14 @@ function onmessage(event) {
   // route based on our application event (sent over websockets)
   switch (data.event) {
     case 'client-registered':
-      // scan QR code
-      // Calls to EPam and stuffs
-      var fooDom = document.getElementById("foo");
-      var text = document.createTextNode("This just got added ");
-      fooDom.appendChild(text);
-      console.log('client registered')
-      var data1 = document.createTextNode(data.event);
-      fooDom.appendChild(data1);
+      console.log("client-registered", trackingId)
       break
 
     case 'presentation-accepted':
       // TODO THis is where things return when accepted
-      console.log('presentation accepted')
+      // do something with trackingID
+      window.location.href = '/accepted';
+      console.log('presentation accepted', data.data)
       break
 
     case 'presentation-rejected':
@@ -74,4 +71,5 @@ function onerror(event) {
 function onclose(event) {
   console.log('onclose');
   console.log(event);
+}
 }

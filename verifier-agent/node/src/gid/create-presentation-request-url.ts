@@ -1,14 +1,12 @@
-import { randomUUID } from 'crypto';
-
 export interface CreatePresentationUrlParams {
+  trackingId: string;
   clientId: string;
   initiationUrl: string;
   redirectUrl?: string;
 }
 
-export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): [URL, string] => {
-  const trackingId = randomUUID();
-  const { clientId, initiationUrl, redirectUrl } = params;
+export const createPresentationRequestUrl = (params: CreatePresentationUrlParams): URL => {
+  const { trackingId, clientId, initiationUrl, redirectUrl } = params;
 
   const linkUrl = new URL('https://link.global.id');
   linkUrl.searchParams.append('app_uuid', clientId);
@@ -20,5 +18,5 @@ export const createPresentationRequestUrl = (params: CreatePresentationUrlParams
     redirect.searchParams.append('tracking_id', trackingId);
     linkUrl.searchParams.append('redirect_url', redirect.toString());
   }
-  return [linkUrl, trackingId];
+  return linkUrl;
 };
