@@ -1,5 +1,6 @@
 import { Injectable, PipeTransform } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
+import { isString } from 'class-validator';
 
 interface HasTrackingId extends MaybeHasTrackingId {
   trackingId: string;
@@ -16,7 +17,7 @@ const hasTrackingId = (x: MaybeHasTrackingId): x is HasTrackingId => {
 @Injectable()
 export class TrackingIdValidationPipe implements PipeTransform<MaybeHasTrackingId, HasTrackingId> {
   transform(value: MaybeHasTrackingId): HasTrackingId {
-    if (hasTrackingId(value)) {
+    if (hasTrackingId(value) && isString(value.trackingId)) {
       return value;
     }
 

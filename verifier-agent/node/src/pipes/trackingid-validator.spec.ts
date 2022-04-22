@@ -26,4 +26,9 @@ describe('TrackingIdValidationPipe', () => {
     const noTrackingId = { name: 'GlobaliD' };
     expect(() => trackingIdValidationPipe.transform(noTrackingId)).toThrow();
   });
+
+  it('should throw on non string trackingId', () => {
+    const obj = { trackingId: [] };
+    expect(() => trackingIdValidationPipe.transform(obj)).toThrow();
+  });
 });
