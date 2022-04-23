@@ -20,7 +20,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      const mockQrCode = 'mock-qr-code';
+      const mockQrCode: Promise<string> = new Promise(() => 'mock-qr-code');
       jest.spyOn(appService, 'getPresentationRequestQrCode').mockImplementation(() => mockQrCode);
 
       expect(appController.renderHomeView()).toEqual({
