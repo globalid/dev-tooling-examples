@@ -1,3 +1,4 @@
+import { Test } from '@nestjs/testing';
 import { trackingId } from '../../test/common';
 import { PresentationRequestGateway } from './presentation-request.gateway';
 import { VerifiablePresentation } from './presentation-request.types';
@@ -6,11 +7,20 @@ describe('PresentationRequestGateway', () => {
   let gateway: PresentationRequestGateway;
   let mockClient;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    const testModule = await Test.createTestingModule({
+      providers: [PresentationRequestGateway]
+    }).compile();
+
     mockClient = {
       send: jest.fn()
     };
-    gateway = new PresentationRequestGateway();
+
+    gateway = testModule.get(PresentationRequestGateway);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   describe('register', () => {
@@ -21,19 +31,12 @@ describe('PresentationRequestGateway', () => {
       expect(data.data).toBe('client successfully registered');
     });
 
-    it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
+    it('should still register 2nd client with the same trackingId', async () => {
       gateway.register(mockClient, { trackingId });
       const data = gateway.register(mockClient, { trackingId });
 
-      expect(data.event).toBe('client-register-error');
-      expect(data.data).toBe(`trackingId "${trackingId}" already exists`);
-    });
-
-    it('should return an error if no trackingId provided', async () => {
-      const data = gateway.register(mockClient, { trackingId: null });
-
-      expect(data.event).toBe('client-register-error');
-      expect(data.data).toBe('trackingId required');
+      expect(data.event).toBe('client-registered');
+      expect(data.data).toBe('client successfully registered');
     });
   });
 
