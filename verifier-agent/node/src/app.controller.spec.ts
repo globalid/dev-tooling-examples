@@ -19,11 +19,11 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      const mockQrCode: Promise<string> = new Promise(() => 'mock-qr-code');
-      jest.spyOn(appService, 'getPresentationRequestQrCode').mockImplementation(() => mockQrCode);
+    it('should return render HomeView and QrCode', async () => {
+      const mockQrCode = 'mock-qr-code';
+      jest.spyOn(appService, 'getPresentationRequestQrCode').mockImplementation(() => Promise.resolve(mockQrCode));
 
-      expect(appController.renderHomeView()).toEqual({
+      expect(await appController.renderHomeView()).toEqual({
         qrCode: mockQrCode,
         trackingId: expect.any(String)
       });

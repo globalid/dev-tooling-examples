@@ -10,16 +10,10 @@ export class AppController {
 
   @Get()
   @Render('index')
-  renderHomeView(): Record<string, any> {
+  async renderHomeView(): Promise<Record<string, any>> {
     const trackingId = randomUUID();
-    const qrCode = this.appService.getPresentationRequestQrCode(trackingId);
+    const qrCode = await this.appService.getPresentationRequestQrCode(trackingId);
 
     return { trackingId, qrCode };
   }
-
-  // @Get()
-  // async getQrCode(): Promise<string> {
-  //   const qrCode = await this.appService.getQrCode();
-  //   return `<img src=${qrCode} />`;
-  // }
 }

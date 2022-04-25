@@ -1,6 +1,4 @@
-// This will not work with standard import. Perhaps there is a config that needs to be changed
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const QRCode = require('qrcode');
+import * as QRCode from 'qrcode';
 
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
