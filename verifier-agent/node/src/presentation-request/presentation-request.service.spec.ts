@@ -68,9 +68,8 @@ describe('PresentationRequestService', () => {
     it('should fail with an invalid signature', async () => {
       const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(false);
 
-      // expect(async () => await service.verifySignature('asdf', '1234')).toThrow();
-      // await service.verifySignature('asdf', '1234');
-      // expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
+      await expect(async () => await service.verifySignature('asdf', '1234')).rejects.toThrow();
+      expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
     });
   });
 });
