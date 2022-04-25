@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { createMock } from '@golevelup/ts-jest';
 import { PresentationRequestService } from './presentation-request.service';
-import { mockConfigService, trackingId } from '../../test/common';
+import { trackingId } from '../../test/common';
 import { ConfigService } from '@nestjs/config';
 import { EpamClient } from '../gid/epam-client';
 import { ProofRequestResponseDto } from '../gid';
