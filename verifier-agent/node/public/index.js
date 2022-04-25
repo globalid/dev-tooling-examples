@@ -1,16 +1,13 @@
 // Create WebSocket connection.
-// const trackingId = '96f5ad768582857b';
 
-
-function functionThing(trackingId) {
-  console.log("this came from another script", trackingId);
+function webSocketHandler(trackingId) {
   const socket = new WebSocket("ws://localhost:8080");
 
-// attach event listeners
-socket.onopen = onopen;
-socket.onmessage = onmessage;
-socket.onerror = onerror;
-socket.onclose = onclose;
+  // attach event listeners
+  socket.onopen = onopen;
+  socket.onmessage = onmessage;
+  socket.onerror = onerror;
+  socket.onclose = onclose;
 
 
 
@@ -28,7 +25,6 @@ function onopen(event) {
 
 function onmessage(event) {
   console.log('onmessage');
-  // console.log(event);
 
   const data = JSON.parse(event.data)
 
@@ -39,14 +35,10 @@ function onmessage(event) {
       break
 
     case 'presentation-accepted':
-      // TODO THis is where things return when accepted
-      // do something with trackingID
-      window.location.href = '/accepted';
-      console.log('presentation accepted', data.data)
+      console.log('presetation-accepted', data.data);
       break
 
     case 'presentation-rejected':
-      // TODO this is where we reject
       console.log('presentation rejected')
       break
 

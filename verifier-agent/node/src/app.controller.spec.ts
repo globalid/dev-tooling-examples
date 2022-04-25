@@ -21,7 +21,8 @@ describe('AppController', () => {
   describe('root', () => {
     it('should return render HomeView and QrCode', async () => {
       const mockQrCode = 'mock-qr-code';
-      jest.spyOn(appService, 'getPresentationRequestQrCode').mockImplementation(() => Promise.resolve(mockQrCode));
+
+      jest.spyOn(appService, 'getPresentationRequestQrCode').mockReturnValueOnce(Promise.resolve(mockQrCode));
 
       expect(await appController.renderHomeView()).toEqual({
         qrCode: mockQrCode,

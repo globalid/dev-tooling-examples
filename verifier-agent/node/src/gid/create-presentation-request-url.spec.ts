@@ -1,9 +1,10 @@
+import { clientId, trackingId } from '../../test/common';
 import { createPresentationRequestUrl, CreatePresentationUrlParams } from './create-presentation-request-url';
 
 describe('createPresentationRequestUrl', () => {
   const baseParams: CreatePresentationUrlParams = {
-    trackingId: 'ddb664a3-7160-467f-936d-a9b8c7ebc300',
-    clientId: 'abc-123',
+    trackingId,
+    clientId,
     initiationUrl: 'https://www.example.com'
   };
 
