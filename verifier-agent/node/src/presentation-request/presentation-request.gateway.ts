@@ -1,13 +1,6 @@
 import { WebSocket } from 'ws';
 
-import {
-  ConnectedSocket,
-  MessageBody,
-  SubscribeMessage,
-  WebSocketGateway,
-  WsException,
-  WsResponse
-} from '@nestjs/websockets';
+import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 
 import { Maybe, TrackingId } from '../types';
 import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';
@@ -34,11 +27,7 @@ export class PresentationRequestGateway {
     @ConnectedSocket() client: WebSocket,
     @MessageBody(new TrackingIdValidationPipe()) data: RegisterClientEvent
   ): WsResponse<string> {
-    const registered = this.addSocketToRegistry(data.trackingId, client);
-    if (!registered) {
-      throw new WsException(`trackingId "${data.trackingId}" already exists`);
-    }
-
+    this.addSocketToRegistry(data.trackingId, client);
     return { event: SocketEvent.ClientRegistered, data: 'client successfully registered' };
   }
 
@@ -60,13 +49,11 @@ export class PresentationRequestGateway {
     this.websocketRegistry.delete(trackingId);
   }
 
-  private addSocketToRegistry(trackingId: TrackingId, socket: WebSocket): boolean {
+  private addSocketToRegistry(trackingId: TrackingId, socket: WebSocket): void {
     if (this.websocketRegistry.has(trackingId)) {
       console.warn(`PresentationRequestGateway: attempting to register client with same trackingId of "${trackingId}"`);
-      return false;
     }
     this.websocketRegistry.set(trackingId, socket);
-    return true;
   }
 
   private getSocketFromRegistry(trackingId: TrackingId): Maybe<WebSocket> {

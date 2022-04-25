@@ -41,34 +41,6 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it('should return an error when trying to register a 2nd client with the same trackingId', async () => {
-      const trackingId: TrackingId = 'b9a4f323-a8f7-4b85-8aab-d98b7f423e942';
-      await new Promise((resolve) => ws.on('open', resolve));
-
-      ws.send(
-        JSON.stringify({
-          event: 'register-client',
-          data: { trackingId }
-        })
-      );
-      await new Promise<void>((resolve) => ws.on('message', resolve));
-
-      ws.send(
-        JSON.stringify({
-          event: 'register-client',
-          data: { trackingId }
-        })
-      );
-      await new Promise<void>((resolve) =>
-        ws.on('message', (event: any) => {
-          const data = JSON.parse(event);
-          expect(data.event).toBe('error');
-          expect(data.data).toContain('already exists');
-          resolve();
-        })
-      );
-    });
-
     it('should return an error if no trackingId provided', async () => {
       await new Promise((resolve) => ws.on('open', resolve));
 
