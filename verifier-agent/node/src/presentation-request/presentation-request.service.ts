@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { GidVerifierClient } from '../gid/gid-verifier-client';
+import { InvalidSignatureError } from '../invalid-signature-error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 
 @Injectable()
@@ -22,7 +23,7 @@ export class PresentationRequestService {
   async verifySignature(signature: string, userResponse: any) {
     const signatureVerified = await this.gidVerifierClient.verifySignature(signature, userResponse);
     if (!signatureVerified) {
-      throw Error('invalid signature');
+      throw new InvalidSignatureError('invalid signature');
     }
     return signatureVerified;
   }

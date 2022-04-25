@@ -11,6 +11,7 @@ import {
   presentationRequestServiceProviderFactory
 } from '../provider-factories';
 import { GidVerifierClient } from '../gid/gid-verifier-client';
+import { InvalidSignatureError } from '../invalid-signature-error';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;
@@ -60,7 +61,7 @@ describe('PresentationRequestService', () => {
     it('should fail with an invalid signature', async () => {
       const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(false);
 
-      await expect(async () => await service.verifySignature('asdf', '1234')).rejects.toThrow();
+      await expect(async () => await service.verifySignature('asdf', '1234')).rejects.toThrow(InvalidSignatureError);
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
     });
   });
