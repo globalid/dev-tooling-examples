@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthClient } from '../gid/auth-client';
-import { EpamClient } from '../gid/epam-client';
 import { GidVerifierClient } from '../gid/gid-verifier-client';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 

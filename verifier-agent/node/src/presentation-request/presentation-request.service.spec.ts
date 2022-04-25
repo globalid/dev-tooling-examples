@@ -14,7 +14,6 @@ import { GidVerifierClient } from '../gid/gid-verifier-client';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;
-  let configService: ConfigService;
   let epamClient: EpamClient;
   let gidVerifierClient: GidVerifierClient;
 
@@ -28,16 +27,9 @@ describe('PresentationRequestService', () => {
       ]
     })
       .useMocker(createMock)
-      .overrideProvider(ConfigService)
-      .useValue(
-        mockConfigService({
-          BASE_URL: 'http://localhost:3000/verifications/connect'
-        })
-      )
       .compile();
 
     service = module.get(PresentationRequestService);
-    configService = module.get(ConfigService);
     epamClient = module.get(EpamClient);
     gidVerifierClient = module.get(GidVerifierClient);
   });
