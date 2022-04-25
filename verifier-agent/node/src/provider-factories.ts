@@ -1,3 +1,4 @@
+import { Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthClient } from './gid/auth-client';
 import { EpamClient } from './gid/epam-client';
@@ -5,7 +6,7 @@ import { GidVerifierClient } from './gid/gid-verifier-client';
 import { PresentationRequestService } from './presentation-request/presentation-request.service';
 import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
 
-export const epamClientProviderFactory = {
+export const epamClientProviderFactory: Provider<EpamClient> = {
   provide: EpamClient,
   useFactory: (configService: ConfigService) => {
     const authClient = new AuthClient(
@@ -17,7 +18,7 @@ export const epamClientProviderFactory = {
   inject: [ConfigService]
 };
 
-export const gidVerifierClientProviderFactory = {
+export const gidVerifierClientProviderFactory: Provider<GidVerifierClient> = {
   provide: GidVerifierClient,
   useFactory: (epamClient: EpamClient) => {
     return new GidVerifierClient(epamClient);
@@ -25,7 +26,7 @@ export const gidVerifierClientProviderFactory = {
   inject: [EpamClient]
 };
 
-export const presentationRequestServiceProviderFactory = {
+export const presentationRequestServiceProviderFactory: Provider<PresentationRequestService> = {
   provide: PresentationRequestService,
   useFactory: (
     configService: ConfigService,
