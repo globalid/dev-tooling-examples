@@ -9,7 +9,7 @@ import {
   epamClientProviderFactory,
   gidVerifierClientProviderFactory,
   presentationRequestServiceProviderFactory
-} from '../provider-factories';
+} from '../gid/provider-factories';
 import { GidVerifierClient } from '../gid/gid-verifier-client';
 import { InvalidSignatureError } from '../invalid-signature-error';
 

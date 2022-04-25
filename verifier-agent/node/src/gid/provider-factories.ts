@@ -1,10 +1,10 @@
 import { Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthClient } from './gid/auth-client';
-import { EpamClient } from './gid/epam-client';
-import { GidVerifierClient } from './gid/gid-verifier-client';
-import { PresentationRequestService } from './presentation-request/presentation-request.service';
-import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
+import { AuthClient } from './auth-client';
+import { EpamClient } from './epam-client';
+import { GidVerifierClient } from './gid-verifier-client';
+import { PresentationRequestService } from '../presentation-request/presentation-request.service';
+import { PresentationRequirementsFactory } from '../presentation-request/presentation-requirements.factory';
 
 export const epamClientProviderFactory: Provider<EpamClient> = {
   provide: EpamClient,

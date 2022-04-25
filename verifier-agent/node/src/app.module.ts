@@ -12,7 +12,7 @@ import {
   epamClientProviderFactory,
   gidVerifierClientProviderFactory,
   presentationRequestServiceProviderFactory
-} from './provider-factories';
+} from './gid/provider-factories';
 
 @Module({
   imports: [
