@@ -1,10 +1,6 @@
 import { IsUUID } from 'class-validator';
 import { VerifiablePresentation } from '../presentation-request/presentation-request.types';
 
-export class UserAcceptance {
-  proof_presentation: VerifiablePresentation;
-}
-
 abstract class UserResponse {
   @IsUUID('4')
   app_uuid: string;
@@ -17,4 +13,12 @@ abstract class UserResponse {
 enum UserResponseState {
   Abandoned = 'abandoned',
   Done = 'done'
+}
+
+export class UserAcceptance extends UserResponse {
+  proof_presentation: VerifiablePresentation;
+}
+
+export class UserRejection {
+  error_msg: string;
 }
