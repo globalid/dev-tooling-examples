@@ -1,6 +1,7 @@
 import { Controller, Param, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { PresentationRequestResponseDto } from '../gid';
+import { UserResponsePipe } from '../gid/user-response.pipe';
 import { PresentationRequestGateway } from './presentation-request.gateway';
 import { PresentationRequestService } from './presentation-request.service';
 
@@ -17,7 +18,7 @@ export class AppController {
   }
 
   @Post('handle-user-response')
-  async handleUserResponse(@Req() request: Request) {
+  async handleUserResponse(@Param('user_response', UserResponsePipe) @Req() request: Request) {
     await this.presentationRequestService.verifySignature(<string>request.headers['X-Signature'], request.body);
   }
 }

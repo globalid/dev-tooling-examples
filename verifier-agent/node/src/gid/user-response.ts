@@ -10,7 +10,7 @@ abstract class UserResponse {
   verified: boolean;
 }
 
-enum UserResponseState {
+export enum UserResponseState {
   Abandoned = 'abandoned',
   Done = 'done'
 }
