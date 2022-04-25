@@ -4,10 +4,14 @@ import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsRes
 
 import { Maybe, TrackingId } from '../types';
 import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';
+import { UseFilters } from '@nestjs/common';
+import { WebsocketExceptionFilter } from '../filters/ws-filter';
+import { TrackingIdValidationPipe } from '../pipes/trackingid-validator';
 
 // TODO remove when config is figured out
 const websocketPort = 8080;
 
+@UseFilters(new WebsocketExceptionFilter())
 @WebSocketGateway(websocketPort)
 export class PresentationRequestGateway {
   private websocketRegistry: Map<TrackingId, WebSocket>;
@@ -19,16 +23,11 @@ export class PresentationRequestGateway {
   }
 
   @SubscribeMessage('register-client')
-  register(@ConnectedSocket() client: WebSocket, @MessageBody() data: RegisterClientEvent): WsResponse<string> {
-    if (!data.trackingId) {
-      return { event: SocketEvent.ClientRegisterError, data: 'trackingId required' };
-    }
-
-    const registered = this.addSocketToRegistry(data.trackingId, client);
-    if (!registered) {
-      return { event: SocketEvent.ClientRegisterError, data: `trackingId "${data.trackingId}" already exists` };
-    }
-
+  register(
+    @ConnectedSocket() client: WebSocket,
+    @MessageBody(new TrackingIdValidationPipe()) data: RegisterClientEvent
+  ): WsResponse<string> {
+    this.addSocketToRegistry(data.trackingId, client);
     return { event: SocketEvent.ClientRegistered, data: 'client successfully registered' };
   }
 
@@ -50,13 +49,11 @@ export class PresentationRequestGateway {
     this.websocketRegistry.delete(trackingId);
   }
 
-  private addSocketToRegistry(trackingId: TrackingId, socket: WebSocket): boolean {
+  private addSocketToRegistry(trackingId: TrackingId, socket: WebSocket): void {
     if (this.websocketRegistry.has(trackingId)) {
       console.warn(`PresentationRequestGateway: attempting to register client with same trackingId of "${trackingId}"`);
-      return false;
     }
     this.websocketRegistry.set(trackingId, socket);
-    return true;
   }
 
   private getSocketFromRegistry(trackingId: TrackingId): Maybe<WebSocket> {
