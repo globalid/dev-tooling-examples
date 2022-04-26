@@ -19,6 +19,6 @@ export class UserAcceptance extends UserResponse {
   proof_presentation: VerifiablePresentation;
 }
 
-export class UserRejection {
+export class UserRejection extends UserResponse {
   error_msg: string;
 }

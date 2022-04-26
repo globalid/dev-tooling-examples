@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { createMock } from '@golevelup/ts-jest';
 import { PresentationRequestService } from './presentation-request.service';
-import { trackingId } from '../../test/common';
+import { trackingId, userAcceptance } from '../../test/common';
 import { ConfigService } from '@nestjs/config';
 import { EpamClient } from '../gid/epam-client';
 import { ProofRequestResponseDto } from '../gid';
@@ -53,7 +53,7 @@ describe('PresentationRequestService', () => {
     it('should verify a signature', async () => {
       const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(true);
 
-      await service.verifySignature('asdf', '1234');
+      await service.verifySignature('asdf', userAcceptance);
 
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
     });
@@ -61,7 +61,9 @@ describe('PresentationRequestService', () => {
     it('should fail with an invalid signature', async () => {
       const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(false);
 
-      await expect(async () => await service.verifySignature('asdf', '1234')).rejects.toThrow(InvalidSignatureError);
+      await expect(async () => await service.verifySignature('asdf', userAcceptance)).rejects.toThrow(
+        InvalidSignatureError
+      );
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
     });
   });

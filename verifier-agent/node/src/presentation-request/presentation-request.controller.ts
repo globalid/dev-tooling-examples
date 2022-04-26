@@ -1,12 +1,13 @@
-import { Controller, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Param, Post, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { PresentationRequestResponseDto } from '../gid';
+import { UserAcceptance, UserRejection } from '../gid/user-response';
 import { UserResponsePipe } from '../gid/user-response.pipe';
 import { PresentationRequestGateway } from './presentation-request.gateway';
 import { PresentationRequestService } from './presentation-request.service';
 
 @Controller()
-export class AppController {
+export class PresentationRequestController {
   constructor(
     private readonly presentationRequestService: PresentationRequestService,
     private readonly presentationRequestGateway: PresentationRequestGateway
@@ -18,7 +19,16 @@ export class AppController {
   }
 
   @Post('handle-user-response')
-  async handleUserResponse(@Param('user_response', UserResponsePipe) @Req() request: Request) {
-    await this.presentationRequestService.verifySignature(<string>request.headers['X-Signature'], request.body);
+  async handleUserResponse(
+    @Body(UserResponsePipe) userResponse: UserAcceptance | UserRejection,
+    @Req() request: Request
+  ) {
+    await this.presentationRequestService.verifySignature(<string>request.headers['X-Signature'], userResponse);
+
+    if (userResponse instanceof UserAcceptance) {
+      this.presentationRequestGateway.acceptPresentation(userResponse.tracking_id, userResponse.proof_presentation);
+    } else {
+      this.presentationRequestGateway.rejectPresentation(userResponse.tracking_id, userResponse.error_msg);
+    }
   }
 }

@@ -1,11 +1,9 @@
 import { UserResponsePipe } from './user-response.pipe';
 import { BadRequestException } from '@nestjs/common';
-import { UserAcceptance, UserResponseState } from './user-response';
+import { UserAcceptance, UserRejection, UserResponseState } from './user-response';
 import { randomUUID } from 'crypto';
-import { trackingId } from '../../test/common';
-// import { code, decoupledId } from '../../test/common';
-// import { ConnectParams } from './connect-params';
-// import { ErrorParams } from './error-params';
+import { trackingId, userAcceptance, userRejection } from '../../test/common';
+import { instanceToPlain } from 'class-transformer';
 
 describe('ConnectParamsPipe', () => {
   let pipe: UserResponsePipe;
@@ -18,38 +16,44 @@ describe('ConnectParamsPipe', () => {
     expect(pipe).toBeDefined();
   });
 
-  it('should transform code to UserAcceptance', async () => {
-    const result = await pipe.transform({
-      app_uuid: randomUUID(),
-      tracking_id: trackingId,
-      thread_id: randomUUID(),
-      state: UserResponseState.Done,
-      proof_presentation: { 'something': 'or other'}
-    });
+  it('should transform UserResponse to UserAcceptance when proof_presentation is present', async () => {
+    const result = await pipe.transform(instanceToPlain(userAcceptance));
 
     expect(result).toBeInstanceOf(UserAcceptance);
   });
 
-  // it('should transform code and decoupled_id to ConnectParams', async () => {
-  //   const result = await pipe.transform({ code, decoupled_id: decoupledId });
+  it('should transform UserResponse to UserRejection when error_msg is present', async () => {
+    const result = await pipe.transform(instanceToPlain(userRejection));
 
-  //   expect(result).toBeInstanceOf(ConnectParams);
-  //   expect(result).toHaveProperty('code', code);
-  //   expect(result).toHaveProperty('decoupledId', decoupledId);
-  // });
+    expect(result).toBeInstanceOf(UserRejection);
+  });
 
-  // it('should transform error and error_description to ErrorParams', async () => {
-  //   const error = 'foo';
-  //   const description = 'Lorem ipsum';
-
-  //   const result = await pipe.transform({ error, error_description: description });
-
-  //   expect(result).toBeInstanceOf(ErrorParams);
-  //   expect(result).toHaveProperty('error', error);
-  //   expect(result).toHaveProperty('errorDescription', description);
-  // });
+  it('should fail to transform UserResponse when neither proof_presentation nor error_msg is present', async () => {
+    await expect(
+      async () =>
+        await pipe.transform({
+          app_uuid: randomUUID(),
+          tracking_id: trackingId,
+          thread_id: randomUUID(),
+          state: UserResponseState.Done,
+          verified: true
+        })
+    ).rejects.toThrow(BadRequestException);
+  });
 
   it('should validate transformation', async () => {
     await expect(pipe.transform({})).rejects.toThrow(BadRequestException);
+  });
+
+  it('should fail to transform UserAcceptance when a property fails class-validator', async () => {
+    await expect(
+      async () => await pipe.transform({ ...instanceToPlain(userAcceptance), app_uuid: 'not-a-uuid' })
+    ).rejects.toThrow(BadRequestException);
+  });
+
+  it('should fail to transform UserRejection when a property fails class-validator', async () => {
+    await expect(
+      async () => await pipe.transform({ ...instanceToPlain(userRejection), app_uuid: 'not-a-uuid' })
+    ).rejects.toThrow(BadRequestException);
   });
 });

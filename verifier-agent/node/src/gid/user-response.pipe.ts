@@ -17,9 +17,10 @@ export class UserResponsePipe implements PipeTransform<Record<string, unknown>> 
   }
 
   private parse(value: Record<string, unknown>): UserAcceptance | UserRejection {
-    if (value.error_msg != null) {
+    if (value.proof_presentation != null) {
+      return plainToClass(UserAcceptance, value);
+    } else if (value.error_msg != null) {
       return plainToClass(UserRejection, value);
-    }
-    return plainToClass(UserAcceptance, value);
+    } else throw new BadRequestException('missing proof_presentation or error_msg');
   }
 }
