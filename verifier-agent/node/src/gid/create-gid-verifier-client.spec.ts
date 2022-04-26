@@ -1,4 +1,3 @@
-
 import { clientId, clientSecret } from '../../test/common';
 import { GidVerifierClientOptions, createGidVerifierClient } from './create-gid-verifier-client';
 import { GidVerifierClient } from './gid-verifier-client';
