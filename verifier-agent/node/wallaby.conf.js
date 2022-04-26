@@ -1,5 +1,11 @@
 module.exports = function () {
   return {
+    tests: {
+      override: (filePatterns) => {
+        filePatterns.push('**/*.e2e-spec.ts');
+        return filePatterns;
+      }
+    },
     filesWithNoCoverageCalculated: [
       'src/**/*-dto.ts',
       'src/**/*.factory.ts',
@@ -11,8 +17,12 @@ module.exports = function () {
       'src/types.ts',
       'test/**/*',
       'jest.config.ts',
-      'wallaby.conf.js',
+      'wallaby.conf.js'
     ],
+    env: {
+      type: 'node',
+      runner: 'node'
+    },
     testFramework: {
       configFile: './jest.config.ts'
     }
