@@ -5,11 +5,23 @@ import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
+import { ConfigService } from '@nestjs/config';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
     imports: [...imports]
-  }).compile();
+  })
+    .overrideProvider(ConfigService)
+    .useValue(
+      mockConfigService({
+        BASE_URL: 'http://localhost:8080',
+        GID_CREDENTIALS_BASE_URL: 'https://credentials.globalid.dev',
+        GID_API_BASE_URL: 'https://api.globalid.dev',
+        CLIENT_ID: 'abcdef',
+        CLIENT_SECRET: '123456'
+      })
+    )
+    .compile();
 
   const app = moduleFixture.createNestApplication();
   app.useWebSocketAdapter(new WsAdapter(app));
