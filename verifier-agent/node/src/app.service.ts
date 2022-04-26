@@ -16,7 +16,7 @@ export class AppService {
       initiationUrl: this.configService.get<string>('INITIATION_URL')
     });
 
-    const qrCodeUrl = await QRCode.toDataURL(url.toString());
+    const qrCodeUrl = await QRCode.toDataURL(url.toString(), { scale: 10 });
     return qrCodeUrl;
   }
 }
