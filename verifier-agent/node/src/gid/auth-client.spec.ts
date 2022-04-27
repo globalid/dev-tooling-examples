@@ -10,11 +10,11 @@ describe('AuthClient', () => {
 
   const authTokenResponse = createMock<AuthToken>({
     access_token: accessToken,
-    expires_in: 28798,
+    expires_in: 28798
   });
 
   beforeEach(() => {
-    tokenCache.flushAll()
+    tokenCache.flushAll();
     client = new AuthClient(clientId, clientSecret);
     axiosMock.post.mockResolvedValue({ data: authTokenResponse });
   });
@@ -52,12 +52,12 @@ describe('AuthClient', () => {
     it('should remove access token from cache when it expires', async () => {
       const expiringTokenResponse = createMock<AuthToken>({
         access_token: accessToken,
-        expires_in: 1,
+        expires_in: 1
       });
       axiosMock.post.mockResolvedValueOnce({ data: expiringTokenResponse });
 
       await client.getAppAccessToken();
-      await new Promise(r => setTimeout(r, 1200));
+      await new Promise((r) => setTimeout(r, 1200));
       await client.getAppAccessToken();
 
       expect(axiosMock.post).toHaveBeenCalledTimes(2);

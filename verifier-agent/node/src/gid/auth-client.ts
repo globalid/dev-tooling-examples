@@ -21,9 +21,9 @@ export class AuthClient {
   constructor(private readonly clientId: string, private readonly clientSecret: string) {}
 
   async getAppAccessToken(): Promise<string> {
-    const key = this.clientId + this.clientSecret
-    const accessToken: string | undefined = tokenCache.get(key)
-    if(accessToken !== undefined) {
+    const key = this.clientId + this.clientSecret;
+    const accessToken: string | undefined = tokenCache.get(key);
+    if (accessToken !== undefined) {
       return accessToken;
     }
     const response: AxiosResponse<AuthToken, any> = await axios.post('/v1/auth/token', {
