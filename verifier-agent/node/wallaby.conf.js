@@ -1,11 +1,5 @@
 module.exports = function () {
   return {
-    tests: {
-      override: (filePatterns) => {
-        filePatterns.push('**/*.e2e-spec.ts');
-        return filePatterns;
-      }
-    },
     filesWithNoCoverageCalculated: [
       'src/**/*-dto.ts',
       'src/**/*.factory.ts',
