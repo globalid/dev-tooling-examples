@@ -8,7 +8,11 @@ import { createNestApp } from './common';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
-  afterEach(async () => await app.close());
+  afterEach(async () => {
+    if (app != null) {
+      await app.close();
+    }
+  });
 
   it('/ (GET)', async () => {
     app = await createNestApp([AppModule]);
