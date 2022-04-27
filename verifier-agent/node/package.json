@@ -36,6 +36,7 @@
     "joi": "17.6.0",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
+    "node-cache": "^5.1.2",
     "reflect-metadata": "0.1.13",
     "ws": "8.5.0"
   },

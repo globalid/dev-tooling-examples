@@ -31,9 +31,9 @@ export function mockConfigService(env: Record<string, any>) {
   };
 }
 
-export const clientId = '123abc';
-export const clientSecret = '456def';
-export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
+export const clientId = '13275c09-4c4c-4369-982b-28d5a679cb36';
+export const clientSecret = '48688c67c6ee444348688c67c6ee4443';
+export const accessToken = 'ilQPl5QSUxg46ma-4LzL4Y_iAE-1arb_ykpJA5ajkpY.J0W0u9cHCMhwS6EJLKjvfu_Coc0u42dy48uJWtYPaVg';
 export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
   modulusLength: 2048,
   publicKeyEncoding: {
