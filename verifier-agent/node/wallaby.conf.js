@@ -10,6 +10,7 @@ module.exports = function () {
       'src/main.ts',
       'src/types.ts',
       'test/**/*',
+      'public/**/*',
       'jest.config.ts',
       'wallaby.conf.js'
     ],
