@@ -8,11 +8,8 @@ import { GidModule } from './gid/gid.module';
 import { CreatePresentationRequestDtoFactory } from './presentation-request/create-presentation-request-dto.factory';
 import { PresentationRequestGateway } from './presentation-request/presentation-request.gateway';
 import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
-import {
-  epamClientProviderFactory,
-  gidVerifierClientProviderFactory,
-  presentationRequestServiceProviderFactory
-} from './gid/provider-factories';
+import { gidVerifierClientProvider, presentationRequestServiceProvider } from './gid/provider-factories';
+import { GidVerifierClientFactory } from './gid/gid-verifier-client.factory';
 
 @Module({
   imports: [
@@ -27,9 +24,9 @@ import {
   providers: [
     AppService,
     CreatePresentationRequestDtoFactory,
-    epamClientProviderFactory,
-    gidVerifierClientProviderFactory,
-    presentationRequestServiceProviderFactory,
+    GidVerifierClientFactory,
+    gidVerifierClientProvider,
+    presentationRequestServiceProvider,
     PresentationRequirementsFactory
   ]
 })
