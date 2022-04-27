@@ -19,7 +19,9 @@ export const createNestApp = async (imports: any[]): Promise<INestApplication> =
         GID_CREDENTIALS_BASE_URL: 'https://credentials.globalid.dev',
         GID_API_BASE_URL: 'https://api.globalid.dev',
         CLIENT_ID: 'abcdef',
-        CLIENT_SECRET: '123456'
+        CLIENT_SECRET: '123456',
+        INITIATION_URL: 'https://www.example.com',
+        REDIRECT_URL: 'https://www.example1.com'
       })
     )
     .compile();
