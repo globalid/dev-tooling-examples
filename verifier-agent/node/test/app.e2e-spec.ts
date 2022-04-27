@@ -4,7 +4,6 @@ import { INestApplication } from '@nestjs/common';
 
 import { AppModule } from '../src/app.module';
 import { createNestApp } from './common';
-import { ConfigService } from '@nestjs/config';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
