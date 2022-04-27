@@ -1,16 +1,20 @@
+import { clientId, trackingId } from '../../test/common';
 import { createPresentationRequestUrl, CreatePresentationUrlParams } from './create-presentation-request-url';
 
 describe('createPresentationRequestUrl', () => {
   const baseParams: CreatePresentationUrlParams = {
-    clientId: 'abc-123',
+    trackingId,
+    clientId,
     initiationUrl: 'https://www.example.com'
   };
 
   it('should return a URL with origin https://link.global.id', () => {
-    const [url, tracking_id] = createPresentationRequestUrl(baseParams);
+    const url = createPresentationRequestUrl(baseParams);
     expect(url.origin).toBe('https://link.global.id');
     expect(url.searchParams.get('app_uuid')).toBe(baseParams.clientId);
-    expect(url.searchParams.get('proof_request_url')).toBe(`${baseParams.initiationUrl}/?tracking_id=${tracking_id}`);
+    expect(url.searchParams.get('proof_request_url')).toBe(
+      `${baseParams.initiationUrl}/?tracking_id=${baseParams.trackingId}`
+    );
     expect(url.searchParams.get('redirect_url')).toBeNull();
   });
 
@@ -20,13 +24,15 @@ describe('createPresentationRequestUrl', () => {
       redirectUrl: 'https://www.hompage.com'
     };
 
-    const [url, tracking_id] = createPresentationRequestUrl(paramsRedirect);
+    const url = createPresentationRequestUrl(paramsRedirect);
 
     expect(url.origin).toBe('https://link.global.id');
     expect(url.searchParams.get('app_uuid')).toBe(paramsRedirect.clientId);
     expect(url.searchParams.get('proof_request_url')).toBe(
-      `${paramsRedirect.initiationUrl}/?tracking_id=${tracking_id}`
+      `${paramsRedirect.initiationUrl}/?tracking_id=${paramsRedirect.trackingId}`
     );
-    expect(url.searchParams.get('redirect_url')).toBe(`${paramsRedirect.redirectUrl}/?tracking_id=${tracking_id}`);
+    expect(url.searchParams.get('redirect_url')).toBe(
+      `${paramsRedirect.redirectUrl}/?tracking_id=${paramsRedirect.trackingId}`
+    );
   });
 });

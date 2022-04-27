@@ -1,0 +1,144 @@
+@font-face {
+  font-family: Averta;
+  src: url(./averta/Averta.woff);
+  color: #101010;
+}
+
+@font-face {
+  font-family: Averta-SemiBold;
+  src: url(./averta/AvertaSemiBold.woff);
+  color: #101010;
+}
+
+.attestations-table td:not(td:last-child) {
+  width: 33%;
+}
+
+.brand {
+  margin-bottom: 4.69em;
+  margin-top: 2.25rem;
+}
+
+.button,
+.button:visited {
+  align-self: center;
+  background-color: #0d51ff;
+  border-radius: 9999px;
+  color: white;
+  min-width: 10rem;
+  padding: 0.63rem 1.25rem;
+  text-decoration: none;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  min-width: 55rem;
+}
+
+.card-focus {
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+.card-focus-text {
+  color: #646466;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin-top: 0;
+  max-width: 57rem;
+}
+
+.card-label {
+  font-family: Averta-SemiBold;
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.card-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+}
+
+.card-verifications {
+  width: 35rem;
+}
+
+.flex-center-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.pii-table td:not(td:last-child) {
+  width: 55%;
+}
+
+.qr-code {
+  margin: 0 auto;
+  width: 15rem;
+}
+
+.spacer {
+  height: 4rem;
+}
+
+.vertical-table th {
+  width: 100%;
+}
+
+.vertical-table td:last-child {
+  text-align: right;
+}
+
+.vertical-table tr:hover,
+tr:nth-child(n + 2):hover {
+  background-color: #f7f7f7;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: Averta;
+}
+
+code {
+  color: #153a9a;
+  padding: 0 0.3rem;
+  border-radius: 3px;
+  background-color: rgba(100, 100, 102, 0.1);
+}
+
+h2 {
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: courier;
+}
+
+td,
+th {
+  border: 0;
+  padding: 0.5rem;
+  text-align: left;
+  white-space: nowrap;
+}
+
+tr {
+  border-top: solid 1px #e5e5e5;
+}
+
+tr:first-child {
+  border: none;
+}

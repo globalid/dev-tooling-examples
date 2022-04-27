@@ -8,6 +8,7 @@ import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
 import { ConfigService } from '@nestjs/config';
 import { UserAcceptance, UserRejection, UserResponseState } from '../src/gid/user-response';
 import { plainToInstance } from 'class-transformer';
+import { join } from 'path';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
@@ -20,12 +21,17 @@ export const createNestApp = async (imports: any[]): Promise<INestApplication> =
         GID_CREDENTIALS_BASE_URL: 'https://credentials.globalid.dev',
         GID_API_BASE_URL: 'https://api.globalid.dev',
         CLIENT_ID: 'abcdef',
-        CLIENT_SECRET: '123456'
+        CLIENT_SECRET: '123456',
+        INITIATION_URL: 'https://www.example.com',
+        REDIRECT_URL: 'https://www.example1.com'
       })
     )
     .compile();
 
-  const app = moduleFixture.createNestApplication();
+  const app: any = moduleFixture.createNestApplication();
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
   app.useWebSocketAdapter(new WsAdapter(app));
   return app;
 };
