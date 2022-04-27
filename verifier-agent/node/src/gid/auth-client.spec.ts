@@ -14,12 +14,14 @@ describe('AuthClient', () => {
   });
 
   beforeEach(() => {
+    jest.useFakeTimers();
     tokenCache.flushAll();
     client = new AuthClient(clientId, clientSecret);
     axiosMock.post.mockResolvedValue({ data: authTokenResponse });
   });
 
   afterEach(() => {
+    jest.useRealTimers();
     axiosMock.reset();
   });
 
@@ -50,14 +52,8 @@ describe('AuthClient', () => {
     });
 
     it('should remove access token from cache when it expires', async () => {
-      const expiringTokenResponse = createMock<AuthToken>({
-        access_token: accessToken,
-        expires_in: 1
-      });
-      axiosMock.post.mockResolvedValueOnce({ data: expiringTokenResponse });
-
       await client.getAppAccessToken();
-      await new Promise((r) => setTimeout(r, 1200));
+      jest.advanceTimersByTime(authTokenResponse.expires_in * 1001);
       await client.getAppAccessToken();
 
       expect(axiosMock.post).toHaveBeenCalledTimes(2);
