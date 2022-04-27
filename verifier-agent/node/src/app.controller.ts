@@ -1,4 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { randomUUID } from 'crypto';
+
+import { Controller, Get, Render } from '@nestjs/common';
 
 import { AppService } from './app.service';
 
@@ -7,7 +9,11 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Render('index')
+  async renderHomeView(): Promise<Record<string, any>> {
+    const trackingId = randomUUID();
+    const qrCode = await this.appService.getPresentationRequestQrCode(trackingId);
+
+    return { trackingId, qrCode };
   }
 }

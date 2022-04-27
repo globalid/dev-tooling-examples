@@ -18,7 +18,6 @@ import { presentationRequestServiceProvider } from './presentation-request/prese
       isGlobal: true,
       validate
     }),
-    PresentationRequestGateway,
     GidModule
   ],
   controllers: [AppController],
@@ -28,7 +27,8 @@ import { presentationRequestServiceProvider } from './presentation-request/prese
     GidVerifierClientFactory,
     gidVerifierClientProvider,
     presentationRequestServiceProvider,
-    PresentationRequirementsFactory
+    PresentationRequirementsFactory,
+    PresentationRequestGateway
   ]
 })
 export class AppModule {}
