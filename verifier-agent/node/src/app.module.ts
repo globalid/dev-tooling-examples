@@ -15,10 +15,14 @@ import { PresentationRequirementsFactory } from './presentation-request/presenta
       isGlobal: true,
       validationSchema
     }),
-    PresentationRequestGateway,
     GidModule
   ],
   controllers: [AppController],
-  providers: [AppService, CreatePresentationRequestDtoFactory, PresentationRequirementsFactory]
+  providers: [
+    AppService,
+    CreatePresentationRequestDtoFactory,
+    PresentationRequirementsFactory,
+    PresentationRequestGateway
+  ]
 })
 export class AppModule {}
