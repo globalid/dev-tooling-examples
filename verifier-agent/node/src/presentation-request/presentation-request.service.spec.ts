@@ -32,7 +32,7 @@ describe('PresentationRequestService', () => {
   });
 
   describe('verifySignature', () => {
-    it('should verify a signature', async () => {
+    it('should call verifySignature one time', async () => {
       const verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature').mockResolvedValueOnce(true);
 
       await service.verifySignature('asdf', '1234');
