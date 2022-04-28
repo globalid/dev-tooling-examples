@@ -6,6 +6,8 @@ import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
 import { ConfigService } from '@nestjs/config';
+import { UserAcceptance, UserRejection, UserResponseState } from '../src/gid/user-response';
+import { plainToInstance } from 'class-transformer';
 import { join } from 'path';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
@@ -63,6 +65,29 @@ export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     format: 'pem'
   }
 });
+
+export const userResponse = {
+  app_uuid: crypto.randomUUID(),
+  tracking_id: trackingId,
+  thread_id: crypto.randomUUID(),
+  state: UserResponseState.Done,
+  verified: true
+};
+
+export const userAcceptance: UserAcceptance = plainToInstance(UserAcceptance, {
+  ...userResponse,
+  proof_presentation: { something: 'or other' }
+});
+
+export const userRejection: UserRejection = plainToInstance(UserRejection, {
+  ...userResponse,
+  error_msg: 'uh oh!'
+});
+
+export const xSignature = {
+  'X-Signature': 'signature'
+};
+
 export const createProofRequestAxiosResponse = {
   data: <ProofRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',
