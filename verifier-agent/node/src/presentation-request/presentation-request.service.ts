@@ -24,7 +24,7 @@ export class PresentationRequestService {
   async verifySignature(signature: string, userResponse: UserAcceptance | UserRejection) {
     const signatureVerified = await this.gidVerifierClient.verifySignature(signature, userResponse);
     if (!signatureVerified) {
-      throw new InvalidSignatureError('invalid signature');
+      throw new InvalidSignatureError();
     }
     return signatureVerified;
   }

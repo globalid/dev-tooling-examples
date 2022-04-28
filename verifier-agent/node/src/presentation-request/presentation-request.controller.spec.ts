@@ -78,7 +78,7 @@ describe('PresentationRequestController', () => {
     it('should reject the presentation request when the signature is not verified', async () => {
       const verifySignatureSpy = jest
         .spyOn(service, 'verifySignature')
-        .mockRejectedValueOnce(new InvalidSignatureError('invalid signature'));
+        .mockRejectedValueOnce(new InvalidSignatureError());
 
       await expect(async () => controller.handleUserResponse(userRejection, req)).rejects.toThrow(
         InvalidSignatureError
