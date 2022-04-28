@@ -1,5 +1,7 @@
-export class InvalidSignatureError extends Error {
-  constructor(message?: string) {
-    super(message);
+import { BadRequestException } from '@nestjs/common';
+
+export class InvalidSignatureError extends BadRequestException {
+  constructor() {
+    super('Message signature is invalid');
   }
 }
