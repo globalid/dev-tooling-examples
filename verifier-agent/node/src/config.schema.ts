@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 
 export const validate = (config: Record<string, unknown>) => {
   const schema = Joi.object({
+    NODE_ENV: Joi.string(),
     CLIENT_ID: Joi.string().required(),
     CLIENT_SECRET: Joi.string().required(),
     BASE_URL: Joi.string().uri().required(),
