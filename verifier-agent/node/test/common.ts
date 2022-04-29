@@ -5,13 +5,33 @@ import { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
 import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
+import { ConfigService } from '@nestjs/config';
+import { UserAcceptance, UserRejection, UserResponseState } from '../src/gid/user-response';
+import { plainToInstance } from 'class-transformer';
+import { join } from 'path';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
     imports: [...imports]
-  }).compile();
+  })
+    .overrideProvider(ConfigService)
+    .useValue(
+      mockConfigService({
+        BASE_URL: 'http://localhost:8080',
+        GID_CREDENTIALS_BASE_URL: 'https://credentials.globalid.dev',
+        GID_API_BASE_URL: 'https://api.globalid.dev',
+        CLIENT_ID: 'abcdef',
+        CLIENT_SECRET: '123456',
+        INITIATION_URL: 'https://www.example.com',
+        REDIRECT_URL: 'https://www.example1.com'
+      })
+    )
+    .compile();
 
-  const app = moduleFixture.createNestApplication();
+  const app: any = moduleFixture.createNestApplication();
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.setViewEngine('hbs');
   app.useWebSocketAdapter(new WsAdapter(app));
   return app;
 };
@@ -31,9 +51,9 @@ export function mockConfigService(env: Record<string, any>) {
   };
 }
 
-export const clientId = '123abc';
-export const clientSecret = '456def';
-export const accessToken = 'abcdefghijklmnopqrstuvwxyz';
+export const clientId = '13275c09-4c4c-4369-982b-28d5a679cb36';
+export const clientSecret = '48688c67c6ee444348688c67c6ee4443';
+export const accessToken = 'ilQPl5QSUxg46ma-4LzL4Y_iAE-1arb_ykpJA5ajkpY.J0W0u9cHCMhwS6EJLKjvfu_Coc0u42dy48uJWtYPaVg';
 export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
   modulusLength: 2048,
   publicKeyEncoding: {
@@ -45,6 +65,29 @@ export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
     format: 'pem'
   }
 });
+
+export const userResponse = {
+  app_uuid: crypto.randomUUID(),
+  tracking_id: trackingId,
+  thread_id: crypto.randomUUID(),
+  state: UserResponseState.Done,
+  verified: true
+};
+
+export const userAcceptance: UserAcceptance = plainToInstance(UserAcceptance, {
+  ...userResponse,
+  proof_presentation: { something: 'or other' }
+});
+
+export const userRejection: UserRejection = plainToInstance(UserRejection, {
+  ...userResponse,
+  error_msg: 'uh oh!'
+});
+
+export const xSignature = {
+  'X-Signature': 'signature'
+};
+
 export const createProofRequestAxiosResponse = {
   data: <ProofRequestResponseDto>{
     '@type': 'https://didcomm.org/present-proof/2.0/request-presentation',

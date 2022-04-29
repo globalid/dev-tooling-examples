@@ -10,9 +10,14 @@ module.exports = function () {
       'src/main.ts',
       'src/types.ts',
       'test/**/*',
+      'public/**/*',
       'jest.config.ts',
-      'wallaby.conf.js',
+      'wallaby.conf.js'
     ],
+    env: {
+      type: 'node',
+      runner: 'node'
+    },
     testFramework: {
       configFile: './jest.config.ts'
     }

@@ -11,6 +11,10 @@ extends:
 env:
   node: true
   jest: true
+globals:
+  document: true
+  WebSocket: true
+  window: true
 rules:
   '@typescript-eslint/interface-name-prefix': off
   '@typescript-eslint/explicit-function-return-type': off
