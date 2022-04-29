@@ -3,6 +3,7 @@ export interface RegisterClientEvent {
 }
 
 export enum SocketEvent {
+  AwaitingResponse = 'awaiting-response',
   ClientRegistered = 'client-registered',
   ClientRegisterError = 'client-register-error',
   ClientUnregistered = 'client-unregistered',

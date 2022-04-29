@@ -15,6 +15,7 @@ export class PresentationRequestController {
 
   @Post('request-presentation')
   async requestPresentation(@Param('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
+    this.presentationRequestGateway.awaitResponse(trackingId);
     return await this.presentationRequestService.requestPresentation(trackingId);
   }
 

@@ -37,12 +37,16 @@ export class PresentationRequestGateway {
     return { event: SocketEvent.ClientUnregistered, data: 'client successfully unregistered' };
   }
 
-  acceptPresentation(trackingId: TrackingId, payload: VerifiablePresentation) {
+  acceptPresentation(trackingId: TrackingId, payload: VerifiablePresentation): void {
     this.sendMessage(trackingId, SocketEvent.PresentationAccepted, payload);
   }
 
-  rejectPresentation(trackingId: TrackingId, payload: string) {
+  rejectPresentation(trackingId: TrackingId, payload: string): void {
     this.sendMessage(trackingId, SocketEvent.PresentationRejected, payload);
+  }
+
+  awaitResponse(trackingId: string): void {
+    this.sendMessage(trackingId, SocketEvent.AwaitingResponse)
   }
 
   private removeSocketFromRegistry(trackingId: string) {
@@ -60,7 +64,7 @@ export class PresentationRequestGateway {
     return this.websocketRegistry.get(trackingId);
   }
 
-  private sendMessage(trackingId: string, event: SocketEvent, payload: VerifiablePresentation | string) {
+  private sendMessage(trackingId: string, event: SocketEvent, payload?: VerifiablePresentation | string) {
     const clientSocket: Maybe<WebSocket> = this.getSocketFromRegistry(trackingId);
     if (!clientSocket) {
       throw new Error(`no client socket found for trackingId ${trackingId}`);
@@ -69,7 +73,7 @@ export class PresentationRequestGateway {
     clientSocket.send(
       JSON.stringify({
         event,
-        data: JSON.stringify(payload)
+        data: payload && JSON.stringify(payload)
       })
     );
   }
