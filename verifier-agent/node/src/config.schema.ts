@@ -7,7 +7,9 @@ export const validate = (config: Record<string, unknown>) => {
     CLIENT_SECRET: Joi.string().required(),
     BASE_URL: Joi.string().uri().required(),
     GID_CREDENTIALS_BASE_URL: Joi.string().uri().required(),
-    GID_API_BASE_URL: Joi.string().uri().required()
+    GID_API_BASE_URL: Joi.string().uri().required(),
+    INITIATION_URL: Joi.string().uri().required(),
+    REDIRECT_URL: Joi.string().uri().required()
   });
 
   const { error, value } = schema.validate(config);
