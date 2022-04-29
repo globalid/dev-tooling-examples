@@ -10,7 +10,7 @@ export const validate = (config: Record<string, unknown>) => {
     GID_API_BASE_URL: Joi.string().uri().required(),
     INITIATION_URL: Joi.string().uri().required(),
     REDIRECT_URL: Joi.string().uri().required()
-  });
+  }).unknown();
 
   const { error, value } = schema.validate(config);
   if (process.env.NODE_ENV !== 'test' && error !== undefined) {
