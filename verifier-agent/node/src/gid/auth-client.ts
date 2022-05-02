@@ -31,7 +31,7 @@ export class AuthClient {
       client_secret: this.clientSecret,
       grant_type: GrantType.ClientCredentials
     });
-    tokenCache.set(key, response.data.access_token, response.data.expires_in);
+    tokenCache.set(key, response.data.access_token, response.data.expires_in / 1000);
     return response.data.access_token;
   }
 }
