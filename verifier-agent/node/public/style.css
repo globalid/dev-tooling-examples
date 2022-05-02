@@ -15,7 +15,7 @@
 }
 
 .brand {
-  margin-bottom: 4.69em;
+  margin-bottom: 2.69em;
   margin-top: 2.25rem;
 }
 
@@ -70,6 +70,43 @@
   width: 35rem;
 }
 
+.message {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: left;
+  padding: 16px;
+  margin-bottom: 19px;
+  border-radius: 8px;
+}
+
+.code {
+  background-color: #F7F7F7;
+}
+
+.confirm-msg {
+  font-family: 'Averta';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 25px;
+  line-height: 30px;
+  text-align: center;
+  color: #000000;
+  width: 260px;
+  margin: 0 auto;
+  margin-top: 45px;
+}
+
+.error {
+  display: flex;
+  flex-direction: row;
+  background-color: #FFA30A19;
+  padding-left: 28px;
+}
+
+.error-icon {
+  width: 30px;
+  padding-right: 25px;
+}
+
 .flex-center-center {
   align-items: center;
   display: flex;
@@ -80,6 +117,20 @@
   flex-direction: column;
 }
 
+.loading-asset {
+  width: 15rem;
+  margin: 0 auto;
+}
+
+.loading-wrapper {
+  border: 1px solid #E5E5E5;
+  width: 51%;
+  margin: 0 auto;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  border-radius: 8px;
+}
+
 .pii-table td:not(td:last-child) {
   width: 55%;
 }
@@ -87,6 +138,7 @@
 .qr-code {
   margin: 0 auto;
   width: 15rem;
+  margin-bottom: 40px;
 }
 
 .spacer {

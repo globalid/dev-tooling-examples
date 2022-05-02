@@ -40,19 +40,20 @@ function webSocketHandler(trackingId) {
     // route based on our application event
     switch (data.event) {
       case SocketEvent.AwaitingResponse:
-        console.log('awaiting response')
+        swapOutQrCodeWithLoadingConfirm()
         break
 
       case SocketEvent.ClientRegistered:
-        console.log('client was successfully registered')
+        console.log(`client was successfully registered with trackingId: ${trackingId}`)
         break
 
       case SocketEvent.PresentationAccepted:
         console.log('presetation-accepted', data.data);
+        acceptPresentationResponse(data.data)
         break
 
       case SocketEvent.PresentationRejected:
-        console.log('presentation rejected')
+        rejectPresentationData(data.data)
         break
 
       case SocketEvent.ClientUnregistered:
@@ -84,6 +85,70 @@ function webSocketHandler(trackingId) {
   function onclose(/* event */) {
     console.log('onclose');
   }
+}
+
+function acceptPresentationResponse(data) {
+  // swap out loading asset with json text
+  const loadingAsset = document.getElementById('loading-asset')
+  const codeCard = document.createElement('pre')
+  codeCard.setAttribute('id', 'json')
+  codeCard.setAttribute('class', 'message code')
+  codeCard.innerText = JSON.stringify(JSON.parse(data), null, 2)
+  loadingAsset.parentNode.replaceChild(codeCard, loadingAsset)
+
+  // add back button
+  const backbtn = document.createElement('a')
+  backbtn.setAttribute('class', 'button')
+  backbtn.setAttribute('href', '/')
+  backbtn.innerText = 'Back'
+  document.getElementById('main-card').appendChild(backbtn)
+}
+
+function rejectPresentationData(errorMessage) {
+  // swap out loading asset with error message
+  const loadingAsset = document.getElementById('loading-asset')
+
+  const errorCard = document.createElement('div')
+  errorCard.setAttribute('class', 'message error')
+
+  const errIcon = document.createElement('img')
+  errIcon.setAttribute('src', 'error-icon.svg')
+  errIcon.setAttribute('class', 'error-icon')
+  errorCard.appendChild(errIcon)
+
+  const errMsg = document.createElement('p')
+  errMsg.innerText = JSON.parse(errorMessage)
+  errorCard.appendChild(errMsg)
+
+  loadingAsset.parentNode.replaceChild(errorCard, loadingAsset)
+
+  // add back button
+  const backbtn = document.createElement('a')
+  backbtn.setAttribute('class', 'button')
+  backbtn.setAttribute('href', '/')
+  backbtn.innerText = 'Back'
+  document.getElementById('main-card').appendChild(backbtn)
+}
+
+function swapOutQrCodeWithLoadingConfirm() {
+  const qrCode = document.getElementById('qr-code')
+
+  const wrapper = document.createElement('div')
+  wrapper.setAttribute('class', 'loading-wrapper')
+  
+  const img = document.createElement('img')
+  img.setAttribute('src', 'loading.svg')
+  img.setAttribute('id', 'loading-asset')
+  img.setAttribute('class', 'loading-asset')
+
+  const msg = document.createElement('p')
+  msg.setAttribute('class', 'confirm-msg')
+  msg.innerText = 'Confirm this request on your device'
+
+  wrapper.appendChild(img)
+  wrapper.appendChild(msg)
+
+  qrCode.parentNode.replaceChild(wrapper, qrCode)
 }
 
 /**

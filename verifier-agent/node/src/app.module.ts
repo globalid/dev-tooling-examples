@@ -11,6 +11,7 @@ import { PresentationRequirementsFactory } from './presentation-request/presenta
 import { GidVerifierClientFactory } from './gid/gid-verifier-client.factory';
 import { gidVerifierClientProvider } from './gid/gid-verifier-client.provider';
 import { presentationRequestServiceProvider } from './presentation-request/presentation-request-service.provider';
+import { PresentationRequestController } from './presentation-request/presentation-request.controller';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { presentationRequestServiceProvider } from './presentation-request/prese
     }),
     GidModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, PresentationRequestController],
   providers: [
     AppService,
     CreatePresentationRequestDtoFactory,

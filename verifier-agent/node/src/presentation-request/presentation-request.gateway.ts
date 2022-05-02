@@ -67,9 +67,12 @@ export class PresentationRequestGateway {
   private sendMessage(trackingId: string, event: SocketEvent, payload?: VerifiablePresentation | string) {
     const clientSocket: Maybe<WebSocket> = this.getSocketFromRegistry(trackingId);
     if (!clientSocket) {
-      throw new Error(`no client socket found for trackingId ${trackingId}`);
+      // TODO what should we do here?
+      console.error(`no client socket found for trackingId ${trackingId}`)
+      return
     }
 
+    console.log(`sending data over websocket for trackingId ${trackingId}`)
     clientSocket.send(
       JSON.stringify({
         event,
