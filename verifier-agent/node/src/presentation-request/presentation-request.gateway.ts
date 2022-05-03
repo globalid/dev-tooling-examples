@@ -34,6 +34,7 @@ export class PresentationRequestGateway {
   @SubscribeMessage('unregister-client')
   unregister(@MessageBody('trackingId') trackingId: string): WsResponse<string> {
     this.removeSocketFromRegistry(trackingId);
+    console.log(`removing socket for trackingId: ${trackingId}`);
     return { event: SocketEvent.ClientUnregistered, data: 'client successfully unregistered' };
   }
 

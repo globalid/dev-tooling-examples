@@ -7,7 +7,8 @@ const SocketEvent = {
   Error: 'error',
   PresentationAccepted: 'presentation-accepted',
   PresentationRejected: 'presentation-rejected',
-  RegisterClient: 'register-client'
+  RegisterClient: 'register-client',
+  UnregisterClient: 'unregister-client',
 }
 
 /**
@@ -18,7 +19,7 @@ const SocketEvent = {
 function webSocketHandler(trackingId) {
   const socket = new WebSocket("ws://localhost:8080");
 
-  registerEventListeners(socket, onopen, onmessage, onerror, onclose)
+  registerEventListeners(socket, onopen, onmessage, onerror, onclose, trackingId)
 
   /**
    * This event gets fired when the websocket connection get's established
@@ -48,7 +49,6 @@ function webSocketHandler(trackingId) {
         break
 
       case SocketEvent.PresentationAccepted:
-        console.log('presetation-accepted', data.data);
         acceptPresentationResponse(data.data)
         break
 
@@ -162,9 +162,13 @@ function sendWsEvent(socket, event, data) {
   socket.send( JSON.stringify({ event, data }) );
 }
 
-function registerEventListeners(socket, onopen, onmessage, onerror, onclose) {
+function registerEventListeners(socket, onopen, onmessage, onerror, onclose, trackingId) {
   socket.onopen = onopen;
   socket.onmessage = onmessage;
   socket.onerror = onerror;
-  socket.onclose = onclose
+  socket.onclose = onclose;
+
+  window.addEventListener("beforeunload", function() {
+    sendWsEvent(socket, SocketEvent.UnregisterClient, { trackingId });
+  })
 }
