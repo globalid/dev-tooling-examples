@@ -46,7 +46,7 @@ export class PresentationRequestGateway {
   }
 
   awaitResponse(trackingId: string): void {
-    this.sendMessage(trackingId, SocketEvent.AwaitingResponse)
+    this.sendMessage(trackingId, SocketEvent.AwaitingResponse);
   }
 
   private removeSocketFromRegistry(trackingId: string) {
@@ -68,11 +68,11 @@ export class PresentationRequestGateway {
     const clientSocket: Maybe<WebSocket> = this.getSocketFromRegistry(trackingId);
     if (!clientSocket) {
       // TODO what should we do here?
-      console.error(`no client socket found for trackingId ${trackingId}`)
-      return
+      console.error(`no client socket found for trackingId ${trackingId}`);
+      return;
     }
 
-    console.log(`sending data over websocket for trackingId ${trackingId}`)
+    console.log(`sending data over websocket for trackingId ${trackingId}`);
     clientSocket.send(
       JSON.stringify({
         event,
