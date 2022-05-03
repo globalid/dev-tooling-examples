@@ -49,12 +49,17 @@ describe('PresentationRequestGateway', () => {
       expect(data.data).toBe('client successfully unregistered');
     });
 
-    it('should throw exception trying to send data after unregister', () => {
+    it('should log an error when trying to send data after unregister', () => {
       gateway.register(mockClient, { trackingId });
       gateway.unregister(trackingId);
+      const spy = jest.spyOn(console, 'error')
 
-      expect(() => gateway.rejectPresentation(trackingId, 'rejected')).toThrow();
+      gateway.rejectPresentation(trackingId, 'rejected')
+
+      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`)
       expect(mockClient.send).toHaveBeenCalledTimes(0);
+
+      spy.mockClear();
     });
   });
 
@@ -77,15 +82,20 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it("should throw an exception when sending confirmation for trackingId that doesn't exist", async () => {
+    it("should log an error when sending confirmation for trackingId that doesn't exist", async () => {
       const verifiablePresentation: VerifiablePresentation = {
         id: '1234',
         accept: true
       };
+      const spy = jest.spyOn(console, 'error')
 
       gateway.register(mockClient, { trackingId });
-      expect(() => gateway.acceptPresentation('1234', verifiablePresentation)).toThrow();
+      gateway.acceptPresentation('1234', verifiablePresentation)
+
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
       expect(mockClient.send).toHaveBeenCalledTimes(0);
+
+      spy.mockClear();
     });
   });
 
@@ -104,13 +114,31 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it("should throw an exception when rejecting presentation for trackingId that doesn't exist", async () => {
+    it("should log an error when rejecting presentation for trackingId that doesn't exist", async () => {
       gateway.register(mockClient, { trackingId });
+      const spy = jest.spyOn(console, 'error')
 
-      expect(() => gateway.rejectPresentation('1234', 'user rejected')).toThrow(
-        'no client socket found for trackingId 1234'
-      );
+      gateway.rejectPresentation('1234', 'user rejected')
+
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
       expect(mockClient.send).toHaveBeenCalledTimes(0);
+
+      spy.mockClear();
     });
   });
+
+  describe('await response', () => {
+    it('should send an await response event', () => {
+      gateway.register(mockClient, { trackingId });
+
+      gateway.awaitResponse(trackingId);
+
+      expect(mockClient.send).toHaveBeenCalledTimes(1);
+      expect(mockClient.send).toHaveBeenCalledWith(
+        JSON.stringify({
+          event: 'awaiting-response'
+        })
+      );
+    })
+  })
 });
