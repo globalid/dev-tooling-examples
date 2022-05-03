@@ -52,11 +52,11 @@ describe('PresentationRequestGateway', () => {
     it('should log an error when trying to send data after unregister', () => {
       gateway.register(mockClient, { trackingId });
       gateway.unregister(trackingId);
-      const spy = jest.spyOn(console, 'error')
+      const spy = jest.spyOn(console, 'error');
 
-      gateway.rejectPresentation(trackingId, 'rejected')
+      gateway.rejectPresentation(trackingId, 'rejected');
 
-      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`)
+      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`);
       expect(mockClient.send).toHaveBeenCalledTimes(0);
 
       spy.mockClear();
@@ -87,12 +87,12 @@ describe('PresentationRequestGateway', () => {
         id: '1234',
         accept: true
       };
-      const spy = jest.spyOn(console, 'error')
+      const spy = jest.spyOn(console, 'error');
 
       gateway.register(mockClient, { trackingId });
-      gateway.acceptPresentation('1234', verifiablePresentation)
+      gateway.acceptPresentation('1234', verifiablePresentation);
 
-      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
       expect(mockClient.send).toHaveBeenCalledTimes(0);
 
       spy.mockClear();
@@ -116,11 +116,11 @@ describe('PresentationRequestGateway', () => {
 
     it("should log an error when rejecting presentation for trackingId that doesn't exist", async () => {
       gateway.register(mockClient, { trackingId });
-      const spy = jest.spyOn(console, 'error')
+      const spy = jest.spyOn(console, 'error');
 
-      gateway.rejectPresentation('1234', 'user rejected')
+      gateway.rejectPresentation('1234', 'user rejected');
 
-      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
       expect(mockClient.send).toHaveBeenCalledTimes(0);
 
       spy.mockClear();
@@ -139,6 +139,6 @@ describe('PresentationRequestGateway', () => {
           event: 'awaiting-response'
         })
       );
-    })
-  })
+    });
+  });
 });

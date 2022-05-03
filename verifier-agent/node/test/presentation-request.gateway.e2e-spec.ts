@@ -110,9 +110,9 @@ describe('PresentationRequestGateway', () => {
         })
       );
       await new Promise((resolve) => ws.on('message', resolve));
-      gateway.rejectPresentation(trackingId, 'user rejected')
+      gateway.rejectPresentation(trackingId, 'user rejected');
 
-      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`)
+      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`);
 
       spy.mockClear();
     });
@@ -149,7 +149,7 @@ describe('PresentationRequestGateway', () => {
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '89140555-cce2-4e37-80f9-01af4c24cdd6';
       await new Promise((resolve) => ws.on('open', resolve));
-      const spy = jest.spyOn(console, 'error')
+      const spy = jest.spyOn(console, 'error');
 
       ws.send(
         JSON.stringify({
@@ -159,9 +159,9 @@ describe('PresentationRequestGateway', () => {
       );
       await new Promise<void>((resolve) => ws.on('message', resolve));
       const vPres = { user: '1234', accepted: true };
-      gateway.acceptPresentation('1234', vPres)
+      gateway.acceptPresentation('1234', vPres);
 
-      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
 
       spy.mockClear();
     });
@@ -197,7 +197,7 @@ describe('PresentationRequestGateway', () => {
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '616ef657-fccb-4b47-bf8f-ebf0fe56089a';
       await new Promise((resolve) => ws.on('open', resolve));
-      const spy = jest.spyOn(console, 'error')
+      const spy = jest.spyOn(console, 'error');
 
       ws.send(
         JSON.stringify({
@@ -206,9 +206,9 @@ describe('PresentationRequestGateway', () => {
         })
       );
       await new Promise<void>((resolve) => ws.on('message', resolve));
-      gateway.rejectPresentation('1234', 'user rejected')
+      gateway.rejectPresentation('1234', 'user rejected');
 
-      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234')
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
 
       spy.mockClear();
     });
