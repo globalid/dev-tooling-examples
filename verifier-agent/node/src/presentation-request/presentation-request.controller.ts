@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { PresentationRequestResponseDto } from '../gid';
 import { UserAcceptance, UserRejection } from '../gid/user-response';
