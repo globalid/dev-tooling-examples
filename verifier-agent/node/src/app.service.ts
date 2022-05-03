@@ -14,6 +14,6 @@ export class AppService {
       initiationUrl: this.configService.get<string>('INITIATION_URL')
     });
 
-    return url.toString()
+    return url.toString();
   }
 }

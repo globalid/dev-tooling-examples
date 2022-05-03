@@ -28,6 +28,6 @@ describe('AppService', () => {
 
     expect(makeQrCodeSpy).toHaveBeenCalledTimes(1);
     expect(makeQrCodeSpy).toHaveReturned();
-    expect(qrCode).toContain('data:image/png;base64,');
+    expect(qrCode).toBe(url);
   });
 });
