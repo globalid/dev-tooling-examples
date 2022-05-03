@@ -12,8 +12,8 @@ export class AppController {
   @Render('index')
   async renderHomeView(): Promise<Record<string, any>> {
     const trackingId = randomUUID();
-    const qrCode = await this.appService.getPresentationRequestQrCode(trackingId);
+    const qrCodeURL = await this.appService.getPresentationRequestQrCode(trackingId);
 
-    return { trackingId, qrCode };
+    return { trackingId, qrCodeURL };
   }
 }

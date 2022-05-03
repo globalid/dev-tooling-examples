@@ -16,6 +16,7 @@ globals:
   WebSocket: true
   window: true
   fetch: true
+  QRCodeStyling: true
 rules:
   '@typescript-eslint/interface-name-prefix': off
   '@typescript-eslint/explicit-function-return-type': off

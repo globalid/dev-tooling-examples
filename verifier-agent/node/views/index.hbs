@@ -6,8 +6,10 @@
     <link rel='stylesheet' href='spinner.css' type='text/css' />
     <script src='websocket.js'></script>
     <script>webSocketHandler('{{trackingId}}')</script>
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <script src='qr-code.js'></script>
   </head>
-  <body class='flex-center-center flex-column'>
+  <body class='flex-center-center flex-column' onload="generateStyledQRCode('{{qrCodeURL}}', 'qr-code')">
     <div class='brand'><img src='../gid-logo.svg' alt='GlobaliD logo' /></div>
     <div id='main-card' class='card'>
       <p class='card-label'>Verifier agent Demo</p>
@@ -17,7 +19,7 @@
           Scan the QR with your GlobaliD mobile app
         </p>
       </div>
-      <img id="qr-code" class='qr-code' src={{qrCode}} />
+      <div id="qr-code"></div>
     </div>
   </body>
 </html>
