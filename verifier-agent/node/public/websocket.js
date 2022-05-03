@@ -87,6 +87,10 @@ function webSocketHandler(trackingId) {
   }
 }
 
+/**
+ * This function swaps out the loading svg with the code block for presentation request data
+ * @param {object} data the presentation request data from epam
+ */
 function acceptPresentationResponse(data) {
   // create json code area
   const codeCard = document.createElement('pre')
@@ -107,6 +111,10 @@ function acceptPresentationResponse(data) {
   document.getElementById('main-card').appendChild(backbtn)
 }
 
+/**
+ * This function swaps out the loading svg with the error message UI block
+ * @param {string} errorMessage an error message
+ */
 function rejectPresentationData(errorMessage) {
   // create the error text area
   const errorCard = document.createElement('div')
@@ -135,6 +143,9 @@ function rejectPresentationData(errorMessage) {
   document.getElementById('main-card').appendChild(backbtn)
 }
 
+/**
+ * This function swaps out the QR code with the loading svg
+ */
 async function swapOutQrCodeWithLoadingConfirm() {
   const wrapper = document.createElement('div')
   wrapper.id = 'loading-asset'
@@ -162,6 +173,15 @@ function sendWsEvent(socket, event, data) {
   socket.send( JSON.stringify({ event, data }) );
 }
 
+/**
+ * Registers websocket event listeners
+ * @param {WebSocket} socket WebSocket object
+ * @param {Function} onopen 
+ * @param {Function} onmessage 
+ * @param {Function} onerror 
+ * @param {Function} onclose 
+ * @param {Function} trackingId 
+ */
 function registerEventListeners(socket, onopen, onmessage, onerror, onclose, trackingId) {
   socket.onopen = onopen;
   socket.onmessage = onmessage;
