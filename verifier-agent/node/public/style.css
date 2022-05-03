@@ -70,14 +70,6 @@
   width: 35rem;
 }
 
-.message {
-  font-family: 'Courier New', Courier, monospace;
-  text-align: left;
-  padding: 16px;
-  margin-bottom: 19px;
-  border-radius: 8px;
-}
-
 .code {
   background-color: #F7F7F7;
 }
@@ -86,25 +78,32 @@
   font-family: 'Averta';
   font-style: normal;
   font-weight: 600;
-  font-size: 25px;
-  line-height: 30px;
+  /* font-size: 25px; */
+  font-size: 1.563rem;
+  /* line-height: 30px; */
+  line-height: 1.875rem;
   text-align: center;
   color: #000000;
-  width: 260px;
+  /* width: 260px; */
+  width: 16.25rem;
   margin: 0 auto;
-  margin-top: 45px;
+  /* margin-top: 45px; */
+  margin-top: 2.813rem;
 }
 
 .error {
   display: flex;
   flex-direction: row;
   background-color: #FFA30A19;
-  padding-left: 28px;
+  /* padding-left: 28px; */
+  padding-left: 1.75rem;
 }
 
 .error-icon {
-  width: 30px;
-  padding-right: 25px;
+  /* width: 30px; */
+  width: 1.875rem;
+  /* padding-right: 25px; */
+  padding-right: 1.563rem;
 }
 
 .flex-center-center {
@@ -117,6 +116,10 @@
   flex-direction: column;
 }
 
+.invisible {
+  display: none;
+}
+
 .loading-asset {
   width: 15rem;
   margin: 0 auto;
@@ -126,10 +129,25 @@
   border: 1px solid #E5E5E5;
   width: 44%;
   margin: 0 auto;
-  padding-top: 50px;
-  padding-bottom: 50px;
-  border-radius: 8px;
-  margin-bottom: 40px;
+  /* padding-top: 50px; */
+  padding-top: 3.125rem;
+  /* padding-bottom: 50px; */
+  padding-bottom: 3.125rem;
+  /* border-radius: 8px; */
+  border-radius: 0.5rem;
+  /* margin-bottom: 40px; */
+  margin-bottom: 2.5rem;
+}
+
+.message {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: left;
+  /* padding: 16px; */
+  padding: 1rem;
+  /* margin-bottom: 19px; */
+  margin-bottom: 1.188rem;
+  /* border-radius: 8px; */
+  border-radius: 0.5rem;
 }
 
 .pii-table td:not(td:last-child) {
@@ -139,7 +157,8 @@
 .qr-code {
   margin: 0 auto;
   width: 15rem;
-  margin-bottom: 40px;
+  /* margin-bottom: 40px; */
+  margin-bottom: 2.5rem;
 }
 
 .spacer {
@@ -157,6 +176,10 @@
 .vertical-table tr:hover,
 tr:nth-child(n + 2):hover {
   background-color: #f7f7f7;
+}
+
+.visible {
+  display: inline;
 }
 
 body {
@@ -194,30 +217,4 @@ tr {
 
 tr:first-child {
   border: none;
-}
-
-
-@keyframes rotateClockwise {
-  0% {transform: rotate(360deg);}
-}
-
-@keyframes rotateCounterClockwise {
-  0% {transform: rotate(-360deg);}
-}
-
-.cockwise-rotation {
-  animation: rotateClockwise 1.5s ease-in-out infinite;
-  transform-origin: center;
-}
-.counter-cockwise-rotation {
-  animation: rotateCounterClockwise 1.5s ease-in-out infinite;
-  transform-origin: center;
-}
-
-.invisible {
-  display: none;
-}
-
-.visible {
-  display: inline;
 }
