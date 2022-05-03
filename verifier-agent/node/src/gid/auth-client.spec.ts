@@ -53,7 +53,7 @@ describe('AuthClient', () => {
 
     it('should remove access token from cache when it expires', async () => {
       await client.getAppAccessToken();
-      jest.advanceTimersByTime(authTokenResponse.expires_in * 1001);
+      jest.advanceTimersByTime(authTokenResponse.expires_in + 1);
       await client.getAppAccessToken();
 
       expect(axiosMock.post).toHaveBeenCalledTimes(2);
