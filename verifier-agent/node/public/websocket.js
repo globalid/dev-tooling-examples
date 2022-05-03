@@ -88,67 +88,68 @@ function webSocketHandler(trackingId) {
 }
 
 function acceptPresentationResponse(data) {
-  // swap out loading asset with json text
-  const loadingAsset = document.getElementById('loading-asset')
+  // create json code area
   const codeCard = document.createElement('pre')
   codeCard.setAttribute('id', 'json')
-  codeCard.setAttribute('class', 'message code')
+  codeCard.classList.add('message')
+  codeCard.classList.add('code')
   codeCard.innerText = JSON.stringify(JSON.parse(data), null, 2)
+
+  // swap out loading asset with the code card
+  const loadingAsset = document.getElementById('loading-asset')
   loadingAsset.parentNode.replaceChild(codeCard, loadingAsset)
 
   // add back button
   const backbtn = document.createElement('a')
-  backbtn.setAttribute('class', 'button')
+  backbtn.classList.add('button')
   backbtn.setAttribute('href', '/')
   backbtn.innerText = 'Back'
   document.getElementById('main-card').appendChild(backbtn)
 }
 
 function rejectPresentationData(errorMessage) {
-  // swap out loading asset with error message
-  const loadingAsset = document.getElementById('loading-asset')
-
+  // create the error text area
   const errorCard = document.createElement('div')
-  errorCard.setAttribute('class', 'message error')
+  errorCard.classList.add('message')
+  errorCard.classList.add('error')
 
+  // load up the error icon
   const errIcon = document.createElement('img')
   errIcon.setAttribute('src', 'error-icon.svg')
-  errIcon.setAttribute('class', 'error-icon')
+  errIcon.classList.add('error-icon')
   errorCard.appendChild(errIcon)
 
+  // error message text
   const errMsg = document.createElement('p')
   errMsg.innerText = JSON.parse(errorMessage)
   errorCard.appendChild(errMsg)
 
+  const loadingAsset = document.getElementById('loading-asset')
   loadingAsset.parentNode.replaceChild(errorCard, loadingAsset)
 
   // add back button
   const backbtn = document.createElement('a')
-  backbtn.setAttribute('class', 'button')
+  backbtn.classList.add('button')
   backbtn.setAttribute('href', '/')
   backbtn.innerText = 'Back'
   document.getElementById('main-card').appendChild(backbtn)
 }
 
-function swapOutQrCodeWithLoadingConfirm() {
-  const qrCode = document.getElementById('qr-code')
-
+async function swapOutQrCodeWithLoadingConfirm() {
   const wrapper = document.createElement('div')
-  wrapper.setAttribute('class', 'loading-wrapper')
-  
-  const img = document.createElement('img')
-  img.setAttribute('src', 'loading.svg')
-  img.setAttribute('id', 'loading-asset')
-  img.setAttribute('class', 'loading-asset')
+  wrapper.id = 'loading-asset'
+  wrapper.classList.add('loading-wrapper')
 
   const msg = document.createElement('p')
-  msg.setAttribute('class', 'confirm-msg')
+  msg.classList.add('confirm-msg')
   msg.innerText = 'Confirm this request on your device'
 
-  wrapper.appendChild(img)
+  const loadingSvg = (await (await fetch('loading.svg')).text())
+  wrapper.innerHTML = loadingSvg
   wrapper.appendChild(msg)
 
-  qrCode.parentNode.replaceChild(wrapper, qrCode)
+  const qrCode = document.getElementById('qr-code')
+  document.getElementById('qr-code').parentNode.replaceChild(wrapper, qrCode)
 }
 
 /**
