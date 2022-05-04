@@ -5,6 +5,7 @@
     "test",
     "dist",
     "**/*spec.ts",
-    "jest.config.ts"
+    "jest.config.ts",
+    "tsconfig.build.json"
   ]
 }
