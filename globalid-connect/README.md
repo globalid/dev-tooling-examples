@@ -7,4 +7,4 @@ This depth will contain more languages and methods of using the GlobaliD Connect
 For the Verification platform example:
 [click here](node)
 
-This software is licensed under the Apache-2.0 
+This software is licensed under Apache License, Version 2.0
