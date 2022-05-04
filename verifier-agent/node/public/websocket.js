@@ -158,11 +158,20 @@ async function swapOutQrCodeWithLoadingConfirm() {
   msg.classList.add('confirm-msg')
   msg.innerText = 'Confirm this request on your device'
 
-  const loadingSvg = (await (await fetch('loading.svg')).text())
+  const loadingSvg = await loadAsset('loading.svg')
   wrapper.innerHTML = loadingSvg
   wrapper.appendChild(msg)
 
   replaceMainContentWith(wrapper)
+}
+
+/**
+ * Loads and returns the assets raw text
+ * @param {string} fileName of asset to load
+ */
+async function loadAsset(fileName) {
+  const res = await fetch(fileName)
+  return await res.text()
 }
 
 /**
