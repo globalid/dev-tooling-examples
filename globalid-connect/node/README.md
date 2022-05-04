@@ -45,3 +45,5 @@ Then, enter values for the following environment variables in your `.env`:
 ### Run the Demo App
 
 Once you have everything setup, simply run `npm start` to run the demo app and navigate to the landing page at <http://localhost:3000>.
+
+This software is licensed under the Apache-2.0 
