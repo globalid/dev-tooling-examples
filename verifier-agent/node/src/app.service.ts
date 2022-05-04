@@ -1,5 +1,3 @@
-import * as QRCode from 'qrcode';
-
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
@@ -16,7 +14,6 @@ export class AppService {
       initiationUrl: this.configService.get<string>('INITIATION_URL')
     });
 
-    const qrCodeUrl = await QRCode.toDataURL(url.toString(), { scale: 10 });
-    return qrCodeUrl;
+    return url.toString();
   }
 }

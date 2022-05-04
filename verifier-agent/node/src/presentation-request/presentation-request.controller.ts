@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
 import { PresentationRequestResponseDto } from '../gid';
 import { UserAcceptance, UserRejection } from '../gid/user-response';
@@ -14,7 +14,8 @@ export class PresentationRequestController {
   ) {}
 
   @Post('request-presentation')
-  async requestPresentation(@Param('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
+  async requestPresentation(@Query('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
+    this.presentationRequestGateway.awaitResponse(trackingId);
     return await this.presentationRequestService.requestPresentation(trackingId);
   }
 

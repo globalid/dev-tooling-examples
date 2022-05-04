@@ -25,7 +25,7 @@ describe('AppController', () => {
       jest.spyOn(appService, 'getPresentationRequestQrCode').mockReturnValueOnce(Promise.resolve(mockQrCode));
 
       expect(await appController.renderHomeView()).toEqual({
-        qrCode: mockQrCode,
+        qrCodeURL: mockQrCode,
         trackingId: expect.any(String)
       });
     });

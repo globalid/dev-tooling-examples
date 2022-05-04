@@ -90,10 +90,11 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it('should throw exception trying to send data after unregister', async () => {
+    it('should log an error when trying to send data after unregister', async () => {
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
       await new Promise((resolve) => ws.on('open', resolve));
+      const spy = jest.spyOn(console, 'error');
 
       ws.send(
         JSON.stringify({
@@ -109,8 +110,11 @@ describe('PresentationRequestGateway', () => {
         })
       );
       await new Promise((resolve) => ws.on('message', resolve));
+      gateway.rejectPresentation(trackingId, 'user rejected');
 
-      expect(() => gateway.rejectPresentation(trackingId, 'user rejected')).toThrow();
+      expect(spy).toHaveBeenCalledWith(`no client socket found for trackingId ${trackingId}`);
+
+      spy.mockClear();
     });
   });
 
@@ -141,10 +145,11 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it("should throw an exception when sending confirmation for trackingId that doesn't exist", async () => {
+    it("should log an error when sending confirmation for trackingId that doesn't exist", async () => {
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '89140555-cce2-4e37-80f9-01af4c24cdd6';
       await new Promise((resolve) => ws.on('open', resolve));
+      const spy = jest.spyOn(console, 'error');
 
       ws.send(
         JSON.stringify({
@@ -153,9 +158,12 @@ describe('PresentationRequestGateway', () => {
         })
       );
       await new Promise<void>((resolve) => ws.on('message', resolve));
-
       const vPres = { user: '1234', accepted: true };
-      expect(() => gateway.acceptPresentation('1234', vPres)).toThrow('no client socket found for trackingId 1234');
+      gateway.acceptPresentation('1234', vPres);
+
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
+
+      spy.mockClear();
     });
   });
 
@@ -185,10 +193,11 @@ describe('PresentationRequestGateway', () => {
       );
     });
 
-    it("should throw an exception when rejecting presentation for trackingId that doesn't exist", async () => {
+    it("should log an error when rejecting presentation for trackingId that doesn't exist", async () => {
       gateway = app.get(PresentationRequestGateway);
       const trackingId: TrackingId = '616ef657-fccb-4b47-bf8f-ebf0fe56089a';
       await new Promise((resolve) => ws.on('open', resolve));
+      const spy = jest.spyOn(console, 'error');
 
       ws.send(
         JSON.stringify({
@@ -197,9 +206,11 @@ describe('PresentationRequestGateway', () => {
         })
       );
       await new Promise<void>((resolve) => ws.on('message', resolve));
-      expect(() => gateway.rejectPresentation('1234', 'user rejected')).toThrow(
-        'no client socket found for trackingId 1234'
-      );
+      gateway.rejectPresentation('1234', 'user rejected');
+
+      expect(spy).toHaveBeenCalledWith('no client socket found for trackingId 1234');
+
+      spy.mockClear();
     });
   });
 });
