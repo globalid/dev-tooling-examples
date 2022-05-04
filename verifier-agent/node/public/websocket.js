@@ -99,16 +99,11 @@ function acceptPresentationResponse(data) {
   codeCard.classList.add('code')
   codeCard.innerText = JSON.stringify(JSON.parse(data), null, 2)
 
-  // swap out loading asset with the code card
-  const loadingAsset = document.getElementById('loading-asset')
-  loadingAsset.parentNode.replaceChild(codeCard, loadingAsset)
+  replaceMainContentWith(codeCard)
+  appendBackButtonTo('main-container')
 
-  // add back button
-  const backbtn = document.createElement('a')
-  backbtn.classList.add('button')
-  backbtn.setAttribute('href', '/')
-  backbtn.innerText = 'Back'
-  document.getElementById('main-card').appendChild(backbtn)
+  swapHeadingTextWith('Verifiable Presentation Received')
+  swapSubHeadingWith('')
 }
 
 /**
@@ -132,15 +127,23 @@ function rejectPresentationData(errorMessage) {
   errMsg.innerText = JSON.parse(errorMessage)
   errorCard.appendChild(errMsg)
 
-  const loadingAsset = document.getElementById('loading-asset')
-  loadingAsset.parentNode.replaceChild(errorCard, loadingAsset)
+  replaceMainContentWith(errorCard)
+  appendBackButtonTo('main-container')
 
-  // add back button
+  swapHeadingTextWith('Presentation Request Failed')
+  swapSubHeadingWith('')
+}
+
+/**
+ * Creates an html button and adds it to the provided containerid's container
+ * @param {string} containerId to add button to
+ */
+function appendBackButtonTo(containerId) {
   const backbtn = document.createElement('a')
   backbtn.classList.add('button')
   backbtn.setAttribute('href', '/')
   backbtn.innerText = 'Back'
-  document.getElementById('main-card').appendChild(backbtn)
+  document.getElementById(containerId).appendChild(backbtn)
 }
 
 /**
@@ -155,12 +158,45 @@ async function swapOutQrCodeWithLoadingConfirm() {
   msg.classList.add('confirm-msg')
   msg.innerText = 'Confirm this request on your device'
 
-  const loadingSvg = (await (await fetch('loading.svg')).text())
+  const loadingSvg = await loadAsset('loading.svg')
   wrapper.innerHTML = loadingSvg
   wrapper.appendChild(msg)
 
-  const qrCode = document.getElementById('qr-code')
-  document.getElementById('qr-code').parentNode.replaceChild(wrapper, qrCode)
+  replaceMainContentWith(wrapper)
+}
+
+/**
+ * Loads and returns the assets raw text
+ * @param {string} fileName of asset to load
+ */
+async function loadAsset(fileName) {
+  const res = await fetch(fileName)
+  return await res.text()
+}
+
+/**
+ * Replaces the heading with the provided text
+ * @param {string} text to display
+ */
+function swapHeadingTextWith(text) {
+  const heading = document.getElementById('card-title')
+  heading.innerText = text
+}
+
+/**
+ * Replaces the sub-heading with the provided text.
+ * Optionally removes the subheading if text is falsey
+ * @param {string} text to display
+ */
+function swapSubHeadingWith(text) {
+  if (!text) {
+    const subHeading = document.getElementById('sub-heading')
+    subHeading.parentNode.removeChild(subHeading)
+    return
+  }
+
+  const subHeading = document.getElementById('sub-heading')
+  subHeading.innerText = text
 }
 
 /**
@@ -191,4 +227,13 @@ function registerEventListeners(socket, onopen, onmessage, onerror, onclose, tra
   window.addEventListener("beforeunload", function() {
     sendWsEvent(socket, SocketEvent.UnregisterClient, { trackingId });
   })
+}
+
+/**
+ * Removes the main containers content with the provided element
+ * @param {HTMLElement} element the element to put in the main container
+ */
+function replaceMainContentWith(element) {
+  const mainContainer = document.getElementById('main-container')
+  mainContainer.replaceChildren(element)
 }

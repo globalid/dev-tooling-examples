@@ -11,15 +11,17 @@
   </head>
   <body class='flex-center-center flex-column' onload="generateStyledQRCode('{{qrCodeURL}}', 'qr-code')">
     <div class='brand'><img src='../gid-logo.svg' alt='GlobaliD logo' /></div>
-    <div id='main-card' class='card'>
+    <div class='card'>
       <p class='card-label'>Verifier agent Demo</p>
-      <h1 class='card-title'>Verifiable Presentation Request</h1>
+      <h1 id="card-title" class='card-title'>Verifiable Presentation Request</h1>
       <div class='card-focus'>
-        <p class='card-focus-text'>
+        <p id="sub-heading" class='card-focus-text'>
           Scan the QR with your GlobaliD mobile app
         </p>
       </div>
-      <div id="qr-code"></div>
+      <div id="main-container">
+        <div id="qr-code"></div>
+      </div>
     </div>
   </body>
 </html>

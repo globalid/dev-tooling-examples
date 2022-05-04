@@ -64,6 +64,10 @@
 .card-title {
   font-size: 2.25rem;
   font-weight: 600;
+  width: 27.188rem;
+  margin: 0 auto;
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
 }
 
 .card-verifications {
@@ -132,7 +136,7 @@
   font-family: 'Courier New', Courier, monospace;
   text-align: left;
   padding: 1rem;
-  margin-bottom: 1.188rem;
+  margin-bottom: 3.188rem;
   border-radius: 0.5rem;
 }
 
