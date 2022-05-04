@@ -1,7 +1,6 @@
+import { PresentationRequestResponseDto, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
 import { Body, Controller, Post, Query, Req } from '@nestjs/common';
 import { Request } from 'express';
-import { PresentationRequestResponseDto } from '../gid';
-import { UserAcceptance, UserRejection } from '../gid/user-response';
 import { UserResponsePipe } from '../gid/user-response.pipe';
 import { PresentationRequestGateway } from './presentation-request.gateway';
 import { PresentationRequestService } from './presentation-request.service';

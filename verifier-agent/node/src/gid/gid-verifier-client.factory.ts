@@ -1,7 +1,6 @@
+import { createGidVerifierClient, GidVerifierClient } from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { createGidVerifierClient } from './create-gid-verifier-client';
-import { GidVerifierClient } from './gid-verifier-client';
 
 @Injectable()
 export class GidVerifierClientFactory {

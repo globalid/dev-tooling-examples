@@ -1,6 +1,6 @@
+import { GidVerifierClient } from '@globalid/verifier-toolkit';
 import { Provider } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GidVerifierClient } from '../gid/gid-verifier-client';
 import { PresentationRequestService } from './presentation-request.service';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 

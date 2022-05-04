@@ -3,10 +3,10 @@ import { createMock } from '@golevelup/ts-jest';
 import { PresentationRequestService } from './presentation-request.service';
 import { trackingId, userAcceptance } from '../../test/common';
 import { ConfigService } from '@nestjs/config';
-import { GidVerifierClient } from '../gid/gid-verifier-client';
 import { InvalidSignatureError } from '../invalid-signature-error';
 import { gidVerifierClientProvider } from '../gid/gid-verifier-client.provider';
 import { presentationRequestServiceProvider } from './presentation-request-service.provider';
+import { GidVerifierClient } from '@globalid/verifier-toolkit';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;

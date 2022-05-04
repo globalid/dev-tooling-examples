@@ -1,10 +1,10 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 import { createMock } from '@golevelup/ts-jest';
-import { GidVerifierClient } from './gid-verifier-client';
 import { GidVerifierClientFactory } from './gid-verifier-client.factory';
-import * as createGidVerifierClientModule from './create-gid-verifier-client';
+import * as verifierToolkit from '@globalid/verifier-toolkit';
 import { clientId, clientSecret } from '../../test/common';
+import { GidVerifierClient } from '@globalid/verifier-toolkit';
 
 describe('GidVerifierClientFactory', () => {
   let factory: GidVerifierClientFactory;
@@ -29,7 +29,7 @@ describe('GidVerifierClientFactory', () => {
       const mockedGidVerifierClient = createMock<GidVerifierClient>();
       const getSpy = jest.spyOn(configService, 'get').mockReturnValueOnce(clientId).mockReturnValueOnce(clientSecret);
       const createSpy = jest
-        .spyOn(createGidVerifierClientModule, 'createGidVerifierClient')
+        .spyOn(verifierToolkit, 'createGidVerifierClient')
         .mockReturnValueOnce(mockedGidVerifierClient);
       const gidVerifierClient: GidVerifierClient = factory.create();
 

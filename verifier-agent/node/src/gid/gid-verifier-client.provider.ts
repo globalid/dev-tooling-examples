@@ -1,5 +1,5 @@
+import { GidVerifierClient } from '@globalid/verifier-toolkit';
 import { Provider } from '@nestjs/common';
-import { GidVerifierClient } from './gid-verifier-client';
 import { GidVerifierClientFactory } from './gid-verifier-client.factory';
 
 export const gidVerifierClientProvider: Provider<GidVerifierClient> = {

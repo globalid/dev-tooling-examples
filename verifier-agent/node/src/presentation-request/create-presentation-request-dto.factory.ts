@@ -1,6 +1,6 @@
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
-import { CreatePresentationRequestDto } from '../gid/create-presentation-request-dto';
 import { Injectable } from '@nestjs/common';
+import { CreatePresentationRequestDto } from '@globalid/verifier-toolkit';
 
 @Injectable()
 export class CreatePresentationRequestDtoFactory {

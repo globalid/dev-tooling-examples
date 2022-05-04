@@ -1,13 +1,5 @@
+import { PresentationRequirements } from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
-import {
-  AllowanceStatus,
-  FilterValueType,
-  FilterValueTypeDate,
-  PresentationRequirements,
-  ProofAlgorithm,
-  RequiredStatus,
-  RequirementStatus
-} from '../gid';
 
 @Injectable()
 export class PresentationRequirementsFactory {
