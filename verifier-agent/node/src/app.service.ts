@@ -1,7 +1,6 @@
+import { createPresentationRequestUrl } from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
-import { createPresentationRequestUrl } from './gid/create-presentation-request-url';
 
 @Injectable()
 export class AppService {

@@ -1,4 +1,5 @@
 import { Test } from '@nestjs/testing';
+
 import { TrackingIdValidationPipe } from './trackingid-validator';
 
 describe('TrackingIdValidationPipe', () => {

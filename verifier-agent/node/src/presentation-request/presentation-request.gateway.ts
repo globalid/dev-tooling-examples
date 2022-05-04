@@ -1,12 +1,12 @@
 import { WebSocket } from 'ws';
 
+import { UseFilters } from '@nestjs/common';
 import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WsResponse } from '@nestjs/websockets';
 
-import { Maybe, TrackingId } from '../types';
-import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';
-import { UseFilters } from '@nestjs/common';
 import { WebsocketExceptionFilter } from '../filters/ws-filter';
 import { TrackingIdValidationPipe } from '../pipes/trackingid-validator';
+import { Maybe, TrackingId } from '../types';
+import { RegisterClientEvent, SocketEvent, VerifiablePresentation } from './presentation-request.types';
 
 // TODO remove when config is figured out
 const websocketPort = 8080;

@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 
-import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 import { CreatePresentationRequestDtoFactory } from './create-presentation-request-dto.factory';
+import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 
 describe('CreatePresentationRequestDtoFactory', () => {
   describe('buildCreatePresentationRequestEpamDto', () => {

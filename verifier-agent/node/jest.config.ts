@@ -9,6 +9,7 @@ const config: Config.InitialOptions = {
     '<rootDir>/.*\\.module.ts$',
     '<rootDir>/.*\\.provider.ts$',
     '<rootDir>/.*\\.schema.ts$',
+    '<rootDir>/.*version.ts',
     '<rootDir>/main.ts$'
   ],
   coverageThreshold: {
@@ -24,7 +25,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   testRegex: '.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest'
+    '^.+\\.ts$': 'ts-jest'
   },
   verbose: true,
   setupFilesAfterEnv: ["../test/setup.ts"]

@@ -1,6 +1,7 @@
 import { GidVerifierClient, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
 import { InvalidSignatureError } from '../invalid-signature-error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 

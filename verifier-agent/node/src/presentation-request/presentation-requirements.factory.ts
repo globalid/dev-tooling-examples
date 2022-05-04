@@ -1,4 +1,12 @@
-import { AllowanceStatus, PresentationRequirements, ProofAlgorithm, RequiredStatus, RequirementStatus } from '@globalid/verifier-toolkit';
+import {
+  AllowanceStatus,
+  FilterValueType,
+  FilterValueTypeDate,
+  PresentationRequirements,
+  ProofAlgorithm,
+  RequiredStatus,
+  RequirementStatus
+} from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

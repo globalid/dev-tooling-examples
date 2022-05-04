@@ -1,14 +1,14 @@
+import { plainToInstance } from 'class-transformer';
 import * as crypto from 'crypto';
+import { join } from 'path';
 import { TrackingId } from 'src/types';
 
+import { UserAcceptance, UserRejection, UserResponseState } from '@globalid/verifier-toolkit';
+import { ProofRequestResponseDto } from '@globalid/verifier-toolkit/dist/presentation-request/create-proof-request-dto';
 import { INestApplication } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test } from '@nestjs/testing';
-import { ProofRequestResponseDto } from '../src/gid/create-proof-request-dto';
-import { ConfigService } from '@nestjs/config';
-import { UserAcceptance, UserRejection, UserResponseState } from '../src/gid/user-response';
-import { plainToInstance } from 'class-transformer';
-import { join } from 'path';
 
 export const createNestApp = async (imports: any[]): Promise<INestApplication> => {
   const moduleFixture = await Test.createTestingModule({
@@ -38,6 +38,8 @@ export const createNestApp = async (imports: any[]): Promise<INestApplication> =
 
 export const webSocketUrl = 'ws://localhost:8080';
 
+export const exampleUrl = 'https://example.com/';
+
 export const trackingId: TrackingId = 'd0078bfe-7e42-4574-867a-ea3deeb0dbe2';
 
 /**
@@ -53,7 +55,7 @@ export function mockConfigService(env: Record<string, any>) {
 
 export const clientId = '13275c09-4c4c-4369-982b-28d5a679cb36';
 export const clientSecret = '48688c67c6ee444348688c67c6ee4443';
-export const accessToken = 'ilQPl5QSUxg46ma-4LzL4Y_iAE-1arb_ykpJA5ajkpY.J0W0u9cHCMhwS6EJLKjvfu_Coc0u42dy48uJWtYPaVg';
+
 export const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', {
   modulusLength: 2048,
   publicKeyEncoding: {

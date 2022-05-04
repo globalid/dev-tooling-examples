@@ -1,8 +1,10 @@
 import { WebSocket } from 'ws';
+
 import { createMock, DeepMocked } from '@golevelup/ts-jest';
 import { ArgumentsHost, HttpException } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { WsException } from '@nestjs/websockets';
+
 import { WebsocketExceptionFilter } from '../filters/ws-filter';
 
 describe('WebsocketExceptionFilter', () => {
