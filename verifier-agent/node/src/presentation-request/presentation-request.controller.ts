@@ -1,0 +1,36 @@
+import { Request } from 'express';
+
+import { PresentationRequestResponseDto, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { Body, Controller, Post, Query, Req } from '@nestjs/common';
+
+import { UserResponsePipe } from '../gid/user-response.pipe';
+import { PresentationRequestGateway } from './presentation-request.gateway';
+import { PresentationRequestService } from './presentation-request.service';
+
+@Controller()
+export class PresentationRequestController {
+  constructor(
+    private readonly presentationRequestService: PresentationRequestService,
+    private readonly presentationRequestGateway: PresentationRequestGateway
+  ) {}
+
+  @Post('request-presentation')
+  async requestPresentation(@Query('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
+    this.presentationRequestGateway.awaitResponse(trackingId);
+    return await this.presentationRequestService.requestPresentation(trackingId);
+  }
+
+  @Post('handle-user-response')
+  async handleUserResponse(
+    @Body(UserResponsePipe) userResponse: UserAcceptance | UserRejection,
+    @Req() request: Request
+  ) {
+    await this.presentationRequestService.verifySignature(<string>request.headers['X-Signature'], userResponse);
+
+    if (userResponse instanceof UserAcceptance) {
+      this.presentationRequestGateway.acceptPresentation(userResponse.tracking_id, userResponse.proof_presentation);
+    } else {
+      this.presentationRequestGateway.rejectPresentation(userResponse.tracking_id, userResponse.error_msg);
+    }
+  }
+}
