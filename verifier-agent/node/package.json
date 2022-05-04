@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "8.4.4",
     "@nestjs/platform-ws": "8.4.4",
     "@nestjs/websockets": "8.4.4",
+    "@globalid/verifier-toolkit": "0.1.0-alpha.2",
     "axios": "0.26.0",
     "class-transformer": "0.5.1",
     "class-validator": "0.13.2",
