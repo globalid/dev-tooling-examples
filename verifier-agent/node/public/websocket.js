@@ -98,7 +98,7 @@ function acceptPresentationResponse(data) {
   codeCard.classList.add('message')
   codeCard.classList.add('code')
   codeCard.classList.add('dark')
-  codeCard.innerHTML = JSONcolorise(JSON.parse(data), 'dark')
+  codeCard.innerHTML = colorizeJSON(JSON.parse(data), 'dark')
 
   replaceMainContentWith(codeCard)
   appendBackButtonTo('main-container')
