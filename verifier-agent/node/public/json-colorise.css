@@ -1,0 +1,47 @@
+/* Light theme */
+.json-key.light {
+  color: #0A8616;
+}
+
+.json-value.light {
+  color: #2E76BD;
+}
+
+.json-string.light {
+  color: #bc7600;
+}
+
+.json-symbols.light {
+  color: #101010;
+}
+
+
+
+/* Dark theme */
+.json-key.dark {
+  /* color: #56B6C2; */
+  /* color: #97c177; */
+  /* color: #98c379; */
+  /* color: #abb2bf; */
+  color: #61afef;
+}
+
+.json-string.dark {
+  /* color: #E5C07B; */
+  /* color: #d09963; */
+  /* color: #d19a66; */
+  /* color: #61afef; */
+  color: #abb2bf;
+}
+
+.json-value.dark {
+  /* color: #33C9FC; */
+  /* color: #9eb2bb; */
+  /* color: #abb2bf; */
+  color: #d19a66;
+  /* color: #98c379; */
+}
+
+.json-symbols.dark {
+  color: #ABB2BF;
+}

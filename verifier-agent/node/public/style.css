@@ -76,6 +76,12 @@
 
 .code {
   background-color: #F7F7F7;
+  color: #101010;
+}
+
+.code.dark {
+  background-color: #282C34;
+  color: #ABB2BF;
 }
 
 .confirm-msg {
