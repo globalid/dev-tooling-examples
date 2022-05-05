@@ -8,7 +8,7 @@ const colorizeJSON = (obj, theme = 'light') => {
 
   const removeColon = (val) => val.replace(/[: ]/g, '')
 
-  const replacer = (theme) => (match, leadingSpaces, jsonKey, jsonValue, endingChar) => {
+  const replacer = (match, leadingSpaces, jsonKey, jsonValue, endingChar) => {
     const openingSpanTagForJsonKeys = `<span class="json-key ${theme}">`;
     const openingSpanTagForJsonValues = `<span class="json-value ${theme}">`;
     const openingSpanTagForJsonStrings = `<span class="json-string ${theme}">`;
@@ -30,5 +30,5 @@ const colorizeJSON = (obj, theme = 'light') => {
       .replace(/\\"/g, '&quot;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
-      .replace(jsonLine, replacer(theme));
+      .replace(jsonLine, replacer);
 }
