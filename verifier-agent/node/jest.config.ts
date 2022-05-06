@@ -9,7 +9,6 @@ const config: Config.InitialOptions = {
     '<rootDir>/.*\\.module.ts$',
     '<rootDir>/.*\\.provider.ts$',
     '<rootDir>/.*\\.schema.ts$',
-    '<rootDir>/.*version.ts',
     '<rootDir>/main.ts$'
   ],
   coverageThreshold: {
