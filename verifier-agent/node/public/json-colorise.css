@@ -1,0 +1,26 @@
+/* Light theme */
+.json-key.light {
+  color: #0A8616;
+}
+
+.json-value.light {
+  color: #2E76BD;
+}
+
+.json-string.light {
+  color: #bc7600;
+}
+
+
+/* Dark theme */
+.json-key.dark {
+  color: #61afef;
+}
+
+.json-string.dark {
+  color: #abb2bf;
+}
+
+.json-value.dark {
+  color: #d19a66;
+}

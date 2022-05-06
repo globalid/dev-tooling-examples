@@ -1,4 +1,4 @@
-"use strict";
+'use strict'
 
 const SocketEvent = {
   AwaitingResponse: 'awaiting-response',
@@ -97,7 +97,8 @@ function acceptPresentationResponse(data) {
   codeCard.setAttribute('id', 'json')
   codeCard.classList.add('message')
   codeCard.classList.add('code')
-  codeCard.innerText = JSON.stringify(JSON.parse(data), null, 2)
+  codeCard.classList.add('dark')
+  codeCard.innerHTML = colorizeJSON(JSON.parse(data), 'dark')
 
   replaceMainContentWith(codeCard)
   appendBackButtonTo('main-container')
@@ -191,7 +192,7 @@ function swapHeadingTextWith(text) {
 function swapSubHeadingWith(text) {
   if (!text) {
     const subHeading = document.getElementById('sub-heading')
-    subHeading.parentNode.removeChild(subHeading)
+    subHeading?.parentNode?.removeChild(subHeading)
     return
   }
 
