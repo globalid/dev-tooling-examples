@@ -4,8 +4,6 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validate } from './config.schema';
-import { GidVerifierClientFactory } from './gid/gid-verifier-client.factory';
-import { gidVerifierClientProvider } from './gid/gid-verifier-client.provider';
 import { GidModule } from './gid/gid.module';
 import { CreatePresentationRequestDtoFactory } from './presentation-request/create-presentation-request-dto.factory';
 import { presentationRequestServiceProvider } from './presentation-request/presentation-request-service.provider';
@@ -25,8 +23,6 @@ import { PresentationRequirementsFactory } from './presentation-request/presenta
   providers: [
     AppService,
     CreatePresentationRequestDtoFactory,
-    GidVerifierClientFactory,
-    gidVerifierClientProvider,
     presentationRequestServiceProvider,
     PresentationRequirementsFactory,
     PresentationRequestGateway

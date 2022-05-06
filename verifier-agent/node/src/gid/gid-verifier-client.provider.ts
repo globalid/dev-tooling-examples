@@ -1,12 +1,14 @@
-import { GidVerifierClient } from '@globalid/verifier-toolkit';
+import { GidVerifierClient, createGidVerifierClient } from '@globalid/verifier-toolkit';
 import { Provider } from '@nestjs/common';
-
-import { GidVerifierClientFactory } from './gid-verifier-client.factory';
+import { ConfigService } from '@nestjs/config';
 
 export const gidVerifierClientProvider: Provider<GidVerifierClient> = {
   provide: GidVerifierClient,
-  useFactory: (gidVerifierClientFactory: GidVerifierClientFactory) => {
-    return gidVerifierClientFactory.create();
+  useFactory: (configService: ConfigService) => {
+    return createGidVerifierClient({
+      clientId: '1234',
+      clientSecret: 'asdf'
+    });
   },
-  inject: [GidVerifierClientFactory]
+  inject: [ConfigService]
 };
