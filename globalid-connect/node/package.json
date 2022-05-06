@@ -4,7 +4,7 @@
   "description": "An example project using the GlobaliD api-client, built with NestJS.",
   "author": "GlobaliD",
   "private": true,
-  "license": "Apache-2.0",
+  "license": "ISC",
   "engines": {
     "node": ">=14"
   },
