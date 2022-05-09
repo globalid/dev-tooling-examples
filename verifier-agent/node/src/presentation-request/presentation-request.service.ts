@@ -13,7 +13,7 @@ export class PresentationRequestService {
     private readonly presentationRequirementsFactory: PresentationRequirementsFactory
   ) {}
 
-  async requestPresentation(trackingId: string) {
+  requestPresentation(trackingId: string) {
     return this.gidVerifierClient.createPresentationRequest({
       trackingId,
       webhookUrl: `${this.config.get<string>('BASE_URL')}/handle-user-response`,

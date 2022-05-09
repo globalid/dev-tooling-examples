@@ -1,59 +1,61 @@
-import axiosMock from 'jest-mock-axios';
-
-import { GidVerifierClient } from '@globalid/verifier-toolkit';
-import { ProofRequestResponseDto } from '@globalid/verifier-toolkit/dist/presentation-request/create-proof-request-dto';
+import {
+  GidVerifierClient,
+  PresentationRequestResponseDto,
+  PresentationRequirements
+} from '@globalid/verifier-toolkit';
 import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 
 import { mockConfigService, trackingId, userAcceptance } from '../../test/common';
-import { gidVerifierClientProvider } from '../gid/gid-verifier-client.provider';
 import { InvalidSignatureError } from '../invalid-signature-error';
-import { presentationRequestServiceProvider } from './presentation-request-service.provider';
 import { PresentationRequestService } from './presentation-request.service';
+import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;
   let gidVerifierClient: GidVerifierClient;
+  let presentationRequirementsFactory: PresentationRequirementsFactory;
 
-  const mockProofRequestResponseDto: ProofRequestResponseDto = createMock<ProofRequestResponseDto>();
-
-  beforeAll(() => {
-    axiosMock.post.mockResolvedValue({ data: mockProofRequestResponseDto });
-  });
+  const baseUrl = 'http://localhost:8080';
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [ConfigService, gidVerifierClientProvider, presentationRequestServiceProvider]
-    })
+    const module = await Test.createTestingModule({ providers: [PresentationRequestService, ConfigService] })
+      .useMocker(createMock)
       .overrideProvider(ConfigService)
       .useValue(
         mockConfigService({
-          BASE_URL: 'http://localhost:8080',
-          GID_CREDENTIALS_BASE_URL: 'https://credentials.globalid.dev',
-          GID_API_BASE_URL: 'https://api.globalid.dev',
-          CLIENT_ID: 'abcdef',
-          CLIENT_SECRET: '123456',
-          INITIATION_URL: 'https://www.example.com',
-          REDIRECT_URL: 'https://www.example1.com'
+          BASE_URL: baseUrl
         })
       )
-      .useMocker(createMock)
       .compile();
 
     service = module.get(PresentationRequestService);
     gidVerifierClient = module.get(GidVerifierClient);
-  });
-
-  afterEach(() => {
-    axiosMock.reset();
+    presentationRequirementsFactory = module.get(PresentationRequirementsFactory);
   });
 
   describe('requestPresentation', () => {
-    it('should create a presentation request and return the response from EPAM', async () => {
-      const proofRequestResponseDto = await service.requestPresentation(trackingId);
+    it('should create a presentation request and return the response', async () => {
+      const presentationRequirements = createMock<PresentationRequirements>();
+      const createSpy = jest
+        .spyOn(presentationRequirementsFactory, 'create')
+        .mockReturnValueOnce(presentationRequirements);
+      const presentationRequestResponseDto = createMock<PresentationRequestResponseDto>();
+      const createPresentationRequestSpy = jest
+        .spyOn(gidVerifierClient, 'createPresentationRequest')
+        .mockResolvedValueOnce(presentationRequestResponseDto);
 
-      expect(proofRequestResponseDto).toBe(mockProofRequestResponseDto);
+      const result = await service.requestPresentation(trackingId);
+
+      expect(result).toBe(presentationRequestResponseDto);
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(createPresentationRequestSpy).toHaveBeenCalledTimes(1);
+      expect(createPresentationRequestSpy).toHaveBeenCalledWith({
+        trackingId,
+        webhookUrl: `${baseUrl}/handle-user-response`,
+        presentationRequirements
+      });
     });
   });
 
