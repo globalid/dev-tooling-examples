@@ -14,8 +14,6 @@ describe('AppController (e2e)', () => {
     }
   });
 
-  afterEach(async () => await app.close());
-
   it('/ (GET)', async () => {
     jest.setTimeout(60000);
     app = await createNestApp([AppModule]);
