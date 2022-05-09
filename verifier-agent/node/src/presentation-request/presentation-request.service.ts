@@ -1,7 +1,7 @@
+import { GidVerifierClient, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { GidVerifierClient } from '../gid/gid-verifier-client';
-import { UserAcceptance, UserRejection } from '../gid/user-response';
+
 import { InvalidSignatureError } from '../invalid-signature-error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 
@@ -13,7 +13,7 @@ export class PresentationRequestService {
     private readonly presentationRequirementsFactory: PresentationRequirementsFactory
   ) {}
 
-  async requestPresentation(trackingId: string) {
+  requestPresentation(trackingId: string) {
     return this.gidVerifierClient.createPresentationRequest({
       trackingId,
       webhookUrl: `${this.config.get<string>('BASE_URL')}/handle-user-response`,

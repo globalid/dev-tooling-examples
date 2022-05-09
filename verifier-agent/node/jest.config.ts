@@ -24,7 +24,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   testRegex: '.*\\.spec\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest'
+    '^.+\\.ts$': 'ts-jest'
   },
   verbose: true,
   setupFilesAfterEnv: ["../test/setup.ts"]

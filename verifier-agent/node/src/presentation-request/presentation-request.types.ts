@@ -12,5 +12,4 @@ export enum SocketEvent {
 }
 
 // TODO replace when we know the fields
-// interface VerifiablePresentation {}
 export type VerifiablePresentation = Record<string, any>;

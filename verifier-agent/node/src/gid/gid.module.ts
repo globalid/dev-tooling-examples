@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
-import { GidVerifierClientFactory } from './gid-verifier-client.factory';
+
+import { gidVerifierClientProvider } from './gid-verifier-client.provider';
 
 @Module({
-  providers: [GidVerifierClientFactory]
+  providers: [gidVerifierClientProvider],
+  exports: [gidVerifierClientProvider]
 })
 export class GidModule {}

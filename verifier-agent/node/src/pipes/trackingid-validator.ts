@@ -1,6 +1,7 @@
+import { isString } from 'class-validator';
+
 import { Injectable, PipeTransform } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
-import { isString } from 'class-validator';
 
 interface HasTrackingId extends MaybeHasTrackingId {
   trackingId: string;

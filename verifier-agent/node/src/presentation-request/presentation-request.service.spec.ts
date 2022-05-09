@@ -1,33 +1,61 @@
-import { Test } from '@nestjs/testing';
+import {
+  GidVerifierClient,
+  PresentationRequestResponseDto,
+  PresentationRequirements
+} from '@globalid/verifier-toolkit';
 import { createMock } from '@golevelup/ts-jest';
-import { PresentationRequestService } from './presentation-request.service';
-import { trackingId, userAcceptance } from '../../test/common';
 import { ConfigService } from '@nestjs/config';
-import { GidVerifierClient } from '../gid/gid-verifier-client';
+import { Test } from '@nestjs/testing';
+
+import { mockConfigService, trackingId, userAcceptance } from '../../test/common';
 import { InvalidSignatureError } from '../invalid-signature-error';
-import { gidVerifierClientProvider } from '../gid/gid-verifier-client.provider';
-import { presentationRequestServiceProvider } from './presentation-request-service.provider';
+import { PresentationRequestService } from './presentation-request.service';
+import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;
   let gidVerifierClient: GidVerifierClient;
+  let presentationRequirementsFactory: PresentationRequirementsFactory;
+
+  const baseUrl = 'http://localhost:8080';
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({
-      providers: [ConfigService, gidVerifierClientProvider, presentationRequestServiceProvider]
-    })
+    const module = await Test.createTestingModule({ providers: [PresentationRequestService, ConfigService] })
       .useMocker(createMock)
+      .overrideProvider(ConfigService)
+      .useValue(
+        mockConfigService({
+          BASE_URL: baseUrl
+        })
+      )
       .compile();
 
     service = module.get(PresentationRequestService);
     gidVerifierClient = module.get(GidVerifierClient);
+    presentationRequirementsFactory = module.get(PresentationRequirementsFactory);
   });
 
   describe('requestPresentation', () => {
-    it('should create a presentation request and return the response from EPAM', async () => {
-      const proofRequestResponseDto = await service.requestPresentation(trackingId);
+    it('should create a presentation request and return the response', async () => {
+      const presentationRequirements = createMock<PresentationRequirements>();
+      const createSpy = jest
+        .spyOn(presentationRequirementsFactory, 'create')
+        .mockReturnValueOnce(presentationRequirements);
+      const presentationRequestResponseDto = createMock<PresentationRequestResponseDto>();
+      const createPresentationRequestSpy = jest
+        .spyOn(gidVerifierClient, 'createPresentationRequest')
+        .mockResolvedValueOnce(presentationRequestResponseDto);
 
-      expect(proofRequestResponseDto).toBeDefined();
+      const result = await service.requestPresentation(trackingId);
+
+      expect(result).toBe(presentationRequestResponseDto);
+      expect(createSpy).toHaveBeenCalledTimes(1);
+      expect(createPresentationRequestSpy).toHaveBeenCalledTimes(1);
+      expect(createPresentationRequestSpy).toHaveBeenCalledWith({
+        trackingId,
+        webhookUrl: `${baseUrl}/handle-user-response`,
+        presentationRequirements
+      });
     });
   });
 

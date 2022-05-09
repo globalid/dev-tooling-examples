@@ -1,9 +1,11 @@
-import { UserResponsePipe } from './user-response.pipe';
-import { BadRequestException } from '@nestjs/common';
-import { UserAcceptance, UserRejection, UserResponseState } from './user-response';
-import { randomUUID } from 'crypto';
-import { trackingId, userAcceptance, userRejection } from '../../test/common';
 import { instanceToPlain } from 'class-transformer';
+import { randomUUID } from 'crypto';
+
+import { UserAcceptance, UserRejection, UserResponseState } from '@globalid/verifier-toolkit';
+import { BadRequestException } from '@nestjs/common';
+
+import { trackingId, userAcceptance, userRejection } from '../../test/common';
+import { UserResponsePipe } from './user-response.pipe';
 
 describe('ConnectParamsPipe', () => {
   let pipe: UserResponsePipe;

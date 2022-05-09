@@ -8,10 +8,10 @@ import {
   userRejection,
   xSignature
 } from '../../test/common';
-import { PresentationRequestController } from './presentation-request.controller';
-import { PresentationRequestService } from './presentation-request.service';
-import { PresentationRequestGateway } from './presentation-request.gateway';
 import { InvalidSignatureError } from '../invalid-signature-error';
+import { PresentationRequestController } from './presentation-request.controller';
+import { PresentationRequestGateway } from './presentation-request.gateway';
+import { PresentationRequestService } from './presentation-request.service';
 
 describe('PresentationRequestController', () => {
   let controller: PresentationRequestController;

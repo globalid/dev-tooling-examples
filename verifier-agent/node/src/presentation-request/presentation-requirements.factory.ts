@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common';
 import {
   AllowanceStatus,
   FilterValueType,
@@ -7,7 +6,8 @@ import {
   ProofAlgorithm,
   RequiredStatus,
   RequirementStatus
-} from '../gid';
+} from '@globalid/verifier-toolkit';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PresentationRequirementsFactory {

@@ -6,12 +6,10 @@ import { AppService } from './app.service';
 import { validate } from './config.schema';
 import { GidModule } from './gid/gid.module';
 import { CreatePresentationRequestDtoFactory } from './presentation-request/create-presentation-request-dto.factory';
-import { PresentationRequestGateway } from './presentation-request/presentation-request.gateway';
-import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
-import { GidVerifierClientFactory } from './gid/gid-verifier-client.factory';
-import { gidVerifierClientProvider } from './gid/gid-verifier-client.provider';
-import { presentationRequestServiceProvider } from './presentation-request/presentation-request-service.provider';
 import { PresentationRequestController } from './presentation-request/presentation-request.controller';
+import { PresentationRequestGateway } from './presentation-request/presentation-request.gateway';
+import { PresentationRequestService } from './presentation-request/presentation-request.service';
+import { PresentationRequirementsFactory } from './presentation-request/presentation-requirements.factory';
 
 @Module({
   imports: [
@@ -25,9 +23,7 @@ import { PresentationRequestController } from './presentation-request/presentati
   providers: [
     AppService,
     CreatePresentationRequestDtoFactory,
-    GidVerifierClientFactory,
-    gidVerifierClientProvider,
-    presentationRequestServiceProvider,
+    PresentationRequestService,
     PresentationRequirementsFactory,
     PresentationRequestGateway
   ]
