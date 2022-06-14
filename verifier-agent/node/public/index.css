@@ -1,0 +1,114 @@
+@font-face {
+  font-family: Averta;
+  src: url(./fonts/Averta.woff);
+  color: #101010;
+}
+
+@font-face {
+  font-family: Averta-SemiBold;
+  src: url(./fonts/AvertaSemiBold.woff);
+  color: #101010;
+}
+
+.brand {
+  margin-bottom: 2.69em;
+  margin-top: 2.25rem;
+}
+
+.button,
+.button:visited {
+  align-self: center;
+  background-color: #0d51ff;
+  border-radius: 9999px;
+  color: white;
+  min-width: 10rem;
+  padding: 0.63rem 1.25rem;
+  text-decoration: none;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  min-width: 55rem;
+}
+
+.card-label {
+  font-family: Averta-SemiBold;
+  font-size: 1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.card-subtitle {
+  color: #646466;
+  font-weight: normal;
+  margin-top: 0;
+}
+
+.card-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  margin: 0 auto;
+  margin-top: 1.25rem;
+  margin-bottom: 0.625rem;
+}
+
+.confirm-msg {
+  font-family: 'Averta';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.563rem;
+  line-height: 1.875rem;
+  text-align: center;
+  color: #000000;
+  width: 16.25rem;
+  margin: 0 auto;
+  margin-top: 2.813rem;
+}
+
+.error-message {
+  background-color: #ffa30a19;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  padding-left: 1.75rem;
+  text-align: left;
+}
+
+.error-icon {
+  width: 1.875rem;
+  padding-right: 1.563rem;
+}
+
+.loading-wrapper {
+  border: 1px solid #e5e5e5;
+  width: 44%;
+  margin: 0 auto;
+  padding-top: 3.125rem;
+  padding-bottom: 3.125rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.qr-code {
+  margin: 0 auto;
+  width: 15rem;
+  margin-bottom: 2.5rem;
+}
+
+body {
+  align-items: center;
+  background-color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+  font-family: Averta;
+  justify-content: center;
+}

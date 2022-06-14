@@ -1,36 +1,34 @@
-import { Request } from 'express';
-
 import { PresentationRequestResponseDto, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
-import { Body, Controller, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Headers, Logger, Post, Query, Render } from '@nestjs/common';
 
-import { UserResponsePipe } from '../gid/user-response.pipe';
-import { PresentationRequestGateway } from './presentation-request.gateway';
 import { PresentationRequestService } from './presentation-request.service';
+import { QrCodeViewModel } from './qr-code.view-model';
+import { UserResponsePipe } from './user-response.pipe';
 
 @Controller()
 export class PresentationRequestController {
-  constructor(
-    private readonly presentationRequestService: PresentationRequestService,
-    private readonly presentationRequestGateway: PresentationRequestGateway
-  ) {}
+  private readonly logger = new Logger(PresentationRequestController.name);
+
+  constructor(private readonly service: PresentationRequestService) {}
+
+  @Get()
+  @Render('index')
+  index(): QrCodeViewModel {
+    return this.service.createQrCodeViewModel();
+  }
 
   @Post('request-presentation')
   async requestPresentation(@Query('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
-    this.presentationRequestGateway.awaitResponse(trackingId);
-    return await this.presentationRequestService.requestPresentation(trackingId);
+    this.logger.log(`requesting presentation (tracking ID: ${trackingId})`);
+    return await this.service.requestPresentation(trackingId);
   }
 
   @Post('handle-user-response')
   async handleUserResponse(
-    @Body(UserResponsePipe) userResponse: UserAcceptance | UserRejection,
-    @Req() request: Request
+    @Headers('X-Signature') signature: string,
+    @Body(UserResponsePipe) userResponse: UserAcceptance | UserRejection
   ) {
-    await this.presentationRequestService.verifySignature(<string>request.headers['X-Signature'], userResponse);
-
-    if (userResponse instanceof UserAcceptance) {
-      this.presentationRequestGateway.acceptPresentation(userResponse.tracking_id, userResponse.proof_presentation);
-    } else {
-      this.presentationRequestGateway.rejectPresentation(userResponse.tracking_id, userResponse.error_msg);
-    }
+    this.logger.log(`handling user response (tracking ID: ${userResponse.trackingId})`);
+    await this.service.handleUserResponse(signature, userResponse);
   }
 }

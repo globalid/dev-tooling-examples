@@ -13,11 +13,10 @@ env:
   jest: true
 globals:
   document: true
-  WebSocket: true
-  window: true
   fetch: true
+  hljs: true
+  io: true
   QRCodeStyling: true
-  colorizeJSON: true
 rules:
   '@typescript-eslint/interface-name-prefix': off
   '@typescript-eslint/explicit-function-return-type': off
