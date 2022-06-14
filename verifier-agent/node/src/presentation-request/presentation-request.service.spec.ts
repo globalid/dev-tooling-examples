@@ -9,7 +9,7 @@ import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
 
-import { mockConfigService, signature, trackingId } from '../../test/common';
+import { baseUrl, mockConfigService, signature, trackingId } from '../../test/common';
 import { ClientService } from './client/client.service';
 import { InvalidSignatureError } from './invalid-signature.error';
 import { PresentationRequestService } from './presentation-request.service';
@@ -21,10 +21,8 @@ describe('PresentationRequestService', () => {
   let gidVerifierClient: GidVerifierClient;
   let presentationRequirementsFactory: PresentationRequirementsFactory;
 
-  const baseUrl = 'http://localhost:8080';
-
   beforeEach(async () => {
-    const module = await Test.createTestingModule({ providers: [PresentationRequestService, ConfigService] })
+    const module = await Test.createTestingModule({ providers: [ConfigService, PresentationRequestService] })
       .useMocker(createMock)
       .overrideProvider(ConfigService)
       .useValue(
@@ -71,9 +69,9 @@ describe('PresentationRequestService', () => {
       expect(createSpy).toHaveBeenCalledTimes(1);
       expect(createPresentationRequestSpy).toHaveBeenCalledTimes(1);
       expect(createPresentationRequestSpy).toHaveBeenCalledWith({
+        presentationRequirements,
         trackingId,
-        webhookUrl: `${baseUrl}/handle-user-response`,
-        presentationRequirements
+        webhookUrl: `${baseUrl}/handle-user-response`
       });
     });
   });
