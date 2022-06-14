@@ -1,6 +1,6 @@
-# GlobaliD Connect Examples
+# GlobaliD Connect Example
 
-This folder contains an example Node.js application that demonstrates integrating the GlobaliD Connect flow. The example is built with [NestJS](https://nestjs.com/) and uses the [GlobaliD API Client](https://github.com/globalid/api-client) for JavaScript. There are two main pages in this demo:
+This folder contains an example Node.js application that demonstrates integrating the [GlobaliD Connect](https://docs.global.id/developers/globalid-connect) flow. The example is built with [NestJS](https://nestjs.com/) and uses the [GlobaliD API Client](https://npmjs.com/package/@globalid/api-client) for JavaScript. There are two main pages in this demo:
 
 - `/verifications` - Landing page that displays the Connect URL
 - `/verifications/connect` - Redirect target for the GlobaliD Connect flow that retrieves and displays information about the user
@@ -15,10 +15,10 @@ Follow the instructions below to run the demo app for yourself.
 
 Before diving into the demo app, you'll need to do some setup in our developer portal.
 
-1. [Create a Developer App](https://docs.google.com/document/d/1ANq_sTTHRCukFtLFNM0EeUVL_Y5HfB9qQSzFvhy3hM8/edit?usp=sharing).
-   - Create a Connect URL with `http://localhost:3000/verifications/connect` as the **Redirect URL**.
-1. (Optional) [Set up a Required Verification Set](https://docs.google.com/document/d/1pUqfyfFsqsV3MlgRv9QLN9e2H1hlZRw0l7WiyaYaG9I/edit?usp=sharing). For simplicity, add requirements such as email or phone number.
-1. (Optional) [Enable PII sharing](https://docs.google.com/document/d/1Eo86uM2gVO9O6wLizSw61Q-XkcP82iHnQRaz21zQrv8/edit?usp=sharing).
+1. Create a [Developer App](https://docs.global.id/developers/globalid-connect/developer-app).
+1. (Optional) Enable [PII sharing](https://docs.global.id/developers/globalid-connect/pii-sharing).
+1. (Optional) Set up one or more [Required Verifications](https://docs.global.id/developers/globalid-connect/required-verifications). For simplicity, add requirements such as email or phone number.
+1. Create a [Connect URL](https://docs.global.id/developers/globalid-connect/connect-url) with `http://localhost:3000/verifications/connect` as the **Redirect URL**.
 
 ### Configure the Demo App
 
