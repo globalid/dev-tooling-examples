@@ -2,9 +2,9 @@ name: Test verifier-agent Node
 on:
   push:
     branches:
-      - '**'
+      - "**"
     paths:
-      - 'verifier-agent/node/**'
+      - "verifier-agent/node/**"
   workflow_dispatch:
 
 jobs:
@@ -31,15 +31,15 @@ jobs:
       - name: Use Node.js ${{ matrix.node_version }}
         uses: actions/setup-node@v2
         with:
-          registry-url: 'https://registry.npmjs.org/'
+          registry-url: "https://registry.npmjs.org/"
           node-version: ${{ matrix.node_version }}
           # https://github.com/actions/setup-node#caching-packages-dependencies
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: verifier-agent/node/package-lock.json
       - run: npm ci --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: npm run build
+      - run: cp .env.example .env
       - run: npm run test:cov
       - run: npm run test:e2e
-      

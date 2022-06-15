@@ -2,28 +2,27 @@
   <head>
     <meta charset='utf-8' />
     <title>GlobaliD Verification Demo</title>
-    <link rel='stylesheet' href='style.css' type='text/css' />
-    <link rel='stylesheet' href='spinner.css' type='text/css' />
-    <link rel='stylesheet' href='json-colorise.css' type='text/css' />
-    <script src='json-colorise.js'></script>
-    <script src='websocket.js'></script>
-    <script>webSocketHandler('{{trackingId}}')</script>
-    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
-    <script src='qr-code.js'></script>
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
+    />
+    <link rel='stylesheet' href='index.css' />
+    <link rel='stylesheet' href='spinner.css' />
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js'></script>
+    <script src='https://cdn.socket.io/4.5.0/socket.io.min.js'></script>
+    <script src='https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js'></script>
+    <script src='index.js'></script>
+    <script>initWebSocket('{{trackingId}}')</script>
   </head>
-  <body class='flex-center-center flex-column' onload="generateStyledQRCode('{{qrCodeURL}}', 'qr-code')">
-    <div class='brand'><img src='../gid-logo.svg' alt='GlobaliD logo' /></div>
+  <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
+    <div class='brand'>
+      <img src='../images/logo.svg' alt='GlobaliD logo' />
+    </div>
     <div class='card'>
       <p class='card-label'>Verifier agent Demo</p>
-      <h1 id="card-title" class='card-title'>Verifiable Presentation Request</h1>
-      <div class='card-focus'>
-        <p id="sub-heading" class='card-focus-text'>
-          Scan the QR with your GlobaliD mobile app
-        </p>
-      </div>
-      <div id="main-container">
-        <div id="qr-code"></div>
-      </div>
+      <h1 id='card-title' class='card-title'>Verifiable Presentation Request</h1>
+      <h2 id='card-subtitle' class='card-subtitle'>Scan the QR code with your GlobaliD mobile app</h2>
+      <div id='main-container'></div>
     </div>
   </body>
 </html>

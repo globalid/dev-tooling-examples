@@ -9,7 +9,8 @@ const config: Config.InitialOptions = {
     '<rootDir>/.*\\.module.ts$',
     '<rootDir>/.*\\.provider.ts$',
     '<rootDir>/.*\\.schema.ts$',
-    '<rootDir>/main.ts$'
+    '<rootDir>/main.ts$',
+    '<rootDir>/setup.ts$'
   ],
   coverageThreshold: {
     global: {
@@ -27,7 +28,7 @@ const config: Config.InitialOptions = {
     '^.+\\.ts$': 'ts-jest'
   },
   verbose: true,
-  setupFilesAfterEnv: ["../test/setup.ts"]
+  setupFilesAfterEnv: ['../test/setup.ts']
 };
 
 export default config;
