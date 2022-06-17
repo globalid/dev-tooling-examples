@@ -1,9 +1,9 @@
 import {
   createPresentationRequestUrl,
   GidVerifierClient,
-  UserAcceptance,
-  UserRejection,
-  UserResponse
+  HolderAcceptance,
+  HolderRejection,
+  HolderResponse
 } from '@globalid/verifier-toolkit';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -40,26 +40,26 @@ export class PresentationRequestService {
     this.clientService.sendAwaitingResponse(trackingId);
     return this.gidVerifierClient.createPresentationRequest({
       trackingId,
-      webhookUrl: `${this.config.get<string>('BASE_URL')}/handle-user-response`,
+      webhookUrl: `${this.config.get<string>('BASE_URL')}/handle-response`,
       presentationRequirements: this.presentationRequirementsFactory.create()
     });
   }
 
-  async handleUserResponse(signature: string, userResponse: UserAcceptance | UserRejection) {
+  async handleResponse(signature: string, holderResponse: HolderAcceptance | HolderRejection) {
     this.logger.log('verifying signature');
-    await this.verifySignature(signature, userResponse);
+    await this.verifySignature(signature, holderResponse);
 
-    if (userResponse instanceof UserAcceptance) {
-      this.logger.log('user accepted');
-      this.clientService.sendUserAcceptance(userResponse);
+    if (holderResponse instanceof HolderAcceptance) {
+      this.logger.log('holder accepted');
+      this.clientService.sendAcceptance(holderResponse);
     } else {
-      this.logger.log('user rejected');
-      this.clientService.sendUserRejection(userResponse);
+      this.logger.log('holder rejected');
+      this.clientService.sendRejection(holderResponse);
     }
   }
 
-  private async verifySignature(signature: string, userResponse: UserResponse) {
-    const isValid = await this.gidVerifierClient.verifySignature(signature, userResponse);
+  private async verifySignature(signature: string, holderResponse: HolderResponse) {
+    const isValid = await this.gidVerifierClient.verifySignature(signature, holderResponse);
     if (!isValid) {
       throw new InvalidSignatureError();
     }

@@ -1,9 +1,9 @@
 import {
   GidVerifierClient,
+  HolderAcceptance,
+  HolderRejection,
   PresentationRequestResponseDto,
-  PresentationRequirements,
-  UserAcceptance,
-  UserRejection
+  PresentationRequirements
 } from '@globalid/verifier-toolkit';
 import { createMock } from '@golevelup/ts-jest';
 import { ConfigService } from '@nestjs/config';
@@ -71,57 +71,57 @@ describe('PresentationRequestService', () => {
       expect(createPresentationRequestSpy).toHaveBeenCalledWith({
         presentationRequirements,
         trackingId,
-        webhookUrl: `${baseUrl}/handle-user-response`
+        webhookUrl: `${baseUrl}/handle-response`
       });
     });
   });
 
-  describe('handleUserResponse', () => {
-    let acceptPresentationSpy: jest.SpyInstance;
-    let rejectionPresentationSpy: jest.SpyInstance;
+  describe('handleResponse', () => {
+    let sendAcceptanceSpy: jest.SpyInstance;
+    let sendRejectionSpy: jest.SpyInstance;
     let verifySignatureSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      acceptPresentationSpy = jest.spyOn(clientService, 'sendUserAcceptance');
-      rejectionPresentationSpy = jest.spyOn(clientService, 'sendUserRejection');
+      sendAcceptanceSpy = jest.spyOn(clientService, 'sendAcceptance');
+      sendRejectionSpy = jest.spyOn(clientService, 'sendRejection');
       verifySignatureSpy = jest.spyOn(gidVerifierClient, 'verifySignature');
     });
 
-    it('should handle user acceptance', async () => {
-      const acceptance = new UserAcceptance();
+    it('should handle holder acceptance', async () => {
+      const acceptance = new HolderAcceptance();
       verifySignatureSpy.mockResolvedValueOnce(true);
 
-      await service.handleUserResponse(signature, acceptance);
+      await service.handleResponse(signature, acceptance);
 
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
       expect(verifySignatureSpy).toHaveBeenCalledWith(signature, acceptance);
-      expect(acceptPresentationSpy).toHaveBeenCalledTimes(1);
-      expect(acceptPresentationSpy).toHaveBeenCalledWith(acceptance);
-      expect(rejectionPresentationSpy).not.toHaveBeenCalled();
+      expect(sendAcceptanceSpy).toHaveBeenCalledTimes(1);
+      expect(sendAcceptanceSpy).toHaveBeenCalledWith(acceptance);
+      expect(sendRejectionSpy).not.toHaveBeenCalled();
     });
 
-    it('should handle user rejection', async () => {
-      const rejection = new UserRejection();
+    it('should handle holder rejection', async () => {
+      const rejection = new HolderRejection();
       verifySignatureSpy.mockResolvedValueOnce(true);
 
-      await service.handleUserResponse(signature, rejection);
+      await service.handleResponse(signature, rejection);
 
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
       expect(verifySignatureSpy).toHaveBeenCalledWith(signature, rejection);
-      expect(acceptPresentationSpy).not.toHaveBeenCalled();
-      expect(rejectionPresentationSpy).toHaveBeenCalledTimes(1);
-      expect(rejectionPresentationSpy).toHaveBeenCalledWith(rejection);
+      expect(sendAcceptanceSpy).not.toHaveBeenCalled();
+      expect(sendRejectionSpy).toHaveBeenCalledTimes(1);
+      expect(sendRejectionSpy).toHaveBeenCalledWith(rejection);
     });
 
     it('should throw error when signature is invalid', async () => {
-      const acceptance = new UserAcceptance();
+      const acceptance = new HolderAcceptance();
       verifySignatureSpy.mockResolvedValueOnce(false);
 
-      await expect(() => service.handleUserResponse(signature, acceptance)).rejects.toThrow(InvalidSignatureError);
+      await expect(() => service.handleResponse(signature, acceptance)).rejects.toThrow(InvalidSignatureError);
       expect(verifySignatureSpy).toHaveBeenCalledTimes(1);
       expect(verifySignatureSpy).toHaveBeenCalledWith(signature, acceptance);
-      expect(acceptPresentationSpy).not.toHaveBeenCalled();
-      expect(rejectionPresentationSpy).not.toHaveBeenCalled();
+      expect(sendAcceptanceSpy).not.toHaveBeenCalled();
+      expect(sendRejectionSpy).not.toHaveBeenCalled();
     });
   });
 });
