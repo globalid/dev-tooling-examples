@@ -1,26 +1,26 @@
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
 
-import { UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection } from '@globalid/verifier-toolkit';
 import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
-export class UserResponsePipe implements PipeTransform<Record<string, unknown>> {
+export class HolderResponsePipe implements PipeTransform<Record<string, unknown>> {
   async transform(value: Record<string, unknown>) {
-    const userResponse = this.parse(value);
+    const HolderResponse = this.parse(value);
     try {
-      await validateOrReject(userResponse);
+      await validateOrReject(HolderResponse);
     } catch (error) {
       throw new BadRequestException(error);
     }
-    return userResponse;
+    return HolderResponse;
   }
 
-  private parse(value: Record<string, unknown>): UserAcceptance | UserRejection {
+  private parse(value: Record<string, unknown>): HolderAcceptance | HolderRejection {
     if (value.proof_presentation != null) {
-      return plainToInstance(UserAcceptance, value);
+      return plainToInstance(HolderAcceptance, value);
     } else if (value.error_msg != null) {
-      return plainToInstance(UserRejection, value);
+      return plainToInstance(HolderRejection, value);
     } else {
       throw new BadRequestException('missing proof_presentation or error_msg');
     }

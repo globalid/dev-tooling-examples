@@ -55,7 +55,7 @@ export class PresentationRequirementsFactory {
               {
                 id: '1f44d55f-f161-4938-a659-f8026467f126',
                 path: ['$.credentialSubject.date_of_birth'],
-                purpose: 'User must be over 18',
+                purpose: 'Holder must be over 18',
                 filter: {
                   maximum: dayjs().subtract(18, 'years').format('YYYY-MM-DD'),
                   type: FilterValueType.String,
