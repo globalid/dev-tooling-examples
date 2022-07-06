@@ -1,9 +1,9 @@
-import { PresentationRequestResponseDto, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection, PresentationRequestResponseDto } from '@globalid/verifier-toolkit';
 import { Body, Controller, Get, Headers, Logger, Post, Query, Render } from '@nestjs/common';
 
+import { HolderResponsePipe } from './holder-response.pipe';
 import { PresentationRequestService } from './presentation-request.service';
 import { QrCodeViewModel } from './qr-code.view-model';
-import { UserResponsePipe } from './user-response.pipe';
 
 @Controller()
 export class PresentationRequestController {
@@ -23,12 +23,12 @@ export class PresentationRequestController {
     return await this.service.requestPresentation(trackingId);
   }
 
-  @Post('handle-user-response')
-  async handleUserResponse(
+  @Post('handle-response')
+  async handleResponse(
     @Headers('X-Signature') signature: string,
-    @Body(UserResponsePipe) userResponse: UserAcceptance | UserRejection
+    @Body(HolderResponsePipe) holderResponse: HolderAcceptance | HolderRejection
   ) {
-    this.logger.log(`handling user response (tracking ID: ${userResponse.trackingId})`);
-    await this.service.handleUserResponse(signature, userResponse);
+    this.logger.log(`handling Holder response (tracking ID: ${holderResponse.trackingId})`);
+    await this.service.handleResponse(signature, holderResponse);
   }
 }

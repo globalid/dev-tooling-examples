@@ -1,4 +1,4 @@
-import { PresentationRequestResponseDto, UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection, PresentationRequestResponseDto } from '@globalid/verifier-toolkit';
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -51,29 +51,29 @@ describe('PresentationRequestController', () => {
     });
   });
 
-  describe('handleUserResponse', () => {
-    let handleUserResponseSpy: jest.SpyInstance;
+  describe('handleResponse', () => {
+    let handleResponseSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      handleUserResponseSpy = jest.spyOn(service, 'handleUserResponse');
+      handleResponseSpy = jest.spyOn(service, 'handleResponse');
     });
 
-    it('should handle user acceptance', async () => {
-      const acceptance = createMock<UserAcceptance>();
+    it('should handle holder acceptance', async () => {
+      const acceptance = createMock<HolderAcceptance>();
 
-      await controller.handleUserResponse(signature, acceptance);
+      await controller.handleResponse(signature, acceptance);
 
-      expect(handleUserResponseSpy).toHaveBeenCalledTimes(1);
-      expect(handleUserResponseSpy).toHaveBeenCalledWith(signature, acceptance);
+      expect(handleResponseSpy).toHaveBeenCalledTimes(1);
+      expect(handleResponseSpy).toHaveBeenCalledWith(signature, acceptance);
     });
 
-    it('should handle user rejection', async () => {
-      const rejection = createMock<UserRejection>();
+    it('should handle holder rejection', async () => {
+      const rejection = createMock<HolderRejection>();
 
-      await controller.handleUserResponse(signature, rejection);
+      await controller.handleResponse(signature, rejection);
 
-      expect(handleUserResponseSpy).toHaveBeenCalledTimes(1);
-      expect(handleUserResponseSpy).toHaveBeenCalledWith(signature, rejection);
+      expect(handleResponseSpy).toHaveBeenCalledTimes(1);
+      expect(handleResponseSpy).toHaveBeenCalledWith(signature, rejection);
     });
   });
 });

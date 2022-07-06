@@ -1,16 +1,16 @@
 import { randomUUID } from 'crypto';
 
-import { UserAcceptance, UserRejection, UserResponseState } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection, HolderResponseState } from '@globalid/verifier-toolkit';
 import { BadRequestException } from '@nestjs/common';
 
 import { trackingId } from '../../test/common';
-import { UserResponsePipe } from './user-response.pipe';
+import { HolderResponsePipe } from './holder-response.pipe';
 
-describe('UserResponsePipe', () => {
-  let pipe: UserResponsePipe;
+describe('HolderResponsePipe', () => {
+  let pipe: HolderResponsePipe;
 
   beforeEach(() => {
-    pipe = new UserResponsePipe();
+    pipe = new HolderResponsePipe();
   });
 
   it('should be defined', () => {
@@ -18,43 +18,43 @@ describe('UserResponsePipe', () => {
   });
 
   describe('transform', () => {
-    const baseUserResponse = {
+    const baseHolderResponse = {
       app_uuid: randomUUID(),
       tracking_id: trackingId,
       thread_id: randomUUID(),
-      state: UserResponseState.Done,
+      state: HolderResponseState.Done,
       verified: true
     };
 
-    it('should return UserAcceptance when proof_presentation is present', async () => {
+    it('should return HolderAcceptance when proof_presentation is present', async () => {
       const input = {
-        ...baseUserResponse,
+        ...baseHolderResponse,
         proof_presentation: { something: 'or other' }
       };
 
       const result = await pipe.transform(input);
 
-      expect(result).toBeInstanceOf(UserAcceptance);
+      expect(result).toBeInstanceOf(HolderAcceptance);
     });
 
-    it('should return UserRejection when error_msg is present', async () => {
+    it('should return HolderRejection when error_msg is present', async () => {
       const input = {
-        ...baseUserResponse,
+        ...baseHolderResponse,
         error_msg: 'uh oh!'
       };
 
       const result = await pipe.transform(input);
 
-      expect(result).toBeInstanceOf(UserRejection);
+      expect(result).toBeInstanceOf(HolderRejection);
     });
 
-    it('should throw an error when not a valid user response', async () => {
+    it('should throw an error when not a valid Holder response', async () => {
       await expect(pipe.transform({})).rejects.toThrow(BadRequestException);
     });
 
-    it('should throw an error when user response is invalid', async () => {
+    it('should throw an error when Holder response is invalid', async () => {
       const input = {
-        ...baseUserResponse,
+        ...baseHolderResponse,
         error_msg: 42
       };
 

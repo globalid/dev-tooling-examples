@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 
-import { UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection } from '@globalid/verifier-toolkit';
 import { Injectable, Logger } from '@nestjs/common';
 
 import { ClientRegistry } from './client.registry';
@@ -12,7 +12,7 @@ export class ClientService {
 
   constructor(private readonly registry: ClientRegistry) {}
 
-  sendUserAcceptance(acceptance: UserAcceptance): void {
+  sendAcceptance(acceptance: HolderAcceptance): void {
     this.emitEvent(ServerEvent.PresentationAccepted, acceptance.trackingId, acceptance);
   }
 
@@ -28,7 +28,7 @@ export class ClientService {
     this.registry.register(trackingId, client);
   }
 
-  sendUserRejection(rejection: UserRejection): void {
+  sendRejection(rejection: HolderRejection): void {
     this.emitEvent(ServerEvent.PresentationRejected, rejection.trackingId, rejection);
   }
 

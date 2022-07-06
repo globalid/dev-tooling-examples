@@ -1,6 +1,6 @@
 import { Socket } from 'socket.io';
 
-import { UserAcceptance, UserRejection } from '@globalid/verifier-toolkit';
+import { HolderAcceptance, HolderRejection } from '@globalid/verifier-toolkit';
 import { createMock } from '@golevelup/ts-jest';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -31,12 +31,12 @@ describe('ClientService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('sendUserAcceptance', () => {
+  describe('sendAcceptance', () => {
     it('should send presentation-accepted event', () => {
       findSpy.mockReturnValueOnce(client);
-      const acceptance = createMock<UserAcceptance>({ trackingId });
+      const acceptance = createMock<HolderAcceptance>({ trackingId });
 
-      service.sendUserAcceptance(acceptance);
+      service.sendAcceptance(acceptance);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(findSpy).toHaveBeenCalledWith(trackingId);
@@ -45,9 +45,9 @@ describe('ClientService', () => {
     });
 
     it('should not send when client is missing', () => {
-      const acceptance = createMock<UserAcceptance>({ trackingId });
+      const acceptance = createMock<HolderAcceptance>({ trackingId });
 
-      service.sendUserAcceptance(acceptance);
+      service.sendAcceptance(acceptance);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(findSpy).toHaveBeenCalledWith(trackingId);
@@ -98,12 +98,12 @@ describe('ClientService', () => {
     });
   });
 
-  describe('sendUserRejection', () => {
+  describe('sendRejection', () => {
     it('should send presentation-rejected event', () => {
       findSpy.mockReturnValueOnce(client);
-      const rejection = createMock<UserRejection>({ trackingId });
+      const rejection = createMock<HolderRejection>({ trackingId });
 
-      service.sendUserRejection(rejection);
+      service.sendRejection(rejection);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(findSpy).toHaveBeenCalledWith(trackingId);
@@ -112,9 +112,9 @@ describe('ClientService', () => {
     });
 
     it('should not send when client is missing', () => {
-      const rejection = createMock<UserRejection>({ trackingId });
+      const rejection = createMock<HolderRejection>({ trackingId });
 
-      service.sendUserRejection(rejection);
+      service.sendRejection(rejection);
 
       expect(findSpy).toHaveBeenCalledTimes(1);
       expect(findSpy).toHaveBeenCalledWith(trackingId);
