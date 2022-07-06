@@ -1,6 +1,8 @@
 # Verifier Agent Example
 
-This folder contains an example Node.js application that demonstrates integrating with GlobaliD as a [Verifier](https://www.w3.org/TR/vc-data-model/#dfn-verifier). The example is built with [NestJS](https://nestjs.com/) and uses [GlobaliD's Verifier Toolkit](https://npmjs.com/package/@globalid/verifier-toolkit).
+This folder contains an example Node.js application that demonstrates integrating with GlobaliD as a [Verifier](https://www.w3.org/TR/vc-data-model/#dfn-verifier). In this case, the application validates the end-user is 18 or older. 
+
+The example is built with [NestJS](https://nestjs.com/) and uses [GlobaliD's Verifier Toolkit](https://npmjs.com/package/@globalid/verifier-toolkit).
 
 ## Setup
 

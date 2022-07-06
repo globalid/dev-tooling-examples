@@ -1,6 +1,6 @@
 # GlobaliD Connect Example
 
-This folder contains an example Node.js application that demonstrates integrating the [GlobaliD Connect](https://docs.global.id/developers/globalid-connect) flow. The example is built with [NestJS](https://nestjs.com/) and uses the [GlobaliD API Client](https://npmjs.com/package/@globalid/api-client) for JavaScript. There are two main pages in this demo:
+This folder contains an example Node.js application that demonstrates signing in with [GlobaliD Connect](https://docs.global.id/developers/globalid-connect). The example is built with [NestJS](https://nestjs.com/) and uses the [GlobaliD API Client](https://npmjs.com/package/@globalid/api-client) for JavaScript. There are two main pages in this demo:
 
 - `/verifications` - Landing page that displays the Connect URL
 - `/verifications/connect` - Redirect target for the GlobaliD Connect flow that retrieves and displays information about the user
