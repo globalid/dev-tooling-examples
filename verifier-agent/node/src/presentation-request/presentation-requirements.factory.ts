@@ -45,7 +45,7 @@ export class PresentationRequirementsFactory {
               {
                 id: 'ff6844b1-5597-4de6-9910-df64721a0519',
                 path: ['$.credentialSubject.phone_number'],
-                purpose: 'Holder must have a valid phone number',
+                purpose: 'Holder must have a valid phone number'
               }
             ]
           }
@@ -75,7 +75,7 @@ export class PresentationRequirementsFactory {
               {
                 id: 'b48fabf6-9e99-48a5-9a89-bd58c7b7e9b3',
                 path: ['$.credentialSubject.email'],
-                purpose: 'Holder must have an email address',
+                purpose: 'Holder must have an email address'
               }
             ]
           }
@@ -111,7 +111,7 @@ export class PresentationRequirementsFactory {
               {
                 directive: 'required',
                 field_id: ['275536cf-f104-4430-b53a-c7af5cf76108']
-              },
+              }
             ],
             status_active: AllowanceStatus.Allowed,
             status_revoked: AllowanceStatus.Disallowed,
@@ -121,31 +121,31 @@ export class PresentationRequirementsFactory {
               {
                 id: '86801c4d-0e4e-4811-9af3-c72b5cd75219',
                 path: ['$.credentialSubject.address_full'],
-                purpose: 'The full address of the credential holder',
+                purpose: 'The full address of the credential holder'
               },
               {
                 id: 'df950bbe-5855-44b8-8bfb-395ca792890c',
                 path: ['$.credentialSubject.ip_address'],
-                purpose: 'The ip address of the credential holder',
+                purpose: 'The ip address of the credential holder'
               },
               {
                 id: '421f1366-335d-43fc-bfa4-c6bc6455be05',
                 path: ['$.credentialSubject.address_country'],
-                purpose: 'The Country of residence of the credential holder',
+                purpose: 'The Country of residence of the credential holder'
               },
               {
                 id: '6a55adab-e941-4e32-8324-3c03c0a11902',
                 path: ['$.credentialSubject.date_of_birth'],
-                purpose: 'The date of birth of the credential holder',
+                purpose: 'The date of birth of the credential holder'
               },
               {
                 id: '275536cf-f104-4430-b53a-c7af5cf76108',
                 path: ['$.credentialSubject.full_name_legal'],
-                purpose: 'The full legal name of the credential holder',
-              },
+                purpose: 'The full legal name of the credential holder'
+              }
             ]
           }
-        },
+        }
       ]
     };
   }
