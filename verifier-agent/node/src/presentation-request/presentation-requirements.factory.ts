@@ -51,7 +51,7 @@ export class PresentationRequirementsFactory {
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.date_of_birth'],
-                purpose: 'Holder must be over 18',
+                purpose: 'Holder must have valid date of birth',
               }
             ]
           }
