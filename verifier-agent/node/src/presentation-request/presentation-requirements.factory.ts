@@ -15,9 +15,9 @@ import { Injectable } from '@nestjs/common';
 export class PresentationRequirementsFactory {
   create(): PresentationRequirements {
     return {
-      name: 'Proof Requirements',
+      name: 'Bonifii Proof Requirements',
       purpose: 'To demonstrate creating the Presentation Requirements for a Presentation Request',
-      id: 'c4272baf-1c96-4246-95e2-ed816f471793',
+      id: 'c59db1dd-4ed5-4668-b337-87241d484840',
       format: {
         ldp_vp: {
           proof_type: [ProofAlgorithm.BbsBlsSignature2020]
@@ -25,17 +25,13 @@ export class PresentationRequirementsFactory {
       },
       input_descriptors: [
         {
-          id: 'government_id',
-          name: 'Government ID',
+          id: 'bonifii-bronze',
+          name: 'Bonifii bronze',
           schema: {
             oneof_filter: [
               {
                 required: true,
-                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Driving%20license/versions/1#Driving%20license'
-              },
-              {
-                required: true,
-                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Passport/versions/2#Passport'
+                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20bronze/versions/4#Bonifii%20bronze'
               }
             ]
           },
@@ -44,7 +40,7 @@ export class PresentationRequirementsFactory {
             is_holder: [
               {
                 directive: 'required',
-                field_id: ['1f44d55f-f161-4938-a659-f8026467f126']
+                field_id: ['632f94f3-e9d5-4992-9576-0856ff503e4f']
               }
             ],
             status_active: AllowanceStatus.Allowed,
@@ -53,14 +49,9 @@ export class PresentationRequirementsFactory {
             subject_is_issuer: RequirementStatus.Preferred,
             fields: [
               {
-                id: '1f44d55f-f161-4938-a659-f8026467f126',
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.date_of_birth'],
                 purpose: 'Holder must be over 18',
-                filter: {
-                  maximum: dayjs().subtract(18, 'years').format('YYYY-MM-DD'),
-                  type: FilterValueType.String,
-                  format: FilterValueFormat.Date
-                }
               }
             ]
           }
