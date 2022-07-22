@@ -15,8 +15,22 @@
     <script>initWebSocket('{{trackingId}}')</script>
   </head>
   <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
+
+     <style>
+
+        .brand {
+            display: grid;
+            height: 30%;
+        }
+        .center-fit {
+            max-width: 50%;
+            max-height: 50vh;
+            margin: auto;
+        }
+    </style>
+    
     <div class='brand'>
-      <img src='../images/logo.svg' alt='GlobaliD logo' />
+      <img src='../images/lonestar-logo.png' alt='GlobaliD logo' class='center-fit'/>
     </div>
     <div class='card'>
       <p class='card-label'>Verifier agent Demo</p>

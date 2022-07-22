@@ -31,7 +31,8 @@ export class PresentationRequirementsFactory {
             oneof_filter: [
               {
                 required: true,
-                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20bronze/versions/4#Bonifii%20bronze'
+                //uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20bronze/versions/4#Bonifii%20bronze'
+                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20Bronze/versions/2#Bonifii%20Bronze'
               }
             ]
           },
@@ -50,7 +51,52 @@ export class PresentationRequirementsFactory {
             fields: [
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.full_name_legal'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.date_of_birth'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.email'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.email_verification_date'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.phone_number'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.phone_number_verification_date'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.address_full'],
+                purpose: 'Holder must have valid address',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.ip_address'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.id_type'],
+                purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.id_number'],
                 purpose: 'Holder must have valid date of birth',
               }
             ]

@@ -19,7 +19,9 @@ function initWebSocket(trackingId) {
   });
 
   socket.on('presentation-accepted', (data) => {
-    acceptPresentation(data);
+    console.log(data);
+    const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+    acceptPresentation(pii_parsed);
   });
 
   socket.on('presentation-rejected', (data) => {
@@ -27,20 +29,48 @@ function initWebSocket(trackingId) {
   });
 }
 
+function display_json_pretty(data) {
+  var table = document.createElement('table');
+  var tblBody = document.createElement("tbody");
+  for (attribute in data) {
+    var row = document.createElement('tr');
+
+    var col1 = document.createElement('td');
+    col1.appendChild(document.createTextNode('${attribute}'));
+    row.appendChild(col1);
+
+    var col2 = document.createElement('td');
+    col2.appendChild(document.createTextNode('data[${attribute}]'));
+    row.appendChild(col2);
+
+    tblBody.appendChild(row);
+  }
+  table.appendChild(tblBody);
+
+  return table
+}
+
 function acceptPresentation(data) {
-  const codeElement = document.createElement('code');
-  codeElement.className = 'language-json';
-  codeElement.innerHTML = JSON.stringify(data, null, 2);
+  var tableElement = document.createElement('table');
+  var tblBody = document.createElement("tbody");
+  for (const attribute in data) {
+    var row = document.createElement('tr');
 
-  const preElement = document.createElement('pre');
-  preElement.style.marginBottom = '1.5rem';
-  preElement.style.maxWidth = '69rem';
-  preElement.style.textAlign = 'left';
-  preElement.appendChild(codeElement);
+    var col1 = document.createElement('td');
+    col1.appendChild(document.createTextNode(attribute + ': '));
+    row.appendChild(col1);
 
-  setTitle('Verifiable Presentation Received');
+    var col2 = document.createElement('td');
+    col2.appendChild(document.createTextNode(data[attribute]));
+    row.appendChild(col2);
+
+    tblBody.appendChild(row);
+  }
+  tableElement.appendChild(tblBody);
+
+  setTitle('Congratulations! We have created your account based on the information you just shared with us');
   hideCardSubtitle();
-  setMainContent(preElement, createBackButton());
+  setMainContent(tableElement, createBackButton());
 
   hljs.highlightAll();
 }
@@ -67,7 +97,7 @@ function createBackButton() {
   const backButton = document.createElement('a');
   backButton.className = 'button';
   backButton.setAttribute('href', '/');
-  backButton.innerText = 'Back';
+  backButton.innerText = 'Try Again';
   return backButton;
 }
 
