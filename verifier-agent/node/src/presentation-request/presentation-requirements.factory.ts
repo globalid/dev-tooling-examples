@@ -98,6 +98,11 @@ export class PresentationRequirementsFactory {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.id_number'],
                 purpose: 'Holder must have valid date of birth',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.credential_date_of_issue'],
+                purpose: 'Holder must have valid date of birth',
               }
             ]
           }

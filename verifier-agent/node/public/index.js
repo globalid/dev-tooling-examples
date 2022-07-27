@@ -20,7 +20,9 @@ function initWebSocket(trackingId) {
 
   socket.on('presentation-accepted', (data) => {
     console.log(data);
+    const credential_id = data.proofPresentation.dif.verifiableCredential[0].id;
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+    pii_parsed.credential_id = credential_id;
     acceptPresentation(pii_parsed);
   });
 
@@ -51,17 +53,22 @@ function display_json_pretty(data) {
 }
 
 function acceptPresentation(data) {
+  const attr_order = ['id', 'credential_id', 'credential_date_of_issue', 'full_name_legal', 'date_of_birth', 'email', 
+  'email_verification_date', 'phone_number', 'phone_number_verification_date', 'address_full', 'ip_address', 
+  'id_type', 'id_number'];
+  
   var tableElement = document.createElement('table');
+  console.log(data);
   var tblBody = document.createElement("tbody");
-  for (const attribute in data) {
+  for (const attr of attr_order) {
     var row = document.createElement('tr');
 
-    var col1 = document.createElement('td');
-    col1.appendChild(document.createTextNode(attribute + ': '));
+    var col1 = document.createElement('td')
+    col1.appendChild(document.createTextNode(attr + ': '))
     row.appendChild(col1);
 
     var col2 = document.createElement('td');
-    col2.appendChild(document.createTextNode(data[attribute]));
+    col2.appendChild(document.createTextNode(data[attr]));
     row.appendChild(col2);
 
     tblBody.appendChild(row);
