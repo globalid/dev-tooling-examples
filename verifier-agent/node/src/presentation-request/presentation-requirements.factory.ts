@@ -15,7 +15,7 @@ import { Injectable } from '@nestjs/common';
 export class PresentationRequirementsFactory {
   create(): PresentationRequirements {
     return {
-      name: 'Bonifii Proof Requirements',
+      name: 'Bonifii Bronze Credential',
       purpose: 'To demonstrate creating the Presentation Requirements for a Presentation Request',
       id: 'c59db1dd-4ed5-4668-b337-87241d484840',
       format: {
@@ -26,12 +26,11 @@ export class PresentationRequirementsFactory {
       input_descriptors: [
         {
           id: 'bonifii-bronze',
-          name: 'Bonifii bronze',
+          name: 'Bonifii Bronze',
           schema: {
             oneof_filter: [
               {
                 required: true,
-                //uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20bronze/versions/4#Bonifii%20bronze'
                 uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20Bronze/versions/2#Bonifii%20Bronze'
               }
             ]
@@ -51,8 +50,13 @@ export class PresentationRequirementsFactory {
             fields: [
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.globalid_id'],
+                purpose: 'Holder\'s GlobaliD',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.full_name_legal'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Holder\'s legal name',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
@@ -62,22 +66,22 @@ export class PresentationRequirementsFactory {
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.email'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Holder must have valid email',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.email_verification_date'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Email verification date',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.phone_number'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Holder must have valid phone number',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.phone_number_verification_date'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Phone number verification date',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
@@ -87,22 +91,27 @@ export class PresentationRequirementsFactory {
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.ip_address'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'IP address of device',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.id_type'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Tax ID type (SSN, FRA ITN, etc.)',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.id_number'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Holder must have valid tax ID number',
               },
               {
                 id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
                 path: ['$.credentialSubject.credential_date_of_issue'],
-                purpose: 'Holder must have valid date of birth',
+                purpose: 'Credential issuance date',
+              },
+              {
+                id: '632f94f3-e9d5-4992-9576-0856ff503e4f',
+                path: ['$.credentialSubject.credential_id'],
+                purpose: 'Credential ID',
               }
             ]
           }
