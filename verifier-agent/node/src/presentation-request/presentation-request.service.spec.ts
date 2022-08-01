@@ -43,6 +43,7 @@ describe('PresentationRequestService', () => {
       const result = service.createQrCodeViewModel();
 
       expect(result).toMatchObject({
+        wsUrl: baseUrl,
         trackingId: expect.any(String),
         qrCodeUrl: expect.any(URL)
       });
