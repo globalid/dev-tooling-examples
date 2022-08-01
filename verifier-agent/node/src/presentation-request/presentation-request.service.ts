@@ -27,10 +27,11 @@ export class PresentationRequestService {
   createQrCodeViewModel(): QrCodeViewModel {
     const [qrCodeUrl, trackingId] = createPresentationRequestUrl({
       clientId: this.config.get<string>('CLIENT_ID'),
-      initiationUrl: `${this.config.get<string>('BASE_URL')}/request-presentation`
+      initiationUrl: `${this.config.get('BASE_URL')}/request-presentation`
     });
     this.logger.log(`generated URL for tracking ID ${trackingId}`);
     return {
+      wsUrl: this.config.get('BASE_URL'),
       trackingId,
       qrCodeUrl
     };

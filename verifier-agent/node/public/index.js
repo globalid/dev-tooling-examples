@@ -1,8 +1,8 @@
 'use strict';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function initWebSocket(trackingId) {
-  const socket = io('ws://localhost:3000', { transports: ['websocket'] });
+function initWebSocket(url, trackingId) {
+  const socket = io(url, { transports: ['websocket'] });
 
   socket.on('connect', () => {
     socket.emit('register-client', trackingId, (response) => {
