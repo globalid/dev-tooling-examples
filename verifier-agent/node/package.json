@@ -29,6 +29,7 @@
     "@nestjs/core": "8.4.4",
     "@nestjs/platform-express": "8.4.4",
     "@nestjs/platform-socket.io": "^8.4.7",
+    "@nestjs/typeorm": "^9.0.1",
     "@nestjs/websockets": "8.4.4",
     "axios": "0.26.0",
     "class-transformer": "0.5.1",
@@ -39,7 +40,9 @@
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.21",
     "node-cache": "^5.1.2",
+    "pg": "^8.8.0",
     "reflect-metadata": "0.1.13",
+    "typeorm": "^0.3.7",
     "ws": "8.5.0"
   },
   "devDependencies": {

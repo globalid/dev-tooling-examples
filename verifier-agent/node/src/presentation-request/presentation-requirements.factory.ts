@@ -44,7 +44,11 @@ export class PresentationRequirementsFactory {
             is_holder: [
               {
                 directive: 'required',
-                field_id: ['1f44d55f-f161-4938-a659-f8026467f126']
+                field_id: [
+                  'e45e83c8-bd3a-466d-bf54-db75967923ec',
+                  '9bbb3fc2-7597-421a-92db-e7b6f881bf85',
+                  '1f44d55f-f161-4938-a659-f8026467f126'
+                ]
               }
             ],
             status_active: AllowanceStatus.Allowed,
@@ -52,6 +56,14 @@ export class PresentationRequirementsFactory {
             status_suspended: RequiredStatus.Allowed,
             subject_is_issuer: RequirementStatus.Preferred,
             fields: [
+              {
+                id: 'e45e83c8-bd3a-466d-bf54-db75967923ec',
+                path: ['$.credentialSubject.last_name_legal']
+              },
+              {
+                id: '9bbb3fc2-7597-421a-92db-e7b6f881bf85',
+                path: ['$.credentialSubject.first_name_legal']
+              },
               {
                 id: '1f44d55f-f161-4938-a659-f8026467f126',
                 path: ['$.credentialSubject.date_of_birth'],

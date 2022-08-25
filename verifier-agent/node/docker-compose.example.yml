@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  postgres:
+    restart: always
+    container_name: kyc-db
+    image: postgres:14
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: kyc
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password

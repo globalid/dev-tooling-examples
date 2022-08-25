@@ -1,0 +1,38 @@
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='stylesheet' href='index.css' />
+    <title>KYC POC</title>
+  </head>
+  <body>
+    <div class='brand'>
+      <img src='../images/logo.svg' alt='GlobaliD logo' />
+    </div>
+    <div class='card'>
+      <p class='card-label'>KYC POC</p>
+      <h1 class='card-title'>Screenings</h1>
+      <table class='screenings-table'>
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Date/Time</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each screenings}}
+            <tr>
+              <td>{{subject}}</td>
+              <td>{{screenedOn}}</td>
+              <td>
+                <a href='/screenings/{{id}}'>Details</a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
