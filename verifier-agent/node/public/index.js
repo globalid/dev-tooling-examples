@@ -19,7 +19,7 @@ function initWebSocket(trackingId) {
   });
 
   socket.on('presentation-accepted', (data) => {
-    // console.log(data);
+    // Parse out just the PII
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
     console.log(pii_parsed);
     acceptPresentation(pii_parsed);
@@ -32,10 +32,18 @@ function initWebSocket(trackingId) {
 
 
 function acceptPresentation(data) {
+  // List of credentials that should be included. Using instead of iterating through the keys, because 
+  // iterating through keys doesn't maintain order
   const attr_order = ['globalid_id', 'credential_id', 'credential_date_of_issue', 'full_name_legal', 'date_of_birth', 'email', 
   'email_verification_date', 'phone_number', 'phone_number_verification_date', 'address_full', 'ip_address', 
   'id_type', 'id_number'];
+
+  /*********************************************
+   * Insert API request for sending data to Janusea/CORE
+   ********************************************/
+
   
+  // Create table that displays the data
   var tableElement = document.createElement('table');
   console.log(data);
   var tblBody = document.createElement("tbody");

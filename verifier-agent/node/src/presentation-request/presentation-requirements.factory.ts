@@ -1,3 +1,9 @@
+/**************************************
+ * Class for creating the JSON object required for the presentation request.
+ * This is where you declare what credentials schema and PII you'd like to retreive.
+ * You can also set requireents on the value of the PII being retrieved by using a filter.
+ **************************************/
+
 import * as dayjs from 'dayjs';
 
 import {
