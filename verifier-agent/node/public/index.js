@@ -21,7 +21,6 @@ function initWebSocket(trackingId) {
   socket.on('presentation-accepted', (data) => {
     // Parse out just the PII
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
-    console.log(pii_parsed);
     acceptPresentation(pii_parsed);
   });
 
@@ -45,7 +44,6 @@ function acceptPresentation(data) {
   
   // Create table that displays the data
   var tableElement = document.createElement('table');
-  console.log(data);
   var tblBody = document.createElement("tbody");
   for (const attr of attr_order) {
     var row = document.createElement('tr');

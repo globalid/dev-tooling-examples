@@ -52,6 +52,10 @@ export class PresentationRequestService {
     if (holderResponse instanceof HolderAcceptance) {
       this.logger.log('holder accepted');
       this.clientService.sendAcceptance(holderResponse);
+      /*****************************************
+       * Janusea API call goes here. The payload is in holderResponse.proofPresentation
+       *****************************************/
+      // this.logger.log(holderResponse.proofPresentation);
     } else {
       this.logger.log('holder rejected');
       this.clientService.sendRejection(holderResponse);
