@@ -19,8 +19,9 @@ function initWebSocket(trackingId) {
   });
 
   socket.on('presentation-accepted', (data) => {
-    console.log(data);
+    // console.log(data);
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+    console.log(pii_parsed);
     acceptPresentation(pii_parsed);
   });
 
@@ -29,26 +30,6 @@ function initWebSocket(trackingId) {
   });
 }
 
-function display_json_pretty(data) {
-  var table = document.createElement('table');
-  var tblBody = document.createElement("tbody");
-  for (attribute in data) {
-    var row = document.createElement('tr');
-
-    var col1 = document.createElement('td');
-    col1.appendChild(document.createTextNode('${attribute}'));
-    row.appendChild(col1);
-
-    var col2 = document.createElement('td');
-    col2.appendChild(document.createTextNode('data[${attribute}]'));
-    row.appendChild(col2);
-
-    tblBody.appendChild(row);
-  }
-  table.appendChild(tblBody);
-
-  return table
-}
 
 function acceptPresentation(data) {
   const attr_order = ['globalid_id', 'credential_id', 'credential_date_of_issue', 'full_name_legal', 'date_of_birth', 'email', 
