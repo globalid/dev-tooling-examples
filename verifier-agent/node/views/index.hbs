@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <title>GlobaliD Verification Demo</title>
+    <title>Lone Star Credit Union</title>
     <link
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
@@ -14,30 +14,50 @@
     <script src='index.js'></script>
     <script>initWebSocket('{{trackingId}}')</script>
   </head>
+
   <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
+  {{!-- <body> --}}
+    <div class="top-container">
+	<div class="box1-top">
+		<img class="lonestar-logo" src="../images/lonestar-logo-5.png" alt="Lonestar logo">
 
-     <style>
+    <div class="credential-description-box">
+      <section class="title-bonifii">Bonifii Credential</section>
+      <section class="earn25">Earn $25</section>
+      <p class="primary-description">when you sign up with your Bonifii credential using GlobaliD</p>
+    </div>
+	</div>
 
-        .brand {
-            display: grid;
-            height: 30%;
-        }
-        .center-fit {
-            max-width: 50%;
-            max-height: 50vh;
-            margin: auto;
-        }
-    </style>
-    
-    <div class='brand'>
-      <img src='../images/lonestar-logo.png' alt='GlobaliD logo' class='center-fit'/>
+  <div class="box2-top">
+      <div class= "qr-code-container" id="qr-code-container"></div>
+  </div>
+</div>
+
+  <div class="bottom-container">
+    <div class="box1-bottom">
+      <p class="p1-bottom">Bonifii is the trusted verification partner of Lone Star Credit Union.</p>
+      <p class="p2-bottom">The Bonifii Bronze credential allows you to get started with Lone Star while providing the minimum amount of personal information</p>
+      <ul class="logo-list">
+        <li>
+          <img class="image-list" src="../images/image_1.png" alt="Bonifii logo">
+        </li>
+        <li>
+          <img class="image-list" src="../images/lonestar-logo-4.png" alt="Lone Star logo">
+        </li>
+        <li>
+          <img class="image-list" src="../images/gid-logo.png" alt="Global ID logo">
+        </li>
+      </ul>
     </div>
-    <div class='card'>
-      <p class='card-label'>Demo</p>
-      <h1 id='card-title' class='card-title'>Share your Bonifii Bronze credential</h1>
-      <h2 id='card-subtitle' class='card-subtitle'>Scan the QR code with your GlobaliD mobile app</h2>
-      <div id='main-container'></div>
+
+    <div class="box2-bottom">
+        <img class="image-bottom" src="../images/image_4.png" alt="people laughing">
     </div>
+  </div>
+
+  <div class="footer">
+    <p>2022 Lonestar Credit Union, All rights reserved</p>
+  </div>
   </body>
 
 </html>

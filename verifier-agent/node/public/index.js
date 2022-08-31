@@ -116,7 +116,7 @@ function hideCardSubtitle() {
 }
 
 function setMainContent(...elements) {
-  const mainContainer = document.getElementById('main-container');
+  const mainContainer = document.getElementById('qr-code-container');
   mainContainer.replaceChildren(...elements);
 }
 
