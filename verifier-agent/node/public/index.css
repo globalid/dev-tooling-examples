@@ -108,12 +108,38 @@
   /* Border / Transparent 15% */
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 7px;
-
-  width: 75%;
 } 
 
 .qr-code-container {
   padding-left: 10px;
+}
+
+.qr-code-container p {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  /* identical to box height, or 116% */
+
+  /* text-align: center; */
+
+  color: #A8A8A8;
+}
+
+.qr-code-container section {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  /* or 133% */
+
+  /* text-align: center; */
+
+  /* Content / Secondary */
+
+  color: #272727;
 }
 
 .top-container {

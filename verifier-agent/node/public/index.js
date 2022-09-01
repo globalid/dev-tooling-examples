@@ -153,8 +153,20 @@ function generateStyledQrCode(dataUrl) {
     }
   });
 
+  const message1 = document.createElement('section');
+  message1.className = 'scan-qr-code';
+  message1.innerText = 'Scan the QR with your mobile device to begin';
+
+  const message2 = document.createElement('p');
+  message2.className = 'available-platforms';
+  message2.innerText = 'Available on Android & iOS';
+
   const qrCodeDiv = document.createElement('div');
   qrCodeDiv.className = 'qr-code';
+
   qrCode.append(qrCodeDiv);
+  qrCodeDiv.appendChild(message1);
+  qrCodeDiv.appendChild(message2);
+
   setMainContent(qrCodeDiv);
 }
