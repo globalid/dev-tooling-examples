@@ -154,6 +154,7 @@ function generateStyledQrCode(dataUrl) {
   });
 
   const qrCodeDiv = document.createElement('div');
+  qrCodeDiv.className = 'qr-code';
   qrCode.append(qrCodeDiv);
   setMainContent(qrCodeDiv);
 }
