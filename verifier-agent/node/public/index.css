@@ -104,14 +104,24 @@
 
 .qr-code {
   margin-left: 14%;
-
-  /* Border / Transparent 15% */
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 7px;
+  width: 72%;
+
+  margin-top: 12%;
 } 
 
 .qr-code-container {
-  padding-left: 10px;
+  position: absolute;
+  height: 500px;
+  background-color: #FFFFFF;
+
+  width: 50%;
+
+  margin-left: 27%;
+  margin-top: 50px;
+
+  border-radius: 25px;
 }
 
 .qr-code-container p {
@@ -120,9 +130,6 @@
   font-weight: 600;
   font-size: 14px;
   line-height: 16px;
-  /* identical to box height, or 116% */
-
-  /* text-align: center; */
 
   color: #A8A8A8;
 }
@@ -133,11 +140,6 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
-  /* or 133% */
-
-  /* text-align: center; */
-
-  /* Content / Secondary */
 
   color: #272727;
 }
@@ -167,6 +169,7 @@
 .box2-top {
   margin-left: 50%;
   height: 700px;
+  position: relative;
 }
 
 .box1-bottom {
@@ -283,22 +286,6 @@
 .logo-list li {
   float: left;
   padding-right: 35px;
-}
-
-.qr-code-container {
-  height: 500px;
-  background-color: #FFFFFF;
-
-  width: 50%;
-
-  margin-left: 27%;
-  margin-top: 30px; /* Why doesn't this move the container down? */
-
-  border-radius: 25px;
-  
-  /* margin-left: 20%;
-  margin-right: 20%;
-  margin-top: 50px;; */
 }
 
 .footer {
