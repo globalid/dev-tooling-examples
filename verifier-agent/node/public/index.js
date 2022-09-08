@@ -88,14 +88,20 @@ function createBackButton() {
 }
 
 async function displaySpinner() {
-  const message = document.createElement('p');
-  message.className = 'confirm-message';
-  message.innerText = 'Confirm this request on your device';
+  const message1 = document.createElement('section');
+  message1.className = 'scan-qr-code';
+  message1.innerText = 'Please Wait';
+
+  const message2 = document.createElement('p');
+  message2.className = 'available-platforms';
+  message2.innerText = 'Your information is being processed';
 
   const wrapper = document.createElement('div');
   wrapper.className = 'loading-wrapper';
   wrapper.innerHTML = await loadAsset('images/spinner.svg');
-  wrapper.appendChild(message);
+  
+  wrapper.appendChild(message1);
+  wrapper.appendChild(message2);
 
   setMainContent(wrapper);
 }
