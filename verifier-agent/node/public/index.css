@@ -161,7 +161,8 @@
   height: 700px;
   object-fit:fill;
   margin: auto;
-  background-image: url('../images/steven-pahel-YdokZeQ-XhA-unsplash.png');
+  /* background-image: url('../images/steven-pahel-YdokZeQ-XhA-unsplash.png'); */
+  background-image: url('../images/background-copy.png');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -307,3 +308,74 @@
   color: #141516;
 }
 
+.checkmark-img {
+  margin-left: 100px;
+}
+
+.message_div {
+  width: 250px;
+  height: auto;
+  margin: 0 auto;
+  position: relative;
+
+  padding-top: 200px;
+}
+
+.congrats {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 38px;
+  line-height: 49px;
+  text-align: center;
+
+  /* Background / Primary */
+
+  color: #FFFFFF;
+}
+
+.account-open {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+  
+  text-align: center;
+  
+  /* Background / Primary */
+  
+  color: #FFFFFF;
+}
+
+.account-number-msg {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* or 150% */
+  
+  text-align: center;
+  
+  /* Content / Tertiary */
+  
+  color: #FFFFFF;
+}
+
+.account-number {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  /* or 120% */
+  
+  text-align: center;
+  letter-spacing: 0.16em;
+  
+  /* Background / Primary */
+  
+  color: #FFFFFF;
+}

@@ -17,8 +17,8 @@
 
   <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
   {{!-- <body> --}}
-    <div class="top-container">
-	<div class="box1-top">
+    <div class="top-container" id="top-container">
+	<div class="box1-top" id="box1-top">
 		<img class="lonestar-logo" src="../images/lonestar-logo-5.png" alt="Lonestar logo">
 
     <div class="credential-description-box">
@@ -28,7 +28,7 @@
     </div>
 	</div>
 
-  <div class="box2-top">
+  <div class="box2-top" id="box2-top">
       <div class= "qr-code-container" id="qr-code-container"></div>
   </div>
 </div>

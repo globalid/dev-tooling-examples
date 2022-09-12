@@ -30,35 +30,62 @@ function initWebSocket(trackingId) {
   });
 }
 
-
 function acceptPresentation(data) {
-  const attr_order = ['globalid_id', 'credential_id', 'credential_date_of_issue', 'full_name_legal', 'date_of_birth', 'email', 
-  'email_verification_date', 'phone_number', 'phone_number_verification_date', 'address_full', 'ip_address', 
-  'id_type', 'id_number'];
-  
-  var tableElement = document.createElement('table');
-  console.log(data);
-  var tblBody = document.createElement("tbody");
-  for (const attr of attr_order) {
-    var row = document.createElement('tr');
+  // First, remove all but the background picture from the top part of the page
+  const top_left_box = document.getElementById('box1-top');
+  const top_right_box = document.getElementById('box2-top');
 
-    var col1 = document.createElement('td')
-    col1.appendChild(document.createTextNode(attr + ': '))
-    row.appendChild(col1);
+  top_left_box.remove();
+  top_right_box.remove();
 
-    var col2 = document.createElement('td');
-    col2.appendChild(document.createTextNode(data[attr]));
-    row.appendChild(col2);
+  // Next, add account creation message to the top part of the page
 
-    tblBody.appendChild(row);
-  }
-  tableElement.appendChild(tblBody);
+  // Main div
+  const msg_div = document.createElement('div');
+  msg_div.className = 'message_div';
 
-  setTitle('Congratulations! We have created your account based on the information you just shared with us');
-  hideCardSubtitle();
-  setMainContent(tableElement, createBackButton());
+  // The rest
+  const checkmark = document.createElement('img');
+  checkmark.className = 'checkmark-img';
+  checkmark.src = 'images/check_mark.png';
 
-  hljs.highlightAll();
+  const congrats_msg = document.createElement('p');
+  congrats_msg.className = 'congrats';
+  congrats_msg.innerText = 'Congrats!';
+
+  const account_open_msg = document.createElement('p');
+  account_open_msg.className = 'account-open';
+  account_open_msg.innerText = 'Your account has been opened.';
+
+  const account_number_msg = document.createElement('p');
+  account_number_msg.className = 'account-number-msg';
+  account_number_msg.innerText = 'Your account number is';
+
+  const account_number = document.createElement('p');
+  account_number.className = 'account-number';
+  account_number.innerText = '00000573910020';
+
+  const check_email_msg = document.createElement('p');
+  check_email_msg.className = 'account-open';
+  check_email_msg.innerText = 'Check your email for more details';
+
+  // Append to the top container
+  let top_container = document.getElementById('top-container');
+  top_container.append(msg_div);
+
+  msg_div.append(checkmark);
+  msg_div.append(congrats_msg);
+  msg_div.append(account_open_msg);
+  msg_div.append(account_number_msg);
+  msg_div.append(account_number);
+  msg_div.append(check_email_msg);
+
+  // top_container.append(checkmark);
+  // top_container.append(congrats_msg);
+  // top_container.append(account_open_msg);
+  // top_container.append(account_number_msg);
+  // top_container.append(account_number);
+  // top_container.append(check_email_msg);
 }
 
 function rejectPresentation(error) {
