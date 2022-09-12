@@ -82,6 +82,7 @@ export class PresentationRequestService {
         'X-HTTP-Method-Override': 'POST',
       }
     }
+    this.logger.log("Got here");
     axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
       this.logger.log(`statusCode: ${res.status}`);
       this.logger.log(res.data);
@@ -106,12 +107,38 @@ export class PresentationRequestService {
 
     if (holderResponse instanceof HolderAcceptance) {
       this.logger.log('holder accepted');
+
       this.clientService.sendAcceptance(holderResponse);
-    } else {
-      this.logger.log('holder rejected');
-      this.clientService.sendRejection(holderResponse);
+
+      /********** Janusea account creation ***********/
+      // this.postToJanusea(holderResponse).then( () => {
+      //   this.logger.log('Account creation request sent');
+      //   this.clientService.sendAcceptance(holderResponse);
+      // }).catch(err => {
+      //   this.logger.log(err);
+      //   this.logger.log(err.response.data);
+      //   this.logger.log(err.response.status);
+      // });
+      /**********************************************/
+      // this.clientService.sendAcceptance(holderResponse);
+    // } else {
+    //   this.logger.log('holder rejected');
+    //   this.clientService.sendRejection(holderResponse);
     }
   }
+
+  // async handleResponse(signature: string, holderResponse: HolderAcceptance | HolderRejection) {
+  //   this.logger.log('verifying signature');
+  //   await this.verifySignature(signature, holderResponse);
+
+  //   if (holderResponse instanceof HolderAcceptance) {
+  //     this.logger.log('holder accepted');
+  //     this.clientService.sendAcceptance(holderResponse);
+  //   } else {
+  //     this.logger.log('holder rejected');
+  //     this.clientService.sendRejection(holderResponse);
+  //   }
+  // }
 
   private async verifySignature(signature: string, holderResponse: HolderResponse) {
     const isValid = await this.gidVerifierClient.verifySignature(signature, holderResponse);

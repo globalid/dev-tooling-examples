@@ -19,7 +19,7 @@ function initWebSocket(trackingId) {
   });
 
   socket.on('presentation-accepted', (data) => {
-    // console.log(data);
+    console.log(data);
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
     console.log(pii_parsed);
     acceptPresentation(pii_parsed);
