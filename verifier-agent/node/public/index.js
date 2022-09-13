@@ -21,7 +21,8 @@ function initWebSocket(trackingId) {
   socket.on('presentation-accepted', (data) => {
     // Parse out just the PII
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
-    acceptPresentation(pii_parsed);
+    const account_number = data.loneStarAccountNumber;
+    acceptPresentation(pii_parsed, account_number);
   });
 
   socket.on('presentation-rejected', (data) => {
@@ -30,18 +31,13 @@ function initWebSocket(trackingId) {
 }
 
 
-function acceptPresentation(data) {
+function acceptPresentation(data, account_number) {
   // List of credentials that should be included. Using instead of iterating through the keys, because 
   // iterating through keys doesn't maintain order
-  const attr_order = ['globalid_id', 'credential_id', 'credential_date_of_issue', 'full_name_legal', 'date_of_birth', 'email', 
-  'email_verification_date', 'phone_number', 'phone_number_verification_date', 'address_full', 'ip_address', 
+  const attr_order = ['globalid_id', 'credential_id', 'credential_date_of_issue', 'full_legal_name', 'date_of_birth', 'email_address', 
+  'email_verification_date', 'phone_number', 'phone_number_verification_date', 'full_residence_address', 'ip_address', 
   'id_type', 'id_number'];
 
-  /*********************************************
-   * Insert API request for sending data to Janusea/CORE
-   ********************************************/
-
-  
   // Create table that displays the data
   var tableElement = document.createElement('table');
   var tblBody = document.createElement("tbody");
@@ -60,7 +56,11 @@ function acceptPresentation(data) {
   }
   tableElement.appendChild(tblBody);
 
-  setTitle('Congratulations! We have created your account based on the information you just shared with us');
+  if(!account_number || account_number != "0000000000") {
+    setTitle('Congratulations! We have created your account based on the information you just shared with us. Your account number is ' + account_number);
+  } else {
+    setTitle('Your information was either formatted incorrectly or already exists. Please call');
+  }
   hideCardSubtitle();
   setMainContent(tableElement, createBackButton());
 
