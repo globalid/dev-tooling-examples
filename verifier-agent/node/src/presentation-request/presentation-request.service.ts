@@ -123,6 +123,7 @@ export class PresentationRequestService {
           // to a "something went wrong" page if the parsing function doens't work
           this.clientService.sendSomethingWentWrong(holderResponse);
         } else if(message == "TIN matches an existing SSN or ITIN or ATIN") {
+          // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
           this.clientService.sendAlreadyCreatedMessage(holderResponse);
         }
       } else if (err.request) {
