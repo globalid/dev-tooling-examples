@@ -19,14 +19,29 @@ function initWebSocket(trackingId) {
   });
 
   socket.on('presentation-accepted', (data) => {
-    console.log(data);
+    // console.log(data);
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
-    console.log(pii_parsed);
     acceptPresentation(pii_parsed);
   });
 
   socket.on('presentation-rejected', (data) => {
     rejectPresentation(data);
+  });
+
+  socket.on('invalid-id-type', (data) => {
+    // Set QR code to error state and display appropriate message
+  });
+
+  socket.on('something-went-wrong', (data) => {
+    // Set QR code to error state and display appropriate message
+  });
+
+  socket.on('timeout-error', (data) => {
+    // Set QR code to error state and display appropriate message
+  });
+
+  socket.on('already-created', (data) => {
+    // Set QR code to error state and display appropriate message
   });
 }
 
