@@ -122,7 +122,6 @@ export class PresentationRequestService {
       holderResponse['loneStarAccountNumber'] = res.data['membershipId'];
       this.clientService.sendAcceptance(holderResponse);
     }).catch(err => {
-      holderResponse['loneStarAccountNumber'] = "0000000000";
       if (err.response){
         // Request was sent and server responded with non 2xx status code
         this.logger.log("Error creating account");
@@ -146,6 +145,7 @@ export class PresentationRequestService {
           this.clientService.sendSomethingWentWrong(holderResponse);
         } else if(message == "TIN matches an existing SSN or ITIN or ATIN") {
           // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
+          holderResponse['loneStarAccountNumber'] = '00000573910020';
           this.clientService.sendAlreadyCreatedMessage(holderResponse);
         }
       } else if (err.request) {
