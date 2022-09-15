@@ -1,0 +1,73 @@
+{
+    "dif": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://w3id.org/security/bbs/v1"
+      ],
+      "type": [
+        "VerifiablePresentation"
+      ],
+      "verifiableCredential": [
+        {
+          "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            "https://credentials.global.id/v1/schema-registry/contexts/verifiable-credentials-extensions/versions/1",
+            "https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20Bronze/versions/2",
+            "https://w3id.org/security/bbs/v1"
+          ],
+          "id": "urn:bnid:_:c14n0",
+          "type": [
+            "Bonifii Bronze",
+            "GidVerifiableCredential",
+            "VerifiableCredential"
+          ],
+          "credentialSubject": {
+            "id": "did:key:zUC71fZJ6dVM1Ay3M4SdyA1p8YkPktaF1A1YBnaHX3v2Yxqsr8qU6pmpZc3BeWENBuoccGtCeKKfZ8zxfz66hy5MuHfkCLsMQcpqvgYagDsQS53BykvSkmeSLJnTdUgsoGJgd1R",
+            "type": "Bonifii Bronze",
+            "address_full": "1234 Wilson Way, Houston, TX 97283",
+            "credential_date_of_issue": "2022-07-26",
+            "credential_id": "f4e1ec1a-0cb4-4404-8445-9dba183d8bbf",
+            "date_of_birth": "1994-01-01",
+            "email": "marcus@global.id",
+            "email_verification_date": "2022-07-25",
+            "full_name_legal": "Marcus Imponenti",
+            "globalid_id": "84fb7a96-fbbd-41fd-be56-06a9a5f96071",
+            "id_number": "123456789",
+            "id_type": "SSN",
+            "ip_address": "98.59.137.179",
+            "phone_number": "+15037247446",
+            "phone_number_verification_date": "1994-07-25"
+          },
+          "issuanceDate": "2022-07-26T18:39:20.999Z",
+          "issuer": "did:key:zUC7F21GToo1sfCRmHUPwWj2x9dPjyAkZuoxL5DfNB5qiCvW7h9JS6swBYQc2xwwkWej78W3XcC2WqVMxiQXvDGV1Zrs15vkyMXcgpjwcUASkAs7uZKyaqDAyK5kofJEcc7hwXK",
+          "proof": {
+            "type": "BbsBlsSignatureProof2020",
+            "nonce": "C0xE8daOKe8EO0QEhQGNNfl4tDxU/8GJ8gz8doky5LowlK3JTA2tezHXzPAU8rGYSmI=",
+            "proofValue": "ABsHH///oHSdqb0m63gZWvvnlc/UiYUOQeC/aryJ8YylhuXY7QiFJxzt7+KzbJp/n1KETTCMhldmW/RINN3abKaRUo0l2c7llALxBCC7yKDQIEjJYPXMAgyckdvjVrfkaC+SX2tQspa5sqXh5pN/rSzMPXsIjiy5SQCqqh5LdRAf4/YF0twErIC1Lq97ONv2q8MffgLTAAAAdJervFwYtVqat48z0kXuYX9TWfYsOkymUvPZUOwFTFZVPvm5qeGpb2CyyywYTE10VgAAAAJauTtALdq8k5vnM/C38QBMBLncyz5hze8GuRYOjbELD1ahuf9u5NV4eBnBhEvsDTiXOaGBBJEMtfvOJWvnim5npK66j3HCXNtOxWsLUY+XT4gxiWBc0oUV0GtCID5378BoBJ0x5xxl3BAxNC8o0K0YAAAABWNQpOTgBlJwKO4ZC/9zGrsLy1kslCOWs0gAgbf87N0mGPUvtNyg9uX8ztwoZjPBeYYLzLH+xeKMweDckV9lA7AFAbOt6QVVl1zcUn4dvk0xJm6vWFVGcw0MmZ/6csBAZlqkNe8UQxGAknlpNkXSn61cWMHx9mX7ayxe2qtXf3IWVmTc1AEawuGA8M4gpBihn6X1ScoiRyIa0tubYLJBdjw=",
+            "verificationMethod": "did:key:zUC7F21GToo1sfCRmHUPwWj2x9dPjyAkZuoxL5DfNB5qiCvW7h9JS6swBYQc2xwwkWej78W3XcC2WqVMxiQXvDGV1Zrs15vkyMXcgpjwcUASkAs7uZKyaqDAyK5kofJEcc7hwXK#zUC7F21GToo1sfCRmHUPwWj2x9dPjyAkZuoxL5DfNB5qiCvW7h9JS6swBYQc2xwwkWej78W3XcC2WqVMxiQXvDGV1Zrs15vkyMXcgpjwcUASkAs7uZKyaqDAyK5kofJEcc7hwXK",
+            "proofPurpose": "assertionMethod",
+            "created": "2022-07-26T18:39:24.106866+00:00"
+          }
+        }
+      ],
+      "presentation_submission": {
+        "id": "555d29ce-1864-47f6-a60c-c8e3767488b5",
+        "definition_id": "c59db1dd-4ed5-4668-b337-87241d484840",
+        "descriptor_map": [
+          {
+            "id": "bonifii-bronze",
+            "format": "ldp_vp",
+            "path": "$.verifiableCredential[0]"
+          }
+        ]
+      },
+      "proof": {
+        "type": "BbsBlsSignature2020",
+        "verificationMethod": "did:key:zUC71fZJ6dVM1Ay3M4SdyA1p8YkPktaF1A1YBnaHX3v2Yxqsr8qU6pmpZc3BeWENBuoccGtCeKKfZ8zxfz66hy5MuHfkCLsMQcpqvgYagDsQS53BykvSkmeSLJnTdUgsoGJgd1R#zUC71fZJ6dVM1Ay3M4SdyA1p8YkPktaF1A1YBnaHX3v2Yxqsr8qU6pmpZc3BeWENBuoccGtCeKKfZ8zxfz66hy5MuHfkCLsMQcpqvgYagDsQS53BykvSkmeSLJnTdUgsoGJgd1R",
+        "created": "2022-08-31T20:11:11.263633+00:00",
+        "proofPurpose": "authentication",
+        "challenge": "603d3d7e-6ed8-45dc-8ba5-fd592d12b525",
+        "proofValue": "jI4ShYH+F/GxW0e0sIa+Q5bJfDyuDu7k8cg5ZEj98wiC3BENwiF+6S874Mrcf1KyKx5AF8OKWO4RSAClr/Pp2ocBK2vs6HFHsON9RF4B2X4cUSCyoTjA2lrLeiWOMndh+R4JIwuxMMoKbeIovTq2TQ=="
+      }
+    }
+  }

@@ -32,6 +32,22 @@ export class ClientService {
     this.emitEvent(ServerEvent.PresentationRejected, rejection.trackingId, rejection);
   }
 
+  sendInvalidIdType(acceptance: HolderAcceptance): void {
+    this.emitEvent(ServerEvent.InvalidIdType, acceptance.trackingId, acceptance);
+  }
+
+  sendSomethingWentWrong(acceptance: HolderAcceptance): void {
+    this.emitEvent(ServerEvent.SomethingWentWrong, acceptance.trackingId, acceptance);
+  }
+
+  sendTimeoutError(acceptance: HolderAcceptance): void {
+    this.emitEvent(ServerEvent.TimeoutError, acceptance.trackingId, acceptance);
+  }
+
+  sendAlreadyCreatedMessage(acceptance: HolderAcceptance): void {
+    this.emitEvent(ServerEvent.AlreadyCreated, acceptance.trackingId, acceptance);
+  }
+
   private emitEvent(event: ServerEvent, trackingId: string, payload?: any) {
     const client = this.registry.find(trackingId);
     if (client === undefined) {

@@ -31,7 +31,7 @@ export class PresentationRequirementsFactory {
             oneof_filter: [
               {
                 required: true,
-                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20Bronze/versions/2#Bonifii%20Bronze'
+                uri: 'https://credentials.global.id/v1/schema-registry/contexts/Bonifii%20Bronze/versions/3#Bonifii%20Bronze'
               }
             ]
           },
