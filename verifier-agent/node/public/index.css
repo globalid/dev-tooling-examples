@@ -10,6 +10,10 @@
   color: #101010;
 }
 
+body {
+  margin: 0px;
+}
+
 .brand {
   margin-bottom: 2.69em;
   margin-top: 2.25rem;
@@ -286,8 +290,8 @@
 }
 
 .image-bottom {
-  padding-left: 2%;
-  padding-top: 15%;
+  margin-left: 2%;
+  margin-top: 15%;
   border-radius: 25px;
 }
 

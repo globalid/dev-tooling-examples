@@ -1,8 +1,8 @@
 'use strict';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function initWebSocket(trackingId) {
-  const socket = io('ws://localhost:3000', { transports: ['websocket'] });
+function initWebSocket(url, trackingId) {
+  const socket = io(url, { transports: ['websocket'] });
 
   socket.on('connect', () => {
     socket.emit('register-client', trackingId, (response) => {
@@ -23,6 +23,7 @@ function initWebSocket(trackingId) {
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
     console.log(pii_parsed);
     acceptPresentation(pii_parsed);
+    // renderErrorComponents('THis is the title', 'This is the message part ususally a bit longer', true);
   });
 
   socket.on('presentation-rejected', (data) => {
@@ -86,6 +87,33 @@ function acceptPresentation(data) {
   // top_container.append(account_number_msg);
   // top_container.append(account_number);
   // top_container.append(check_email_msg);
+}
+
+function renderErrorComponents(title, message, isError) {
+  const qrCode = document.createElement('div');
+
+  const qrImg = document.createElement("img");
+  qrImg.src = isError ? 'images/qr_error.svg' : 'images/qr_question.svg';
+  console.log('imgsrc', qrImg.src);
+
+  const message1 = document.createElement('section');
+  message1.className = 'scan-qr-code';
+  message1.innerText = title;
+
+  const message2 = document.createElement('p');
+  message2.className = 'available-platforms';
+  message2.innerText = message;
+
+  const qrCodeDiv = document.createElement('div');
+  qrCodeDiv.className = 'qr-code';
+
+  qrCode.append(qrCodeDiv);
+  qrCodeDiv.appendChild(qrImg);
+  qrCodeDiv.appendChild(message1);
+  qrCodeDiv.appendChild(message2);
+
+  setMainContent(qrCodeDiv);
+
 }
 
 function rejectPresentation(error) {

@@ -13,7 +13,7 @@ import { InvalidSignatureError } from './invalid-signature.error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 import { QrCodeViewModel } from './qr-code.view-model';
 
-const axios = require('axios');
+import axios from 'axios';
 
 @Injectable()
 export class PresentationRequestService {
@@ -29,10 +29,11 @@ export class PresentationRequestService {
   createQrCodeViewModel(): QrCodeViewModel {
     const [qrCodeUrl, trackingId] = createPresentationRequestUrl({
       clientId: this.config.get<string>('CLIENT_ID'),
-      initiationUrl: `${this.config.get<string>('BASE_URL')}/request-presentation`
+      initiationUrl: `${this.config.get('BASE_URL')}/request-presentation`
     });
     this.logger.log(`generated URL for tracking ID ${trackingId}`);
     return {
+      wsUrl: this.config.get('BASE_URL'),
       trackingId,
       qrCodeUrl
     };
@@ -124,6 +125,8 @@ export class PresentationRequestService {
     // } else {
     //   this.logger.log('holder rejected');
     //   this.clientService.sendRejection(holderResponse);
+    } else {
+      this.clientService.sendRejection(holderResponse);
     }
   }
 
