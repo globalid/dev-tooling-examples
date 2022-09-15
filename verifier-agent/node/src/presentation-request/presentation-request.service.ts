@@ -12,6 +12,7 @@ import { ClientService } from './client/client.service';
 import { InvalidSignatureError } from './invalid-signature.error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 import { QrCodeViewModel } from './qr-code.view-model';
+import { ErrorInfoJanusea } from './client/error-event';
 
 const axios = require('axios');
 
@@ -68,12 +69,17 @@ export class PresentationRequestService {
     else if (data['id_type'].includes('ATIN')) data['id_type'] = 'ATIN';
     else {
       this.clientService.sendInvalidIdType(holderResponse);
+      return {'error': 'Invalid ID type'};
     }
 
     // Strip the dashes from the SSN, and also check if it's 9 digits
-    data['id_number'] = data['id_number'].replace('-', '');
+    data['id_number'] = data['id_number'].replaceAll('-', '');
     if (data['id_number'].length != 9) {
+      this.logger.log("Invalid SSN length");
+      this.logger.log(data['id_number']);
       this.clientService.sendInvalidIdType(holderResponse);
+
+      return {'error': 'Invalid ID type'};
     }
 
     // Check if '+1' is in the phone number
@@ -88,13 +94,19 @@ export class PresentationRequestService {
   async postToJanusea(holderResponse: HolderAcceptance) {
     // Parse the data and re-name keys to match the Janusea API
     const data = this.parseCredentialData(holderResponse);
-    // this.logger.log(data);
+    if (data['error']) {
+      // If there was an error parsing the credential data, we've already send the user to the error page and can return
+      return;
+    }
+    this.logger.log("request data");
+    this.logger.log(data);
 
 
     // // Send the post request to the Janusea API
     let config = {
       headers: {
         'X-HTTP-Method-Override': 'POST',
+        'X-HTTP-FI-Code': 'testcore3',
       },
       timeout: 10000,
     }
@@ -112,6 +124,14 @@ export class PresentationRequestService {
       if (err.response){
         // Request was sent and server responded with non 2xx status code
         this.logger.log("Error creating account");
+        // this.logger.log(err.response.data);
+        
+        if(err.response.status == 500) {
+          this.logger.log('Error calling Janusea API: 500 response code')
+          this.clientService.sendSomethingWentWrong(holderResponse);
+          return;
+        }
+
         const message = err.response.data.error.message;
 
         // XML validation failing means bad input in the body of the request. Most likely 

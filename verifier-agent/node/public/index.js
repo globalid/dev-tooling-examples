@@ -24,20 +24,23 @@ function initWebSocket(trackingId) {
     acceptPresentation(pii_parsed);
   });
 
-  socket.on('presentation-rejected', (data) => {
-    rejectPresentation(data);
+  socket.on('presentation-rejected', (errorInfo) => {
+    rejectPresentation(errorInfo);
   });
 
-  socket.on('invalid-id-type', (data) => {
+  socket.on('invalid-id-type', (errorInfo) => {
     // Set QR code to error state and display appropriate message
   });
 
-  socket.on('something-went-wrong', (data) => {
-    // Set QR code to error state and display appropriate message
+  socket.on('something-went-wrong', (errorInfo) => {
+    rejectPresentation(errorInfo);
+    setTitle(errorInfo.title);
+    setMess
+
   });
 
-  socket.on('timeout-error', (data) => {
-    // Set QR code to error state and display appropriate message
+  socket.on('timeout-error', (errorInfo) => {
+    rejectPresentation(errorInfo);
   });
 
   socket.on('already-created', (data) => {
@@ -109,7 +112,8 @@ function rejectPresentation(error) {
   errorIcon.className = 'error-icon';
 
   const errorMessage = document.createElement('p');
-  errorMessage.innerText = error.errorMessage;
+  errorMessage.innerText = error.message;
+  errorMessage.setAttribute('id', 'card-title');
 
   const errorCard = document.createElement('div');
   errorCard.className = 'error-message';
