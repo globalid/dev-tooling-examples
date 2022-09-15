@@ -12,26 +12,26 @@
     <script src='https://cdn.socket.io/4.5.0/socket.io.min.js'></script>
     <script src='https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js'></script>
     <script src='index.js'></script>
-    <script>initWebSocket('{{trackingId}}')</script>
+    <script>initWebSocket('{{wsUrl}}','{{trackingId}}')</script>
   </head>
 
   <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
   {{!-- <body> --}}
     <div class="top-container" id="top-container">
-	<div class="box1-top" id="box1-top">
-		<img class="lonestar-logo" src="../images/lonestar-logo-5.png" alt="Lonestar logo">
+      <div class="box1-top" id="box1-top">
+        <img class="lonestar-logo" src="../images/lonestar-logo-5.png" alt="Lonestar logo">
 
-    <div class="credential-description-box">
-      <section class="title-bonifii">Bonifii Credential</section>
-      <section class="earn25">Earn $25</section>
-      <p class="primary-description">when you sign up with your Bonifii credential using GlobaliD</p>
+        <div class="credential-description-box">
+          <section class="title-bonifii">Bonifii Credential</section>
+          <section class="earn25">Earn $25</section>
+          <p class="primary-description">when you sign up with your Bonifii credential using GlobaliD</p>
+        </div>
+      </div>
+
+      <div class="box2-top" id="box2-top">
+        <div class="qr-code-container" id="qr-code-container"></div>
+      </div>
     </div>
-	</div>
-
-  <div class="box2-top" id="box2-top">
-      <div class= "qr-code-container" id="qr-code-container"></div>
-  </div>
-</div>
 
   <div class="bottom-container">
     <div class="box1-bottom">

@@ -14,7 +14,7 @@ import { PresentationRequirementsFactory } from './presentation-requirements.fac
 import { QrCodeViewModel } from './qr-code.view-model';
 import { ErrorInfoJanusea } from './client/error-event';
 
-const axios = require('axios');
+import axios from 'axios';
 
 @Injectable()
 export class PresentationRequestService {
@@ -30,10 +30,11 @@ export class PresentationRequestService {
   createQrCodeViewModel(): QrCodeViewModel {
     const [qrCodeUrl, trackingId] = createPresentationRequestUrl({
       clientId: this.config.get<string>('CLIENT_ID'),
-      initiationUrl: `${this.config.get<string>('BASE_URL')}/request-presentation`
+      initiationUrl: `${this.config.get('BASE_URL')}/request-presentation`
     });
     this.logger.log(`generated URL for tracking ID ${trackingId}`);
     return {
+      wsUrl: this.config.get('BASE_URL'),
       trackingId,
       qrCodeUrl
     };
@@ -109,8 +110,9 @@ export class PresentationRequestService {
         'X-HTTP-FI-Code': 'testcore3',
       },
       timeout: 10000,
-    }
-    
+      }
+
+    this.logger.log("Got here");
     axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
       // If we get a success response, we can accept the credential and send the user to the "account created" page
       this.logger.log('Account creation successful');
@@ -167,6 +169,8 @@ export class PresentationRequestService {
 
       // this.clientService.sendAcceptance(holderResponse);
       await this.postToJanusea(holderResponse); // Error responses handled in here
+    } else {
+      this.clientService.sendRejection(holderResponse);
     }
   }
 
