@@ -21,81 +21,84 @@ function initWebSocket(url, trackingId) {
 
   socket.on('presentation-accepted', (data) => {
     // console.log(data);
-    const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
-    // acceptPresentation(pii_parsed);
-    renderErrorComponents('THis is the title', 'This is the message part ususally a bit longer', true);
+    // renderErrorComponents('THis is the title', 'This is the message part ususally a bit longer', true);
+    displaySuccessMessage(data['loneStarAccountNumber'], false);
   });
 
-  socket.on('presentation-rejected', (data) => {
-    rejectPresentation(data);
+  socket.on('presentation-rejected', (errorInfo) => {
+    // rejectPresentation(errorInfo);
+    renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });
 
-  socket.on('invalid-id-type', (data) => {
-    // Set QR code to error state and display appropriate message
+  socket.on('invalid-id-type', (errorInfo) => {
+    renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });
 
-  socket.on('something-went-wrong', (data) => {
-    // Set QR code to error state and display appropriate message
+  socket.on('something-went-wrong', (errorInfo) => {
+    renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });
 
-  socket.on('timeout-error', (data) => {
-    // Set QR code to error state and display appropriate message
+  socket.on('timeout-error', (errorInfo) => {
+    renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });
 
   socket.on('already-created', (data) => {
-    // Set QR code to error state and display appropriate message
+    displaySuccessMessage(data['loneStarAccountNumber'], true);
   });
 }
 
-function acceptPresentation(data) {
-  // First, remove all but the background picture from the top part of the page
+function removeTopComponents() {
   const top_left_box = document.getElementById('box1-top');
   const top_right_box = document.getElementById('box2-top');
 
   top_left_box.remove();
   top_right_box.remove();
+}
 
-  // Next, add account creation message to the top part of the page
+function displaySuccessMessage(accountNumber, accountExists) {
+  removeTopComponents();
 
-  // Main div
-  const msg_div = document.createElement('div');
-  msg_div.className = 'message_div';
+    // Main div
+    const msg_div = document.createElement('div');
+    msg_div.className = 'message_div';
+  
+    // The rest
+    const checkmark = document.createElement('img');
+    checkmark.className = 'checkmark-img';
+    checkmark.src = 'images/check_mark.png';
 
-  // The rest
-  const checkmark = document.createElement('img');
-  checkmark.className = 'checkmark-img';
-  checkmark.src = 'images/check_mark.png';
+    const congrats_msg = document.createElement('p');
+    congrats_msg.className = 'congrats';
+    congrats_msg.innerText = accountExists ? "Yay" : 'Congrats!';
 
-  const congrats_msg = document.createElement('p');
-  congrats_msg.className = 'congrats';
-  congrats_msg.innerText = 'Congrats!';
+    const account_open_msg = document.createElement('p');
+    account_open_msg.className = 'account-open';
+    account_open_msg.innerText = accountExists ? 'Looks like you already have an account with us' : 'Your account has been opened';
 
-  const account_open_msg = document.createElement('p');
-  account_open_msg.className = 'account-open';
-  account_open_msg.innerText = 'Your account has been opened.';
+    const account_number_msg = document.createElement('p');
+    account_number_msg.className = 'account-number-msg';
+    account_number_msg.innerText = accountExists ? 'Please contact Lone Star' : 'Your account number is';
 
-  const account_number_msg = document.createElement('p');
-  account_number_msg.className = 'account-number-msg';
-  account_number_msg.innerText = 'Your account number is';
+    const account_number = document.createElement('p');
+    account_number.className = 'account-number';
+    account_number.innerText = accountNumber;
 
-  const account_number = document.createElement('p');
-  account_number.className = 'account-number';
-  account_number.innerText = '00000573910020';
+    // Append to the top container
+    let top_container = document.getElementById('top-container');
+    top_container.append(msg_div);
 
-  const check_email_msg = document.createElement('p');
-  check_email_msg.className = 'account-open';
-  check_email_msg.innerText = 'Check your email for more details';
+    msg_div.append(checkmark);
+    msg_div.append(congrats_msg);
+    msg_div.append(account_open_msg);
+    msg_div.append(account_number_msg);
+    msg_div.append(account_number);
 
-  // Append to the top container
-  let top_container = document.getElementById('top-container');
-  top_container.append(msg_div);
-
-  msg_div.append(checkmark);
-  msg_div.append(congrats_msg);
-  msg_div.append(account_open_msg);
-  msg_div.append(account_number_msg);
-  msg_div.append(account_number);
-  msg_div.append(check_email_msg);
+    if(!accountExists) {
+      const check_email_msg = document.createElement('p');
+      check_email_msg.className = 'account-open';
+      check_email_msg.innerText = 'Check your email for more details';
+      msg_div.append(check_email_msg);
+    }
 }
 
 function renderErrorComponents(title, message, isError) {

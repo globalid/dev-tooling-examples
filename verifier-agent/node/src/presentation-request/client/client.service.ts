@@ -5,6 +5,7 @@ import { Injectable, Logger } from '@nestjs/common';
 
 import { ClientRegistry } from './client.registry';
 import { ServerEvent } from './server-event';
+import { ErrorInfoJanusea } from './error-event';
 
 @Injectable()
 export class ClientService {
@@ -29,22 +30,43 @@ export class ClientService {
   }
 
   sendRejection(rejection: HolderRejection): void {
-    this.emitEvent(ServerEvent.PresentationRejected, rejection.trackingId, rejection);
+    const errorInfo : ErrorInfoJanusea = {
+      title: 'Did you miss something?',
+      message: 'You declined to share your personal data',
+      isQuestionDisplayed: true
+    }
+    this.emitJanuseaErrorEvent(ServerEvent.PresentationRejected, rejection.trackingId, errorInfo);
   }
 
   sendInvalidIdType(acceptance: HolderAcceptance): void {
-    this.emitEvent(ServerEvent.InvalidIdType, acceptance.trackingId, acceptance);
+    const errorInfo : ErrorInfoJanusea = {
+      title: 'Oops',
+      message: 'Unfortunately, you cannot open an account based on the document information you provided. The account can be opened only for US residents with a SSN or an ITIN.',
+      isQuestionDisplayed: false
+    }
+    this.emitJanuseaErrorEvent(ServerEvent.InvalidIdType, acceptance.trackingId, errorInfo);
   }
 
   sendSomethingWentWrong(acceptance: HolderAcceptance): void {
-    this.emitEvent(ServerEvent.SomethingWentWrong, acceptance.trackingId, acceptance);
+    const errorInfo : ErrorInfoJanusea = {
+      title: 'Oops',
+      message: 'Something went wrong. Please try again.',
+      isQuestionDisplayed: false
+    }
+    this.emitJanuseaErrorEvent(ServerEvent.SomethingWentWrong, acceptance.trackingId, errorInfo);
   }
 
   sendTimeoutError(acceptance: HolderAcceptance): void {
-    this.emitEvent(ServerEvent.TimeoutError, acceptance.trackingId, acceptance);
+    const errorInfo : ErrorInfoJanusea = {
+      title: 'Oops',
+      message: 'The system is having temporary difficulties. Please try again.',
+      isQuestionDisplayed: false
+    }
+    this.emitJanuseaErrorEvent(ServerEvent.TimeoutError, acceptance.trackingId, errorInfo);
   }
 
   sendAlreadyCreatedMessage(acceptance: HolderAcceptance): void {
+    // TODO: This isn't a QR code load. Need to render something similar to what's generated in sendAcceptance()
     this.emitEvent(ServerEvent.AlreadyCreated, acceptance.trackingId, acceptance);
   }
 
@@ -58,4 +80,16 @@ export class ClientService {
     this.logger.log(`emitting ${event} event (tracking ID: ${trackingId})`);
     client.emit(event, payload);
   }
+
+  private emitJanuseaErrorEvent(event: ServerEvent, trackingId: string, payload: ErrorInfoJanusea) {
+    const client = this.registry.find(trackingId);
+    if (client === undefined) {
+      this.logger.error(`no client socket found (tracking ID: ${trackingId})`);
+      return;
+    }
+
+    this.logger.log(`emitting ${event} event (tracking ID: ${trackingId})`);
+    client.emit(event, payload);
+  }
+
 }

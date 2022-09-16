@@ -13,6 +13,7 @@ import { ClientService } from './client/client.service';
 import { InvalidSignatureError } from './invalid-signature.error';
 import { PresentationRequirementsFactory } from './presentation-requirements.factory';
 import { QrCodeViewModel } from './qr-code.view-model';
+// import { ErrorInfoJanusea } from './client/error-event';
 
 import axios from 'axios';
 
@@ -85,6 +86,8 @@ export class PresentationRequestService {
     data['id_number'] = data['id_number'].replace('-', '');
     if (!idType || data['id_number'].length != 9) {
       this.clientService.sendInvalidIdType(holderResponse);
+
+      return {'error': 'Invalid ID type'};
     }
 
     // Check if '+1' is in the phone number
@@ -98,15 +101,22 @@ export class PresentationRequestService {
 
   async postToJanusea(holderResponse: HolderAcceptance) {
     // Parse the data and re-name keys to match the Janusea API
-    // const data = this.parseCredentialData(holderResponse);
-    // this.logger.log(data);
+    const data = this.parseCredentialData(holderResponse);
+    if (data['error']) {
+      // If there was an error parsing the credential data, we've already send the user to the error page and can return
+      return;
+    }
+    this.logger.log("request data");
+    this.logger.log(data);
 
 
     const config = {
       headers: {
         'X-HTTP-Method-Override': 'POST',
+        'X-HTTP-FI-Code': 'testcore3',
+      },
+      timeout: 10000,
       }
-    }
 
     axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
       // If we get a success response, we can accept the credential and send the user to the "account created" page
@@ -117,10 +127,17 @@ export class PresentationRequestService {
       holderResponse['loneStarAccountNumber'] = res.data['membershipId'];
       this.clientService.sendAcceptance(holderResponse);
     }).catch(err => {
-      holderResponse['loneStarAccountNumber'] = "0000000000";
       if (err.response){
         // Request was sent and server responded with non 2xx status code
         this.logger.log("Error creating account");
+        // this.logger.log(err.response.data);
+        
+        if(err.response.status == 500) {
+          this.logger.log('Error calling Janusea API: 500 response code')
+          this.clientService.sendSomethingWentWrong(holderResponse);
+          return;
+        }
+
         const message = err.response.data.error.message;
 
         // XML validation failing means bad input in the body of the request. Most likely 
@@ -133,6 +150,7 @@ export class PresentationRequestService {
           this.clientService.sendSomethingWentWrong(holderResponse);
         } else if(message == "TIN matches an existing SSN or ITIN or ATIN") {
           // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
+          holderResponse['loneStarAccountNumber'] = '00000573910020';
           this.clientService.sendAlreadyCreatedMessage(holderResponse);
         }
       } else if (err.request) {
