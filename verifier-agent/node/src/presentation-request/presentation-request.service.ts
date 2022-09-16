@@ -3,7 +3,8 @@ import {
   GidVerifierClient,
   HolderAcceptance,
   HolderRejection,
-  HolderResponse
+  HolderResponse,
+  VerifiablePresentation
 } from '@globalid/verifier-toolkit';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -48,8 +49,22 @@ export class PresentationRequestService {
     });
   }
 
-  parseCredentialData(holderResponse: HolderAcceptance) : Object {
-    let data = holderResponse.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+  setCredentialDataIdType(data: VerifiablePresentation): string {
+    let idType;
+    if (data['id_type'].includes('SSN')) {
+      idType = 'SSN';
+    } else if (data['id_type'].includes('ITIN')) {
+      idType = 'ITIN';
+    } else if (data['id_type'].includes('ATIN')) {
+      idType = 'ATIN';
+    } else {
+      return undefined;
+    }
+    return idType;
+  }
+
+  parseCredentialData(holderResponse: HolderAcceptance): VerifiablePresentation {
+    const data: VerifiablePresentation = holderResponse.proofPresentation.dif.verifiableCredential[0].credentialSubject;
     delete data['id']; // ID of the proof request, which isn't needed
     delete data['type'];
     
@@ -64,16 +79,11 @@ export class PresentationRequestService {
     delete data['address_full'];
 
     // Check the ID type format
-    if (data['id_type'].includes('SSN')) data['id_type'] = 'SSN';
-    else if (data['id_type'].includes('ITIN')) data['id_type'] = 'ITIN';
-    else if (data['id_type'].includes('ATIN')) data['id_type'] = 'ATIN';
-    else {
-      this.clientService.sendInvalidIdType(holderResponse);
-    }
+    const idType = this.setCredentialDataIdType(data);
 
     // Strip the dashes from the SSN, and also check if it's 9 digits
     data['id_number'] = data['id_number'].replace('-', '');
-    if (data['id_number'].length != 9) {
+    if (!idType || data['id_number'].length != 9) {
       this.clientService.sendInvalidIdType(holderResponse);
     }
 
@@ -88,17 +98,16 @@ export class PresentationRequestService {
 
   async postToJanusea(holderResponse: HolderAcceptance) {
     // Parse the data and re-name keys to match the Janusea API
-    const data = this.parseCredentialData(holderResponse);
+    // const data = this.parseCredentialData(holderResponse);
     // this.logger.log(data);
 
 
-    // // Send the post request to the Janusea API
-    let config = {
+    const config = {
       headers: {
         'X-HTTP-Method-Override': 'POST',
       }
     }
-    this.logger.log("Got here");
+
     axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
       // If we get a success response, we can accept the credential and send the user to the "account created" page
       this.logger.log('Account creation successful');

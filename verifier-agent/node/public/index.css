@@ -19,15 +19,17 @@ body {
   margin-top: 2.25rem;
 }
 
-.button,
-.button:visited {
+.back-button,
+.back-button:visited {
+  font-family: 'Helvetica';
   align-self: center;
   background-color: #0d51ff;
-  border-radius: 9999px;
+  border-radius: 10px;
   color: white;
-  min-width: 10rem;
-  padding: 0.63rem 1.25rem;
+  min-width: 13rem;
+  padding: 0.75rem 1.25rem;
   text-decoration: none;
+  margin-bottom: 1rem;
 }
 
 .card {
@@ -93,38 +95,32 @@ body {
 }
 
 .loading-wrapper {
-
-  margin-left: 65px;
-
-  padding-left: 10px;
-  padding-right: 5px;
-  padding-top: 25px;
-
+  margin-top: 2rem;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 7px;
-  width: 275px;
+}
 
-  height: 400px;
-
-  margin-top: 40px;
+.message-area {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .qr-code {
-  /* margin-left: 14%; */
-  margin-left: 65px;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 7px;
-  width: 300px;
-
+  width: 15.96rem;
   margin-top: 40px;
 } 
 
 .qr-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
-  height: 550px;
+  min-height: 22rem;
+  width: 18rem;
   background-color: #FFFFFF;
-
-  width: 50%;
 
   /* margin-left: 27%; */
   margin-left: 225px;
@@ -142,23 +138,40 @@ body {
   font-size: 14px;
   line-height: 16px;
 
+
+
+  text-align: center;
+
+
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.available-platforms {
+  font-family: 'Helvetica';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+
   color: #A8A8A8;
 
   text-align: center;
 
-  padding-top: 30px;
+  border-top: solid #A8A8A8 1px;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
 
 .qr-code-container section {
   font-family: 'Helvetica';
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
-  line-height: 24px;
-
+  font-size: 25px;
+  line-height: 25px;
   color: #272727;
-
-  padding-top: 30px;
+  padding: 1rem 1rem 0;
+  flex-grow: 1;
 }
 
 .top-container {

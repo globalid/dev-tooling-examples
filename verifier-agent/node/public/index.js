@@ -15,14 +15,15 @@ function initWebSocket(url, trackingId) {
   });
 
   socket.on('awaiting-response', () => {
+    console.log("I am getting da spinner!!")
     displaySpinner();
   });
 
   socket.on('presentation-accepted', (data) => {
     // console.log(data);
     const pii_parsed = data.proofPresentation.dif.verifiableCredential[0].credentialSubject;
-    acceptPresentation(pii_parsed);
-    // renderErrorComponents('THis is the title', 'This is the message part ususally a bit longer', true);
+    // acceptPresentation(pii_parsed);
+    renderErrorComponents('THis is the title', 'This is the message part ususally a bit longer', true);
   });
 
   socket.on('presentation-rejected', (data) => {
@@ -95,13 +96,6 @@ function acceptPresentation(data) {
   msg_div.append(account_number_msg);
   msg_div.append(account_number);
   msg_div.append(check_email_msg);
-
-  // top_container.append(checkmark);
-  // top_container.append(congrats_msg);
-  // top_container.append(account_open_msg);
-  // top_container.append(account_number_msg);
-  // top_container.append(account_number);
-  // top_container.append(check_email_msg);
 }
 
 function renderErrorComponents(title, message, isError) {
@@ -109,71 +103,46 @@ function renderErrorComponents(title, message, isError) {
 
   const qrImg = document.createElement("img");
   qrImg.src = isError ? 'images/qr_error.svg' : 'images/qr_question.svg';
-  console.log('imgsrc', qrImg.src);
+  qrImg.width = '225';
 
-  const message1 = document.createElement('section');
-  message1.className = 'scan-qr-code';
-  message1.innerText = title;
-
-  const message2 = document.createElement('p');
-  message2.className = 'available-platforms';
-  message2.innerText = message;
+  const tryAgainButton = createBackButton();
 
   const qrCodeDiv = document.createElement('div');
   qrCodeDiv.className = 'qr-code';
 
   qrCode.append(qrCodeDiv);
   qrCodeDiv.appendChild(qrImg);
-  qrCodeDiv.appendChild(message1);
-  qrCodeDiv.appendChild(message2);
+
+  const qrCodeContainer = document.getElementById('qr-code-container');
+  
+  const messageDiv = createMessageArea(title, message, 'message-text-section');
+  messageDiv.appendChild(tryAgainButton)
 
   setMainContent(qrCodeDiv);
-
-}
-
-function rejectPresentation(error) {
-  const errorIcon = document.createElement('img');
-  errorIcon.src = 'images/error-icon.svg';
-  errorIcon.className = 'error-icon';
-
-  const errorMessage = document.createElement('p');
-  errorMessage.innerText = error.errorMessage;
-
-  const errorCard = document.createElement('div');
-  errorCard.className = 'error-message';
-  errorCard.appendChild(errorIcon);
-  errorCard.appendChild(errorMessage);
-
-  setTitle('Presentation Request Failed');
-  hideCardSubtitle();
-  setMainContent(errorCard, createBackButton());
+  qrCodeContainer.appendChild(messageDiv);
 }
 
 function createBackButton() {
   const backButton = document.createElement('a');
-  backButton.className = 'button';
+  backButton.className = 'back-button';
   backButton.setAttribute('href', '/');
   backButton.innerText = 'Try Again';
   return backButton;
 }
 
 async function displaySpinner() {
-  const message1 = document.createElement('section');
-  message1.className = 'scan-qr-code';
-  message1.innerText = 'Please Wait';
-
-  const message2 = document.createElement('p');
-  message2.className = 'available-platforms';
-  message2.innerText = 'Your information is being processed';
 
   const wrapper = document.createElement('div');
   wrapper.className = 'loading-wrapper';
   wrapper.innerHTML = await loadAsset('images/spinner.svg');
-  
-  wrapper.appendChild(message1);
-  wrapper.appendChild(message2);
+
+  const messageDiv = createMessageArea('Please Wait', 'Your information is being processed', 'message-text-section');
+
+  const qrCodeContainer = document.getElementById('qr-code-container');
+
 
   setMainContent(wrapper);
+  qrCodeContainer.appendChild(messageDiv);
 }
 
 async function loadAsset(fileName) {
@@ -181,26 +150,34 @@ async function loadAsset(fileName) {
   return await res.text();
 }
 
-function setTitle(text) {
-  const heading = document.getElementById('card-title');
-  heading.innerText = text;
-}
-
-function hideCardSubtitle() {
-  const subtitleElement = document.getElementById('card-subtitle');
-  subtitleElement.style.display = 'none';
-}
 
 function setMainContent(...elements) {
   const mainContainer = document.getElementById('qr-code-container');
   mainContainer.replaceChildren(...elements);
 }
 
+function createMessageArea(title, message, messageClass) {
+  const message1 = document.createElement('section');
+  message1.className = 'qr-text-title';
+  
+  message1.innerText = title;
+
+  const message2 = document.createElement('p');
+  message2.className = messageClass;
+  message2.innerText = message;
+
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'message-area';
+  messageDiv.appendChild(message1);
+  messageDiv.appendChild(message2);
+  return messageDiv;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function generateStyledQrCode(dataUrl) {
   const qrCode = new QRCodeStyling({
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     data: dataUrl,
     type: 'svg',
     margin: 0,
@@ -229,20 +206,19 @@ function generateStyledQrCode(dataUrl) {
     }
   });
 
-  const message1 = document.createElement('section');
-  message1.className = 'scan-qr-code';
-  message1.innerText = 'Scan the QR with your mobile device to begin';
-
-  const message2 = document.createElement('p');
-  message2.className = 'available-platforms';
-  message2.innerText = 'Available on Android & iOS';
+  const messageSection = document.createElement('div');
+  messageSection.className = ('message-section');
 
   const qrCodeDiv = document.createElement('div');
   qrCodeDiv.className = 'qr-code';
 
+  const qrCodeContainer = document.getElementById('qr-code-container');
+  const message1 = 'Scan the QR with your mobile device to begin';
+  const message2 = 'Available on Android & iOS';
+  const messageDiv = createMessageArea(message1, message2, 'available-platforms');
+
   qrCode.append(qrCodeDiv);
-  qrCodeDiv.appendChild(message1);
-  qrCodeDiv.appendChild(message2);
 
   setMainContent(qrCodeDiv);
+  qrCodeContainer.appendChild(messageDiv);
 }
