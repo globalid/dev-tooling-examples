@@ -43,7 +43,7 @@ function initWebSocket(url, trackingId) {
   });
 
   socket.on('already-created', (data) => {
-    displaySuccessMessage(data['loneStarAccountNumber'], true);
+    displaySuccessMessage(data['loneStarAccountNumber'], false);
   });
 }
 
