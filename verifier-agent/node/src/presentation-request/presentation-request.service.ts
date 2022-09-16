@@ -65,37 +65,38 @@ export class PresentationRequestService {
   }
 
   parseCredentialData(holderResponse: HolderAcceptance): VerifiablePresentation {
-    const data: VerifiablePresentation = holderResponse.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+    let data = holderResponse.proofPresentation.dif.verifiableCredential[0].credentialSubject;
     delete data['id']; // ID of the proof request, which isn't needed
     delete data['type'];
     
     // Change some keys to match the Janusea API
     data['full_legal_name'] = data['full_name_legal'];
     delete data['full_name_legal'];
-
     data['email_address'] = data['email'];
     delete data['email'];
-
     data['full_residence_address'] = data['address_full'];
     delete data['address_full'];
-
     // Check the ID type format
-    const idType = this.setCredentialDataIdType(data);
-
-    // Strip the dashes from the SSN, and also check if it's 9 digits
-    data['id_number'] = data['id_number'].replace('-', '');
-    if (!idType || data['id_number'].length != 9) {
+    if (data['id_type'].includes('SSN')) data['id_type'] = 'SSN';
+    else if (data['id_type'].includes('ITIN')) data['id_type'] = 'ITIN';
+    else if (data['id_type'].includes('ATIN')) data['id_type'] = 'ATIN';
+    else {
       this.clientService.sendInvalidIdType(holderResponse);
-
       return {'error': 'Invalid ID type'};
     }
-
+    // Strip the dashes from the SSN, and also check if it's 9 digits
+    data['id_number'] = data['id_number'].replaceAll('-', '');
+    if (data['id_number'].length != 9) {
+      this.logger.log("Invalid SSN length");
+      this.logger.log(data['id_number']);
+      this.clientService.sendInvalidIdType(holderResponse);
+      return {'error': 'Invalid ID type'};
+    }
     // Check if '+1' is in the phone number
     // TODO: Speak with Janusea team about what phone number format they want
     if (data['phone_number'].includes('+1')) {
       data['phone_number'] = data['phone_number'].substring(2, 5) + '-' + data['phone_number'].substring(5, 8) + '-' + data['phone_number'].substring(8, 12);
     }
-
     return data;
   }
 
@@ -130,7 +131,7 @@ export class PresentationRequestService {
       if (err.response){
         // Request was sent and server responded with non 2xx status code
         this.logger.log("Error creating account");
-        // this.logger.log(err.response.data);
+        this.logger.log(err.response.data);
         
         if(err.response.status == 500) {
           this.logger.log('Error calling Janusea API: 500 response code')
