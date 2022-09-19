@@ -171,10 +171,12 @@ export class PresentationRequestService {
 
     if (holderResponse instanceof HolderAcceptance) {
       this.logger.log('holder accepted');
-      this.logger.log('posting to Janusea');
+      // this.logger.log('posting to Janusea');
 
       // // this.clientService.sendAcceptance(holderResponse);
       // await this.postToJanusea(holderResponse); // Error responses handled in here
+      holderResponse['loneStarAccountNumber'] = '00000573910020';
+      this.clientService.sendAcceptance(holderResponse);
     } else {
       this.clientService.sendRejection(holderResponse);
     }
