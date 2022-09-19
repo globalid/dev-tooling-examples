@@ -173,8 +173,8 @@ export class PresentationRequestService {
       this.logger.log('holder accepted');
       this.logger.log('posting to Janusea');
 
-      // this.clientService.sendAcceptance(holderResponse);
-      await this.postToJanusea(holderResponse); // Error responses handled in here
+      // // this.clientService.sendAcceptance(holderResponse);
+      // await this.postToJanusea(holderResponse); // Error responses handled in here
     } else {
       this.clientService.sendRejection(holderResponse);
     }
