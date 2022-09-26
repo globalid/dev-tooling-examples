@@ -34,12 +34,18 @@ function parseCredentialData(data) {
     return {'error': 'Invalid phone number'};
   }
 
+  // Update the address to only include 3 items
+  let split_address = data['full_residence_address'].split(',');
+  split_address.pop();
+  data['full_residence_address'] = split_address.join(',');
+
+
   return data;
 }
 
 
 function test_id_type() {
-  var cred1 = {
+  let cred1 = {
     "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
     "type": "Bonifii Bronze",
     "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
@@ -57,7 +63,7 @@ function test_id_type() {
     "phone_number_verification_date": "2022-09-12"
   }
 
-  var cred2 = {
+  let cred2 = {
     "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
     "type": "Bonifii Bronze",
     "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
@@ -86,7 +92,7 @@ function test_id_type() {
 
 
 function test_tax_number_format(data) {
-  var cred1 = {
+  let cred1 = {
     "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
     "type": "Bonifii Bronze",
     "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
@@ -103,7 +109,7 @@ function test_tax_number_format(data) {
     "phone_number": "+15037247446",
     "phone_number_verification_date": "2022-09-12"
   }
-  var cred2 = {
+  let cred2 = {
     "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
     "type": "Bonifii Bronze",
     "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
@@ -132,7 +138,7 @@ function test_tax_number_format(data) {
 
 
 function test_phone_number_format(data) {
-  var cred1 = {
+  let cred1 = {
     "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
     "type": "Bonifii Bronze",
     "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
@@ -156,10 +162,39 @@ function test_phone_number_format(data) {
   console.log('Testing phone number is formatted correctly... passed');
 }
 
+
+function test_address_format() {
+  let cred1 = {
+    "id": "did:key:zUC73TZd7zxcpymXziMFHnWiZwZQHCYzc17ssnbhGkd4gpcubYBZv2rhqcJ7rCh84Vv4CF5Excn6h1dP9pjGWupK1JDTSXWAinAALRc9atJuRFnSAY5bkXZiCbaLwzBxAdAhRDz",
+    "type": "Bonifii Bronze",
+    "address_full": "12777 Northeast 153rd Place, Woodinville, WA, USA",
+    "credential_date_of_issue": "2022-09-12",
+    "credential_id": "3c92dc0a-d4a7-4b9e-b285-b23f15c07524",
+    "date_of_birth": "1994-10-11",
+    "email": "Marcus.imponenti@gmail.com",
+    "email_verification_date": "2022-09-12",
+    "full_name_legal": "Marcus Imponenti",
+    "globalid_id": "1d15974c-e813-491b-a05a-089dd0b52bb9",
+    "id_number": "123-45-6789",
+    "id_type": "USA SSN",
+    "ip_address": "98.59.137.179",
+    "phone_number": "+15037347446",
+    "phone_number_verification_date": "2022-09-12"
+  }
+  
+  cred1 = parseCredentialData(cred1);
+  assert.equal(cred1['full_residence_address'], '12777 Northeast 153rd Place, Woodinville, WA');
+
+  console.log('Testing address is formatted correctly... passed');
+}
+
+
+
 function testAll() {
   test_id_type();
   test_tax_number_format();
   test_phone_number_format();
+  test_address_format();
 }
 
 testAll();

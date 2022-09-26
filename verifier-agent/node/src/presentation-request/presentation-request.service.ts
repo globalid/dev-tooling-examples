@@ -104,6 +104,11 @@ export class PresentationRequestService {
     this.clientService.sendInvalidPhoneNumber(holderResponse);
     return {'error': 'Invalid phone number'};
   }
+
+    // Update the address to only include 3 items
+    let split_address = data['full_residence_address'].split(',');
+    split_address.pop();
+    data['full_residence_address'] = split_address.join(',');
     return data;
   }
 
