@@ -66,6 +66,8 @@ export class PresentationRequestService {
 
   parseCredentialData(holderResponse: HolderAcceptance): VerifiablePresentation {
     let data = holderResponse.proofPresentation.dif.verifiableCredential[0].credentialSubject;
+    this.logger.log("Raw credential data from GlobaliD:")
+    this.logger.log(data);
     delete data['id']; // ID of the proof request, which isn't needed
     delete data['type'];
     
@@ -92,11 +94,13 @@ export class PresentationRequestService {
       this.clientService.sendInvalidIdType(holderResponse);
       return {'error': 'Invalid ID type'};
     }
-    // Check if '+1' is in the phone number
-    // TODO: Speak with Janusea team about what phone number format they want
-    if (data['phone_number'].includes('+1')) {
-      data['phone_number'] = data['phone_number'].substring(2, 5) + '-' + data['phone_number'].substring(5, 8) + '-' + data['phone_number'].substring(8, 12);
-    }
+
+    // Remove country code if iti's present in the phone number
+    if (data['phone_number'].includes('+')) {
+      const cur_number = data['phone_number'];
+      data['phone_number'] = cur_number.substring(cur_number.length - 10);
+      data['phone_number'] = data['phone_number'].substring(0, 3) + '-' + data['phone_number'].substring(3, 6) + '-' + data['phone_number'].substring(6, 10);
+  }
     return data;
   }
 
@@ -142,17 +146,13 @@ export class PresentationRequestService {
         const message = err.response.data.error.message;
 
         // XML validation failing means bad input in the body of the request. Most likely 
-        if(message == "Bad Request - XML Validation Failed") {
-          this.clientService.sendSomethingWentWrong(holderResponse);
-        } else if(message == "Value must contain a valid phone number") {
-          // TODO: Let's ask Janusea about phone number format and sync on GlobalID's end
-          // For now, I'm manually attempting to parse the phone number, and we'll send 
-          // to a "something went wrong" page if the parsing function doens't work
-          this.clientService.sendSomethingWentWrong(holderResponse);
-        } else if(message == "TIN matches an existing SSN or ITIN or ATIN") {
+      if(message == "TIN matches an existing SSN or ITIN or ATIN") {
           // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
           holderResponse['loneStarAccountNumber'] = '00000573910020';
           this.clientService.sendAlreadyCreatedMessage(holderResponse);
+        } else {
+          this.clientService.sendSomethingWentWrong(holderResponse);
+          this.logger.log("Janusea API error: " + message);
         }
       } else if (err.request) {
         // The request was made but no response was received within the timeout range
@@ -174,8 +174,7 @@ export class PresentationRequestService {
       // this.logger.log('posting to Janusea');
 
       // // this.clientService.sendAcceptance(holderResponse);
-      // await this.postToJanusea(holderResponse); // Error responses handled in here
-      holderResponse['loneStarAccountNumber'] = '00000573910020';
+      await this.postToJanusea(holderResponse); // Error responses handled in here
       this.clientService.sendAcceptance(holderResponse);
     } else {
       this.clientService.sendRejection(holderResponse);
