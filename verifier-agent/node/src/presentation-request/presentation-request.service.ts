@@ -95,11 +95,14 @@ export class PresentationRequestService {
       return {'error': 'Invalid ID type'};
     }
 
-    // Remove country code if iti's present in the phone number
-    if (data['phone_number'].includes('+')) {
+    // Remove country code if it's a US phone number. If not a US phone number, tell the user
+    if (data['phone_number'].includes('+1')) {
       const cur_number = data['phone_number'];
       data['phone_number'] = cur_number.substring(cur_number.length - 10);
       data['phone_number'] = data['phone_number'].substring(0, 3) + '-' + data['phone_number'].substring(3, 6) + '-' + data['phone_number'].substring(6, 10);
+  } else {
+    this.clientService.sendInvalidPhoneNumber(holderResponse);
+    return {'error': 'Invalid phone number'};
   }
     return data;
   }

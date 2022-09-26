@@ -6,4 +6,5 @@ export enum ServerEvent {
   SomethingWentWrong = 'something-went-wrong',
   TimeoutError = 'timeout-error',
   AlreadyCreated = 'already-created',
+  InvalidPhoneNumber = 'invalid-phone-number',
 }

@@ -34,6 +34,10 @@ function initWebSocket(url, trackingId) {
     renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });
 
+  socket.on('invalid-phone-number', (errorInfo) => {
+    renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
+  });
+
   socket.on('something-went-wrong', (errorInfo) => {
     renderErrorComponents(errorInfo.title, errorInfo.message, errorInfo.isQuestionDisplayed);
   });

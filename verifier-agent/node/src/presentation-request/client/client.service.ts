@@ -56,6 +56,15 @@ export class ClientService {
     this.emitJanuseaErrorEvent(ServerEvent.SomethingWentWrong, acceptance.trackingId, errorInfo);
   }
 
+  sendInvalidPhoneNumber(acceptance: HolderAcceptance): void {
+    const errorInfo : ErrorInfoJanusea = {
+      title: 'Oops',
+      message: 'The phone number you provided is invalid. Please try again.',
+      isQuestionDisplayed: false
+    }
+    this.emitJanuseaErrorEvent(ServerEvent.InvalidPhoneNumber, acceptance.trackingId, errorInfo);
+  }
+
   sendTimeoutError(acceptance: HolderAcceptance): void {
     const errorInfo : ErrorInfoJanusea = {
       title: 'Oops',
