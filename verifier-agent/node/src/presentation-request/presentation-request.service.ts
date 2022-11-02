@@ -131,46 +131,52 @@ export class PresentationRequestService {
       timeout: 10000,
       }
 
-    axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
-      // If we get a success response, we can accept the credential and send the user to the "account created" page
-      this.logger.log('Account creation successful');
-      // this.logger.log(res.data);
+    // For the sake of testing, I'm manually setting an account number and removing the call to Janaseu's test core.
+    // The reason is so GlobaliD team can solely test the app we've created, without having to consider API calls to 
+    // an endpoint we aren't going to be using
+    holderResponse['loneStarAccountNumber'] = '123456789';
+    this.clientService.sendAcceptance(holderResponse);
 
-      // Set the account number so we can display it later
-      holderResponse['loneStarAccountNumber'] = res.data['membershipId'];
-      this.clientService.sendAcceptance(holderResponse);
-    }).catch(err => {
-      if (err.response){
-        // Request was sent and server responded with non 2xx status code
-        this.logger.log("Error creating account");
-        this.logger.log(err.response.data);
+    // axios.post('https://eco.kivagroup.com/bonifii/membership', data, config).then(res => {
+    //   // If we get a success response, we can accept the credential and send the user to the "account created" page
+    //   this.logger.log('Account creation successful');
+    //   // this.logger.log(res.data);
+
+    //   // Set the account number so we can display it later
+    //   holderResponse['loneStarAccountNumber'] = res.data['membershipId'];
+    //   this.clientService.sendAcceptance(holderResponse);
+    // }).catch(err => {
+    //   if (err.response){
+    //     // Request was sent and server responded with non 2xx status code
+    //     this.logger.log("Error creating account");
+    //     this.logger.log(err.response.data);
         
-        if(err.response.status == 500) {
-          this.logger.log('Error calling Janusea API: 500 response code')
-          this.clientService.sendSomethingWentWrong(holderResponse);
-          return;
-        }
+    //     if(err.response.status == 500) {
+    //       this.logger.log('Error calling Janusea API: 500 response code')
+    //       this.clientService.sendSomethingWentWrong(holderResponse);
+    //       return;
+    //     }
 
-        const message = err.response.data.error.message;
+    //     const message = err.response.data.error.message;
 
-        // XML validation failing means bad input in the body of the request. Most likely 
-      if(message == "TIN matches an existing SSN or ITIN or ATIN") {
-          // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
-          holderResponse['loneStarAccountNumber'] = '00000573910020';
-          this.clientService.sendAlreadyCreatedMessage(holderResponse);
-        } else {
-          this.clientService.sendSomethingWentWrong(holderResponse);
-          this.logger.log("Janusea API error: " + message);
-        }
-      } else if (err.request) {
-        // The request was made but no response was received within the timeout range
-        this.clientService.sendTimeoutError(holderResponse);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        // TODO: Send user to "something went wrong" page
-        this.clientService.sendSomethingWentWrong(holderResponse);
-      }
-    });
+    //     // XML validation failing means bad input in the body of the request. Most likely 
+    //   if(message == "TIN matches an existing SSN or ITIN or ATIN") {
+    //       // TODO: How do we get the account number if it's already created? Can we query by SSN/ITIN?
+    //       holderResponse['loneStarAccountNumber'] = '00000573910020';
+    //       this.clientService.sendAlreadyCreatedMessage(holderResponse);
+    //     } else {
+    //       this.clientService.sendSomethingWentWrong(holderResponse);
+    //       this.logger.log("Janusea API error: " + message);
+    //     }
+    //   } else if (err.request) {
+    //     // The request was made but no response was received within the timeout range
+    //     this.clientService.sendTimeoutError(holderResponse);
+    //   } else {
+    //     // Something happened in setting up the request that triggered an Error
+    //     // TODO: Send user to "something went wrong" page
+    //     this.clientService.sendSomethingWentWrong(holderResponse);
+    //   }
+    // });
   }
 
   async handleResponse(signature: string, holderResponse: HolderAcceptance | HolderRejection) {
