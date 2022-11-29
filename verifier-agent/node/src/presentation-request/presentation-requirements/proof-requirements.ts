@@ -1,5 +1,3 @@
-import * as dayjs from 'dayjs';
-
 import {
   AllowanceStatus,
   FilterValueFormat,
@@ -9,11 +7,13 @@ import {
   RequiredStatus,
   RequirementStatus
 } from '@globalid/verifier-toolkit';
-import { Injectable } from '@nestjs/common';
+import * as dayjs from 'dayjs';
+import { PresentationRequirementsProvider } from '../factory/presentation-requirements.factory';
 
-@Injectable()
-export class PresentationRequirementsFactory {
-  create(): PresentationRequirements {
+export default class ProofRequirements implements PresentationRequirementsProvider {
+  name = 'Proof Requirements';
+
+  provide(): PresentationRequirements {
     return {
       name: 'Proof Requirements',
       purpose: 'To demonstrate creating the Presentation Requirements for a Presentation Request',

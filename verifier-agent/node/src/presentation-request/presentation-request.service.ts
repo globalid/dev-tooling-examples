@@ -3,14 +3,15 @@ import {
   GidVerifierClient,
   HolderAcceptance,
   HolderRejection,
-  HolderResponse
+  HolderResponse,
+  PresentationRequirements
 } from '@globalid/verifier-toolkit';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 import { ClientService } from './client/client.service';
 import { InvalidSignatureError } from './invalid-signature.error';
-import { PresentationRequirementsFactory } from './presentation-requirements.factory';
+import { PresentationRequirementsFactory } from './factory/presentation-requirements.factory';
 import { QrCodeViewModel } from './qr-code.view-model';
 
 @Injectable()
@@ -24,25 +25,39 @@ export class PresentationRequestService {
     private readonly presentationRequirementsFactory: PresentationRequirementsFactory
   ) {}
 
-  createQrCodeViewModel(): QrCodeViewModel {
+  async createQrCodeViewModel(name?: string): Promise<QrCodeViewModel> {
+    const requirements = this.presentationRequirementsFactory.list();
+    const selectedRequirement = await this.getSelectedRequirement(name);
     const [qrCodeUrl, trackingId] = createPresentationRequestUrl({
       clientId: this.config.get<string>('CLIENT_ID'),
-      initiationUrl: `${this.config.get('BASE_URL')}/request-presentation`
+      initiationUrl: `${this.config.get('BASE_URL')}/request-presentation/${selectedRequirement.name}`
     });
+
     this.logger.log(`generated URL for tracking ID ${trackingId}`);
+
     return {
       wsUrl: this.config.get('BASE_URL'),
+      requirements: requirements.map((r) => ({
+        value: r.name,
+        name: r.name,
+        selected: r.name === selectedRequirement.name
+      })),
+      selectedRequirement: {
+        flowName: selectedRequirement.name,
+        purpose: selectedRequirement.purpose
+      },
       trackingId,
       qrCodeUrl
     };
   }
 
-  requestPresentation(trackingId: string) {
+  requestPresentation(name: string, trackingId: string) {
+    const presentationRequirements = this.presentationRequirementsFactory.create(name);
     this.clientService.sendAwaitingResponse(trackingId);
     return this.gidVerifierClient.createPresentationRequest({
       trackingId,
       webhookUrl: `${this.config.get<string>('BASE_URL')}/handle-response`,
-      presentationRequirements: this.presentationRequirementsFactory.create()
+      presentationRequirements
     });
   }
 
@@ -65,5 +80,13 @@ export class PresentationRequestService {
       throw new InvalidSignatureError();
     }
     return isValid;
+  }
+
+  private async getSelectedRequirement(name?: string): Promise<PresentationRequirements> {
+    if (!name) {
+      return this.presentationRequirementsFactory.list()[0];
+    } else {
+      return this.presentationRequirementsFactory.create(name);
+    }
   }
 }

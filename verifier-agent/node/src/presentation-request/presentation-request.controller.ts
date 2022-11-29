@@ -1,9 +1,7 @@
 import { HolderAcceptance, HolderRejection, PresentationRequestResponseDto } from '@globalid/verifier-toolkit';
-import { Body, Controller, Get, Headers, Logger, Post, Query, Render } from '@nestjs/common';
-
-import { HolderResponsePipe } from './holder-response.pipe';
+import { Body, Controller, Get, Headers, Logger, Param, Post, Query, Render } from '@nestjs/common';
 import { PresentationRequestService } from './presentation-request.service';
-import { QrCodeViewModel } from './qr-code.view-model';
+import { HolderResponsePipe } from './holder-response.pipe';
 
 @Controller()
 export class PresentationRequestController {
@@ -13,14 +11,17 @@ export class PresentationRequestController {
 
   @Get()
   @Render('index')
-  index(): QrCodeViewModel {
-    return this.service.createQrCodeViewModel();
+  index(@Query('name') name?: string) {
+    return this.service.createQrCodeViewModel(name);
   }
 
-  @Post('request-presentation')
-  async requestPresentation(@Query('tracking_id') trackingId: string): Promise<PresentationRequestResponseDto> {
+  @Post('request-presentation/:name')
+  async requestPresentation(
+    @Param('name') name: string,
+    @Query('tracking_id') trackingId: string
+  ): Promise<PresentationRequestResponseDto> {
     this.logger.log(`requesting presentation (tracking ID: ${trackingId})`);
-    return await this.service.requestPresentation(trackingId);
+    return await this.service.requestPresentation(name, trackingId);
   }
 
   @Post('handle-response')

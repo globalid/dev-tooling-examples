@@ -1,0 +1,59 @@
+{
+  "name": "Proof Requirements",
+  "purpose": "To demonstrate creating the Presentation Requirements for a Presentation Request",
+  "id": "c4272baf-1c96-4246-95e2-ed816f471793",
+  "format": {
+    "ldp_vp": {
+      "proof_type": [
+        "BbsBlsSignature2020"
+      ]
+    }
+  },
+  "input_descriptors": [
+    {
+      "id": "government_id",
+      "name": "Government ID",
+      "schema": {
+        "oneof_filter": [
+          {
+            "required": true,
+            "uri": "https://credentials.globalid.construction/v1/schema-registry/contexts/Driving%20License/versions/1#Driving%20License"
+          },
+          {
+            "required": true,
+            "uri": "https://credentials.globalid.construction/v1/schema-registry/contexts/Passport/versions/2#Passport"
+          }
+        ]
+      },
+      "constraints": {
+        "limit_disclosure": "required",
+        "is_holder": [
+          {
+            "directive": "required",
+            "field_id": [
+              "1f44d55f-f161-4938-a659-f8026467f126"
+            ]
+          }
+        ],
+        "status_active": "allowed",
+        "status_revoked": "allowed",
+        "status_suspended": "allowed",
+        "subject_is_issuer": "preferred",
+        "fields": [
+          {
+            "id": "1f44d55f-f161-4938-a659-f8026467f126",
+            "path": [
+              "$.credentialSubject.date_of_birth"
+            ],
+            "purpose": "Holder must be over 18",
+            "filter": {
+              "maximum": "#over18",
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

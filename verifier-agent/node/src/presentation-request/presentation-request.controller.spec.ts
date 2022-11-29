@@ -25,13 +25,13 @@ describe('PresentationRequestController', () => {
   });
 
   describe('index', () => {
-    it('should return QrCodeViewModel', () => {
+    it('should return QrCodeViewModel', async () => {
       const qrCodeViewModel = createMock<QrCodeViewModel>();
       const createQrCodeViewModelSpy = jest
         .spyOn(service, 'createQrCodeViewModel')
-        .mockReturnValueOnce(qrCodeViewModel);
+        .mockResolvedValueOnce(qrCodeViewModel);
 
-      const result = controller.index();
+      const result = await controller.index();
 
       expect(result).toBe(qrCodeViewModel);
       expect(createQrCodeViewModelSpy).toHaveBeenCalledTimes(1);
@@ -43,11 +43,11 @@ describe('PresentationRequestController', () => {
       const response = createMock<PresentationRequestResponseDto>();
       const requestPresentationSpy = jest.spyOn(service, 'requestPresentation').mockResolvedValueOnce(response);
 
-      const result = await controller.requestPresentation(trackingId);
+      const result = await controller.requestPresentation('name', trackingId);
 
       expect(result).toBe(response);
       expect(requestPresentationSpy).toHaveBeenCalledTimes(1);
-      expect(requestPresentationSpy).toHaveBeenCalledWith(trackingId);
+      expect(requestPresentationSpy).toHaveBeenCalledWith('name', trackingId);
     });
   });
 
