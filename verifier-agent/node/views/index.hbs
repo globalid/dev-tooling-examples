@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
   <head>
     <meta charset='utf-8' />
     <title>GlobaliD Verification Demo</title>
@@ -13,15 +13,20 @@
     <script src='https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js'></script>
     <script src='index.js'></script>
     <script>initWebSocket('{{wsUrl}}', '{{trackingId}}')</script>
+    <script>window.addEventListener('load', () => document.querySelector('#requirements-select').addEventListener('change', e => onFlowSelect(e)), {once: true})</script>
   </head>
   <body onload="generateStyledQrCode('{{qrCodeUrl}}')">
     <div class='brand'>
       <img src='../images/logo.svg' alt='GlobaliD logo' />
     </div>
     <div class='card'>
-      <p class='card-label'>Verifier agent Demo</p>
-      <h1 id='card-title' class='card-title'>Verifiable Presentation Request</h1>
-      <h2 id='card-subtitle' class='card-subtitle'>Scan the QR code with your GlobaliD mobile app</h2>
+      <select id="requirements-select" class="card-title">
+          {{#each requirements}}
+              <option value="{{this.value}}" {{#if this.selected}}selected{{/if}}>{{this.name}}</option>
+          {{/each}}
+      </select>
+        <h1 id="card-title"></h1>
+      <h2 id='card-subtitle' class='card-subtitle'>{{selectedRequirement.purpose}}</h2>
       <div id='main-container'></div>
     </div>
   </body>

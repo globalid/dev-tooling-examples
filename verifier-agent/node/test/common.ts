@@ -29,7 +29,8 @@ export async function createTestingApp(): Promise<NestExpressApplication> {
       mockConfigService({
         BASE_URL: baseUrl,
         CLIENT_ID: clientId,
-        CLIENT_SECRET: clientSecret
+        CLIENT_SECRET: clientSecret,
+        PRESENTATION_REQUIREMENTS_PATH: 'test/presentation-requirements'
       })
     )
     .compile();

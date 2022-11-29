@@ -13,7 +13,8 @@ import { baseUrl, mockConfigService, signature, trackingId } from '../../test/co
 import { ClientService } from './client/client.service';
 import { InvalidSignatureError } from './invalid-signature.error';
 import { PresentationRequestService } from './presentation-request.service';
-import { PresentationRequirementsFactory } from './presentation-requirements.factory';
+import { AggregatePresentationRequirementsFactory } from './factory/aggregate-presentation-requirements.factory';
+import { PresentationRequirementsFactory } from './factory/presentation-requirements.factory';
 
 describe('PresentationRequestService', () => {
   let service: PresentationRequestService;
@@ -22,7 +23,13 @@ describe('PresentationRequestService', () => {
   let presentationRequirementsFactory: PresentationRequirementsFactory;
 
   beforeEach(async () => {
-    const module = await Test.createTestingModule({ providers: [ConfigService, PresentationRequestService] })
+    const module = await Test.createTestingModule({
+      providers: [
+        ConfigService,
+        PresentationRequestService,
+        { provide: PresentationRequirementsFactory, useClass: AggregatePresentationRequirementsFactory }
+      ]
+    })
       .useMocker(createMock)
       .overrideProvider(ConfigService)
       .useValue(
@@ -39,8 +46,18 @@ describe('PresentationRequestService', () => {
   });
 
   describe('createQrCodeViewModel', () => {
-    it('should create and return view model', () => {
-      const result = service.createQrCodeViewModel();
+    it('should create and return default view model', async () => {
+      const result = await service.createQrCodeViewModel();
+
+      expect(result).toMatchObject({
+        wsUrl: baseUrl,
+        trackingId: expect.any(String),
+        qrCodeUrl: expect.any(URL)
+      });
+    });
+
+    it('should create and return specific view model', async () => {
+      const result = await service.createQrCodeViewModel('Proof requirements');
 
       expect(result).toMatchObject({
         wsUrl: baseUrl,
@@ -62,7 +79,7 @@ describe('PresentationRequestService', () => {
         .spyOn(gidVerifierClient, 'createPresentationRequest')
         .mockResolvedValueOnce(presentationRequestResponseDto);
 
-      const result = await service.requestPresentation(trackingId);
+      const result = await service.requestPresentation('name', trackingId);
 
       expect(result).toBe(presentationRequestResponseDto);
       expect(awaitResponseSpy).toHaveBeenCalledTimes(1);
