@@ -34,7 +34,7 @@ Then, enter values for the following environment variables in your `.env`:
 
 ### Expose the Demo
 
-For the demo to work locally, port 3000 needs to be exposed over the internet using something like [ngrok](https://ngrok.com/).
+For the demo to work locally, port 8080 needs to be exposed over the internet using something like [ngrok](https://ngrok.com/).
 
 ## Run the Demo
 
