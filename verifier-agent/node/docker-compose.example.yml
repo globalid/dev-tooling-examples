@@ -3,8 +3,8 @@ services:
   web:
     build: .
     environment:
-      - BASE_URL=localhost:3000
+      - BASE_URL=localhost:8080
       - CLIENT_ID=123
       - CLIENT_SECRET=123
     ports:
-      - "3000:3000"
+      - "8080:8080"
