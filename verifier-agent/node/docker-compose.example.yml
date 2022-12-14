@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  web:
+    build: .
+    environment:
+      - BASE_URL=localhost:8080
+      - CLIENT_ID=123
+      - CLIENT_SECRET=123
+    ports:
+      - "8080:8080"

@@ -5,7 +5,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../src/app.module';
 import { setup } from '../src/setup';
 
-export const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'http://localhost:8080';
 export const clientId = '13275c09-4c4c-4369-982b-28d5a679cb36';
 export const clientSecret = '48688c67c6ee444348688c67c6ee4443';
 export const signature = 'abcdefghijklmnopqrstuvwxyz';
@@ -29,7 +29,8 @@ export async function createTestingApp(): Promise<NestExpressApplication> {
       mockConfigService({
         BASE_URL: baseUrl,
         CLIENT_ID: clientId,
-        CLIENT_SECRET: clientSecret
+        CLIENT_SECRET: clientSecret,
+        PRESENTATION_REQUIREMENTS_PATH: 'test/presentation-requirements'
       })
     )
     .compile();

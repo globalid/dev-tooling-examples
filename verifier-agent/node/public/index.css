@@ -112,3 +112,14 @@ body {
   font-family: Averta;
   justify-content: center;
 }
+
+#requirements-select {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+  width: 50%;
+  overflow: scroll;
+}

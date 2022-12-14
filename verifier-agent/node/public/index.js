@@ -40,6 +40,7 @@ function acceptPresentation(data) {
 
   setTitle('Verifiable Presentation Received');
   hideCardSubtitle();
+  hideSelectDropdown();
   setMainContent(preElement, createBackButton());
 
   hljs.highlightAll();
@@ -60,6 +61,7 @@ function rejectPresentation(error) {
 
   setTitle('Presentation Request Failed');
   hideCardSubtitle();
+  hideSelectDropdown();
   setMainContent(errorCard, createBackButton());
 }
 
@@ -92,6 +94,12 @@ async function loadAsset(fileName) {
 function setTitle(text) {
   const heading = document.getElementById('card-title');
   heading.innerText = text;
+}
+
+
+function hideSelectDropdown() {
+  const subtitleElement = document.getElementById('requirements-select');
+  subtitleElement.style.display = 'none';
 }
 
 function hideCardSubtitle() {
@@ -140,4 +148,10 @@ function generateStyledQrCode(dataUrl) {
   const qrCodeDiv = document.createElement('div');
   qrCode.append(qrCodeDiv);
   setMainContent(qrCodeDiv);
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function onFlowSelect(event) {
+  // eslint-disable-next-line no-undef
+  window.location.href = encodeURI(`/?name=${event.target.value}`)
 }
