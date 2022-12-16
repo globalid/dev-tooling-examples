@@ -36,7 +36,6 @@ export class PresentationRequestService {
     this.logger.log(`generated URL for tracking ID ${trackingId}`);
 
     return {
-      wsUrl: this.config.get('BASE_URL'),
       requirements: requirements.map((r) => ({
         value: r.name,
         name: r.name,
