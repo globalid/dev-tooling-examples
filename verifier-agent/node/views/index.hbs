@@ -6,12 +6,12 @@
       rel='stylesheet'
       href='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css'
     />
-    <link rel='stylesheet' href='index.css' />
-    <link rel='stylesheet' href='spinner.css' />
+    <link rel='stylesheet' href='{{BASE_URL}}/index.css' />
+    <link rel='stylesheet' href='{{BASE_URL}}/spinner.css' />
     <script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js'></script>
     <script src='https://cdn.socket.io/4.5.0/socket.io.min.js'></script>
     <script src='https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js'></script>
-    <script src='index.js'></script>
+    <script src='{{BASE_URL}}/index.js'></script>
     <script>initWebSocket('{{wsUrl}}', '{{trackingId}}')</script>
     <script>window.addEventListener('load', () => document.querySelector('#requirements-select').addEventListener('change', e => onFlowSelect(e)), {once: true})</script>
   </head>
