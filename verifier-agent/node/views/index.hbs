@@ -13,7 +13,7 @@
   <script src='https://cdn.socket.io/4.5.0/socket.io.min.js'></script>
   <script src='https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js'></script>
   <script src='/index.js'></script>
-  <script>initWebSocket('{{BASE_URL}}', '{{trackingId}}');</script>
+  <script>initWebSocket('{{trackingId}}');</script>
   <script>window.addEventListener('load', () => document.querySelector('#requirements-select').addEventListener('change', e => onFlowSelect(e)), { once: true });</script>
 </head>
 <body onload="generateStyledQrCode('{{qrCodeUrl}}')">

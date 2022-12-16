@@ -1,9 +1,17 @@
 'use strict';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function initWebSocket(url, trackingId) {
-  const socket = io(url, { transports: ['websocket'] });
-
+function initWebSocket(trackingId) {
+  const url = [
+    window.location.protocol.replace('http', 'ws'),
+    '//',
+    window.location.host
+  ].join('')
+  const wspath = [
+    window.location.pathname,
+    'socket.io'
+  ].filter(s => s !== '' && s !== '/').join('/')
+  const socket = io(url, { transports: ['websocket'], path: wspath });
   socket.on('connect', () => {
     socket.emit('register-client', trackingId, (response) => {
       console.log(response);
