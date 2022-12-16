@@ -5,7 +5,6 @@ export interface Requirement {
 }
 
 export interface QrCodeViewModel {
-  wsUrl: string;
   trackingId: string;
   qrCodeUrl: URL;
   selectedRequirement: {
