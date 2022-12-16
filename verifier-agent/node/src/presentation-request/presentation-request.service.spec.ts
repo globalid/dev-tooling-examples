@@ -50,7 +50,6 @@ describe('PresentationRequestService', () => {
       const result = await service.createQrCodeViewModel();
 
       expect(result).toMatchObject({
-        wsUrl: baseUrl,
         trackingId: expect.any(String),
         qrCodeUrl: expect.any(URL)
       });
@@ -60,7 +59,6 @@ describe('PresentationRequestService', () => {
       const result = await service.createQrCodeViewModel('Proof requirements');
 
       expect(result).toMatchObject({
-        wsUrl: baseUrl,
         trackingId: expect.any(String),
         qrCodeUrl: expect.any(URL)
       });
