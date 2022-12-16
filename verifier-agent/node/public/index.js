@@ -1,9 +1,12 @@
+/* eslint-disable no-undef */
 'use strict';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function initWebSocket(url, trackingId) {
-  const socket = io(url, { transports: ['websocket'] });
-
+function initWebSocket(trackingId) {
+  const wspath = [ window.location.pathname, 'socket.io' ]
+    .join('/')
+    .replace(/\/+/g, '/')
+  const socket = io({ transports: ['websocket'], path: wspath });
   socket.on('connect', () => {
     socket.emit('register-client', trackingId, (response) => {
       console.log(response);
@@ -48,7 +51,7 @@ function acceptPresentation(data) {
 
 function rejectPresentation(error) {
   const errorIcon = document.createElement('img');
-  errorIcon.src = 'images/error-icon.svg';
+  errorIcon.src = prefixBaseUrl('images/error-icon.svg')
   errorIcon.className = 'error-icon';
 
   const errorMessage = document.createElement('p');
@@ -68,7 +71,7 @@ function rejectPresentation(error) {
 function createBackButton() {
   const backButton = document.createElement('a');
   backButton.className = 'button';
-  backButton.setAttribute('href', '/');
+  backButton.setAttribute('href', BASE_URL);
   backButton.innerText = 'Back';
   return backButton;
 }
@@ -87,7 +90,7 @@ async function displaySpinner() {
 }
 
 async function loadAsset(fileName) {
-  const res = await fetch(fileName);
+  const res = await fetch(prefixBaseUrl(fileName));
   return await res.text();
 }
 
@@ -134,7 +137,7 @@ function generateStyledQrCode(dataUrl) {
       type: 'dots',
       color: '#000000'
     },
-    image: 'images/logo-qr-code.svg',
+    image: prefixBaseUrl('images/logo-qr-code.svg'),
     cornersSquareOptions: {
       type: 'square',
       color: '#000000'
@@ -152,6 +155,9 @@ function generateStyledQrCode(dataUrl) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function onFlowSelect(event) {
-  // eslint-disable-next-line no-undef
-  window.location.href = encodeURI(`/?name=${event.target.value}`)
+  window.location.href = prefixBaseUrl(encodeURI(`?name=${event.target.value}`))
+}
+
+function prefixBaseUrl(url) {
+  return `${BASE_URL}/${url}`.replace(/(?<!:)\/+/g, '/')
 }
