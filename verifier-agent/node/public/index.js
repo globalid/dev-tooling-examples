@@ -159,5 +159,6 @@ function onFlowSelect(event) {
 }
 
 function prefixBaseUrl(url) {
-  return `${BASE_URL}/${url}`.replace(/(?<!:)\/+/g, '/')
+  return `${BASE_URL}/${url}`
+    .replace('://', '**').replace(/\/+/g, '/').replace('**', '://')
 }
