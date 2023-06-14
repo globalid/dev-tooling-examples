@@ -6,9 +6,13 @@ export const gidVerifierClientProvider: Provider<GidVerifierClient> = {
   provide: GidVerifierClient,
   inject: [ConfigService],
   useFactory: (configService: ConfigService) => {
-    return createGidVerifierClient({
+    const client = createGidVerifierClient({
       clientId: configService.get('CLIENT_ID'),
       clientSecret: configService.get('CLIENT_SECRET')
     });
+
+    client.setAppUuid(configService.get('APP_UUID'));
+
+    return client;
   }
 };
