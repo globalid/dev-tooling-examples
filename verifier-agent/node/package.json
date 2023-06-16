@@ -23,7 +23,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json --maxWorkers=1"
   },
   "dependencies": {
-    "@globalid/verifier-toolkit": "^0.5.5-alpha.1",
+    "@globalid/verifier-toolkit": "^1.0.0",
     "@nestjs/common": "8.4.4",
     "@nestjs/config": "1.2.0",
     "@nestjs/core": "8.4.4",
